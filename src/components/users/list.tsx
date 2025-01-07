@@ -3,11 +3,11 @@ import {USER}           from "~/lib/store";
 import {A}              from "@solidjs/router";
 
 type PROPS = {
-    users: USER[]
+    users: USER[]|undefined;
 }
 
 const UserList: Component<PROPS> = props => {
-    const users = () => props.users;
+    const users = () => props.users ?? [];
     return (
         <ul>
             <For each={users()}>

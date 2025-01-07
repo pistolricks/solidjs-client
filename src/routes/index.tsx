@@ -1,16 +1,20 @@
-import {A}            from "@solidjs/router";
-import {createSignal} from "solid-js";
+import {A, AccessorWithLatest} from "@solidjs/router";
+import {createSignal}          from "solid-js";
 import UserList from "~/components/users/list";
 import {USER}   from "~/lib/store";
 
 import { createAsync } from "@solidjs/router";
+import {getStorageUsers} from "~/lib/users";
 
+export const route = {
+    preload(){
+        getStorageUsers();
+    }
+}
 
 export default function Home() {
     
-    const users = createAsync(async () => 
-        await fetch(`http://localhost:${import.meta.env.VITE_CLIENT_PORT}/api/users`).then(res => res.json())
-    )
+    const users: AccessorWithLatest<USER[]|undefined> = createAsync(async () => getStorageUsers());
     
 
     return (
