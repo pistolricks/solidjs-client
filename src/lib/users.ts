@@ -45,6 +45,11 @@ export const addStorageUser = action(async (data: FormData) => {
     throw redirect("/")
 })
 
+const redirectTo = (path?: string) => {
+    let urlPath = `/${path ?? ``}`
+    throw redirect(urlPath) 
+}
+
 export const registerUserHandler = action(async (data: FormData) => {
     "use server";
 
@@ -61,6 +66,9 @@ export const registerUserHandler = action(async (data: FormData) => {
     })
     const res: any = await response.json();
     console.log(res);
+
+    if (!res?.error) {
+        redirectTo()    
+    }
     return res;
-    throw redirect("/")
 })
