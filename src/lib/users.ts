@@ -1,4 +1,3 @@
-
 import {storage, USER}           from "~/lib/store";
 import {action, query, redirect} from "@solidjs/router";
 
