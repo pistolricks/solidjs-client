@@ -1,6 +1,13 @@
 import { createStorage } from "unstorage";
 import fsLiteDriver from "unstorage/drivers/fs-lite";
 
+export type REGISTER_USER = {
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+}
+
 export type USER = {
     id: number;
     firstName: string;

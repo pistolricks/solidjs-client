@@ -44,3 +44,23 @@ export const addStorageUser = action(async (data: FormData) => {
     ])
     throw redirect("/")
 })
+
+export const registerUserHandler = action(async (data: FormData) => {
+    "use server";
+
+    const userInput = {
+        name: String(data.get("firstName")) + " " + String(data.get("lastName")),
+        email: String(data.get("email")),
+        password: String(data.get("password")),
+    }
+
+    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/users`, {
+        method: "POST",
+        headers: {},
+        body: JSON.stringify(userInput)
+    })
+    const res: any = await response.json();
+    console.log(res);
+    return res;
+    throw redirect("/")
+})
