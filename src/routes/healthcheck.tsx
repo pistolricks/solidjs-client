@@ -1,19 +1,17 @@
-import {A, AccessorWithLatest, createAsync} from "@solidjs/router";
-import {USER}                               from "~/lib/store";
-import {getStorageUsers}                    from "~/lib/users";
-import {getHealth}                          from "~/lib/health";
+import {A, createAsync} from "@solidjs/router";
+import {getHealthcheck}      from "~/lib/healthcheck";
 
 export const route = {
-    preload(){
-        getHealth();
+    preload() {
+        getHealthcheck();
     }
 }
 
 
 export default function Healthcheck() {
 
-    const healthcheck: any = createAsync(async () => getHealth())
-    
+    const healthcheck: any = createAsync(async () => getHealthcheck())
+
     const check = () => healthcheck();
     console.log(check())
     return (
