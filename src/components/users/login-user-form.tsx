@@ -1,8 +1,8 @@
 import {Component, createEffect, createMemo, Show} from "solid-js";
-import {A, useSubmission} from "@solidjs/router";
+import {useSubmission} from "@solidjs/router";
 import {loginUserHandler} from "~/lib/users";
-import {TextField, TextFieldInput} from "~/components/ui/text-field";
-import { Button } from "../ui/button";
+import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
+import {Button} from "../ui/button";
 
 type PROPS = {}
 
@@ -17,22 +17,30 @@ const LoginUserForm: Component<PROPS> = props => {
     })
     return (
         <>
-            <form action={loginUserHandler} method="post">
+            <form class={'space-y-4'} action={loginUserHandler} method="post">
                 <TextField>
-                    <TextFieldInput type="email" name="email" placeholder="email"/>
-                    <TextFieldInput type="password" required name="password" placeholder="********"/>
+                    <TextFieldInput type="email" autocomplete={'username'} name="email" placeholder="Email"/>
+                    <Show when={results()?.error?.email}>
+                        <TextFieldErrorMessage>
+                            {results()?.error?.email}
+                        </TextFieldErrorMessage>
+                    </Show>
+
                 </TextField>
-                <Button as={"button"} type={"submit"}>Login</Button>
-
-
-                <button type="submit">Login</button>
+                <TextField>
+                    <TextFieldInput type="password" autocomplete={'current-password'} required name="password"
+                                    placeholder="Password"/>
+                    <Show when={results()?.error?.password}>
+                        <TextFieldErrorMessage>
+                            {results()?.error?.password}
+                        </TextFieldErrorMessage>
+                    </Show>
+                </TextField>
+                <div class={'flex justify-end space-x-2'}>
+                    <Button as={"button"} variant={'default'} type={"submit"}>Login</Button>
+                    <Button as={"A"} href={'/'} variant={'secondary'} type={"button"}>Go Back</Button>
+                </div>
             </form>
-
-            <Show when={results()?.error?.email}>
-                {results()?.error?.email}
-            </Show>
-
-            <A href={"/"}>Go Back</A>
         </>
     );
 };

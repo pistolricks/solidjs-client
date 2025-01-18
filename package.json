@@ -29,6 +29,7 @@
     "node": ">=18"
   },
   "devDependencies": {
-    "@types/node": "^22.10.7"
+    "@types/node": "^22.10.7",
+    "postcss-import": "^16.1.0"
   }
 }

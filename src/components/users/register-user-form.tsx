@@ -1,6 +1,8 @@
 import {Component, createEffect, createMemo, Show} from "solid-js";
-import {A, useSubmission}                          from "@solidjs/router";
-import {registerUserHandler}                       from "~/lib/users";
+import {A, useSubmission} from "@solidjs/router";
+import {registerUserHandler} from "~/lib/users";
+import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
+import {Button} from "~/components/ui/button";
 
 type PROPS = {}
 
@@ -15,19 +17,47 @@ const RegisterUserForm: Component<PROPS> = props => {
     })
     return (
         <>
-            <form action={registerUserHandler} method="post">
-                <input type="text" required name="firstName" placeholder="First Name"/>
-                <input type="text" required name="lastName" placeholder="Last Name"/>
-                <input type="email" required name="email" placeholder="email"/>
-                <input type="password" required name="password" placeholder="********"/>
-                <button type="submit">Register</button>
+            <form class={'space-y-4'} action={registerUserHandler} method="post">
+                <TextField>
+                    <TextFieldInput type="text" required name="firstName" placeholder="First Name"/>
+                    <Show when={results()?.error?.firstName}>
+                        <TextFieldErrorMessage>
+                            {results()?.error?.firstName}
+                        </TextFieldErrorMessage>
+                    </Show>
+                </TextField>
+                <TextField>
+                    <TextFieldInput type="text" required name="lastName" placeholder="Last Name"/>
+                    <Show when={results()?.error?.lastName}>
+                        <TextFieldErrorMessage>
+                            {results()?.error?.lastName}
+                        </TextFieldErrorMessage>
+                    </Show>
+                </TextField>
+                <TextField>
+                    <TextFieldInput type="email" required name="email" placeholder="email"/>
+                    <Show when={results()?.error?.email}>
+                        <TextFieldErrorMessage>
+                            {results()?.error?.email}
+                        </TextFieldErrorMessage>
+                    </Show>
+                </TextField>
+                <TextField>
+                    <TextFieldInput type="password" autocomplete={'none'} required name="password"
+                                    placeholder="********"/>
+                    <Show when={results()?.error?.password}>
+                        <TextFieldErrorMessage>
+                            {results()?.error?.password}
+                        </TextFieldErrorMessage>
+                    </Show>
+                </TextField>
+                <div class={'flex justify-end space-x-2'}>
+                    <Button as={"button"} variant={'default'} type={"submit"}>Register</Button>
+                    <Button as={"A"} href={'/'} variant={'secondary'} type={"button"}>Go Back</Button>
+                </div>
             </form>
 
-            <Show when={results()?.error?.email}>
-                {results()?.error?.email}
-            </Show>
 
-            <A href={"/"}>Go Back</A>
         </>
     );
 };

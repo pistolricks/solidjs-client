@@ -1,13 +1,14 @@
-import {Component, lazy}  from "solid-js";
-
-const LoginUserForm = lazy(() => import('~/components/users/login-user-form'));
+import {Component, lazy} from "solid-js";
+import LoginUserForm from '~/components/users/login-user-form';
 
 type PROPS = {}
 
 const Login: Component<PROPS> = props => {
 
     return (
-        <LoginUserForm />
+        <div class={'p-4'}>
+            <LoginUserForm/>
+        </div>
     );
 };
 

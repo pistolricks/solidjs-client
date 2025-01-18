@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "./css/colors.css";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @layer base {
   :root {
@@ -19,10 +20,10 @@
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
 
-    --primary: 240 5.9% 10%;
+    --primary: 206 82% 65%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 240 4.8% 95.9%;
+    --secondary: 203 100% 88%;
     --secondary-foreground: 240 5.9% 10%;
 
     --accent: 240 4.8% 95.9%;
@@ -102,8 +103,8 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings:
-      "rlig" 1,
-      "calt" 1;
+            "rlig" 1,
+            "calt" 1;
   }
 }
 
