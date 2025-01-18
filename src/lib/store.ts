@@ -15,6 +15,13 @@ export type USER = {
     age: number;
 }
 
+export type MOVIES = {
+    title: string
+    year: number
+    runtime: string
+    genres: string[]
+}
+
 export const storage = createStorage({
     driver: fsLiteDriver({
         base: "./storage"

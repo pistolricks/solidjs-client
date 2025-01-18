@@ -5,6 +5,9 @@ import {USER}   from "~/lib/store";
 
 import { createAsync } from "@solidjs/router";
 import {getStorageUsers} from "~/lib/users";
+import "@fontsource/inter"
+import "../app.css"
+
 
 export const route = {
     preload(){
