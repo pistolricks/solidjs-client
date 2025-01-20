@@ -1,50 +1,50 @@
 @import "tailwindcss/base";
-@import "./css/colors.css";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --background: #FCFCFC;
+    --foreground: #F9F9F9;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted: #202020;
+    --muted-foreground: #646464;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover: #FFFFFF;
+    --popover-foreground: #838383;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
+    --border: #D9D9D9;
+    --input: #D9D9E0;
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card: #FFFFFF;
+    --card-foreground: #838383;
 
-    --primary: 206 82% 65%;
-    --primary-foreground: 0 0% 98%;
+    --primary: #E8E8E8;
+    --primary-foreground: #F0F0F0;
 
-    --secondary: 203 100% 88%;
-    --secondary-foreground: 240 5.9% 10%;
+    --secondary: #E8E8EC;
+    --secondary-foreground: #F0F0F3;
 
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --accent: #E7D9D3;
+    --accent-foreground: #7D5E54;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: #FFDBDC;
+    --destructive-foreground: #CE2C31;
 
-    --info: 204 94% 94%;
-    --info-foreground: 199 89% 48%;
+    --info: #D5EFFF;
+    --info-foreground: #0D74CE;
 
-    --success: 149 80% 90%;
-    --success-foreground: 160 84% 39%;
+    --success: #C8F4E9;
+    --success-foreground: #027864;
 
-    --warning: 48 96% 89%;
-    --warning-foreground: 25 95% 53%;
+    --warning: #FFEE9C;
+    --warning-foreground: #AB6400;
 
-    --error: 0 93% 94%;
-    --error-foreground: 0 84% 60%;
+    --error: #FFDCD3;
+    --error-foreground: #D13415;
 
-    --ring: 240 5.9% 10%;
+    --ring: #BBBBBB;
 
     --radius: 0.5rem;
   }

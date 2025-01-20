@@ -9,7 +9,6 @@
   "dependencies": {
     "@fontsource/inter": "^5.1.1",
     "@kobalte/core": "^0.13.7",
-    "@radix-ui/colors": "^3.0.0",
     "@solidjs/router": "^0.15.0",
     "@solidjs/start": "^1.0.10",
     "autoprefixer": "^10.4.19",
@@ -30,6 +29,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.7",
-    "postcss-import": "^16.1.0"
+    "postcss-import": "^16.1.0",
+    "tailwindcss-radix-colors": "^1.4.1"
   }
 }
