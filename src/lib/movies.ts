@@ -3,9 +3,7 @@ import {action, query, redirect} from "@solidjs/router";
 
 export const getMovies = query(async () => {
     "use server";
-    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/movies`)
-    const res: any = await response.json();
-    console.log(res);
+    return (await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/movies`)).json();
 }, "movies")
 
 export const getMovie = query(async (id: number) => {

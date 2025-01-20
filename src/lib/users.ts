@@ -1,4 +1,4 @@
-import {storage, USER}           from "~/lib/store";
+import {AUTHENTICATION_TOKEN, storage, USER} from "~/lib/store";
 import {action, query, redirect} from "@solidjs/router";
 
 export const getStorageUsers = query(async () => {
@@ -7,12 +7,10 @@ export const getStorageUsers = query(async () => {
     return ((await storage.getItem("users:data")) as USER[]).reverse();
 }, "users")
 
-export const getStorageUser = query(async (id: number) => {
+export const getUser = query(async (id: number) => {
     "use server";
-    console.log("getStorageUser was called")
-    return ((await storage.getItem("users:data")) as USER[]).find(
-        user => user.id === id
-    );
+    console.log("getUser was called")
+    return (await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/users`)).json();
 }, "user")
 
 export type userInput = Pick<USER, "firstName" | "lastName" | "age">
@@ -60,11 +58,28 @@ export const loginUserHandler = action(async (data: FormData) => {
         headers: {},
         body: JSON.stringify(userInput)
     })
+
     const res: any = await response.json();
-    console.log(res);
+
+
+    await storage.setItem("auth:token", {
+        token: res.authentication_token.token,
+        expiry: res.authentication_token.expiry,
+    })
+
+    console.log(res.authentication_token.token);
+
 
     if (!res?.error) {
         redirectTo()
     }
     return res;
 })
+
+export const getUserToken = query(async () => {
+    "use server";
+
+    console.log("getUserToken")
+    return ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
+
+}, 'token')

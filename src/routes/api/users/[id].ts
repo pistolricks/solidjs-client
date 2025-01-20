@@ -1,6 +1,6 @@
-import {getStorageUser} from "~/lib/users";
+import {getUser} from "~/lib/users";
 import {APIEvent}       from "@solidjs/start/server";
 
 export const GET = (event: APIEvent) => {
-    return getStorageUser(+event.params.id)
+    return getUser(+event.params.id)
 }

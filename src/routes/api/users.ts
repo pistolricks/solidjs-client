@@ -2,7 +2,7 @@ import {registerUserHandler, getStorageUsers} from "~/lib/users";
 import {APIEvent}                        from "@solidjs/start/server";
 
 export function GET() {
-    return getStorageUsers();
+
 }
 
 export const POST = async (event: APIEvent) => {

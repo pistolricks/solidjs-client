@@ -1,13 +1,6 @@
 import { createStorage } from "unstorage";
 import fsLiteDriver from "unstorage/drivers/fs-lite";
 
-export type REGISTER_USER = {
-    id: number;
-    name: string;
-    email: string;
-    password: string;
-}
-
 export type USER = {
     id: number;
     firstName: string;
@@ -34,13 +27,16 @@ storage.setItem("users:data", [
         firstName: "Jane",
         lastName: "Doe",
         age: 21,
-    },
-    {
-        id: 1,
-        firstName: "John",
-        lastName: "Doe",
-        age: 25,
     }
 ])
 
 storage.setItem("users:counter", 2)
+
+export type AUTHENTICATION_TOKEN = {
+    token: string;
+    expiry: string;
+}
+storage.setItem("auth:token", {
+    token: "XXXXXXXXXXXXXXXXXXXXXXXXXX",
+    expiry: "2022-01-01T00:00:00.000Z"
+})
