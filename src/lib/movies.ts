@@ -1,9 +1,20 @@
-import {storage, USER}           from "~/lib/store";
+import {AUTHENTICATION_TOKEN, storage, USER} from "~/lib/store";
 import {action, query, redirect} from "@solidjs/router";
 
 export const getMovies = query(async () => {
     "use server";
-    return (await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/movies`)).json();
+    let token = ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
+
+    console.log("calling token", token.token)
+
+    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/movies`, {
+        headers: {
+            Authorization: `Bearer ${token.token}`
+        },
+    })
+    const res: any = await response.json();
+    console.log(res);
+    return res;
 }, "movies")
 
 export const getMovie = query(async (id: number) => {
