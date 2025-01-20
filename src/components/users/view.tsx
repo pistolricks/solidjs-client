@@ -13,7 +13,7 @@ const ViewUser: Component<PROPS> = props => {
         <Show when={user()} keyed>
             {(item: USER) => (
                 <>
-                    {item.id} | {item.firstName} {item.lastName} | {item.age}
+                    {item.id} | {item.name}
                 </>
             )}
         </Show>

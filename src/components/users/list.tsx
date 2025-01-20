@@ -14,7 +14,7 @@ const UserList: Component<PROPS> = props => {
                 {user => (
                     <li>
                         <A href={`/users/${user.id}`}>
-                            {user.id} | {user.firstName} {user.lastName} | {user.age}
+                            {user.id} | {user.name}
                         </A>
                     </li>
                 )}
