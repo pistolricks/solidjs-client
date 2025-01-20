@@ -1,15 +1,20 @@
 import {A, AccessorWithLatest, createAsync, useLocation} from "@solidjs/router";
-import {MoviesData, USER} from "~/lib/store";
-import {getMovies} from "~/lib/movies";
+import {USER} from "~/lib/store";
 import {getUser} from "~/lib/users";
-import {Show} from "solid-js";
+import {createEffect, createMemo, Show} from "solid-js";
 
 export default function Nav() {
     const location = useLocation();
 
-    const user: AccessorWithLatest<USER | undefined> = createAsync(async () => getUser());
+    const userData: AccessorWithLatest<USER | undefined> = createAsync(async () => getUser());
     const active = (path: string) =>
         path == location.pathname ? "border-gray-normal" : "border-transparent hover:border-gray-dim";
+
+    const user = createMemo(() => {
+        console.log("user", userData())
+        return userData()
+    })
+
 
     return (
         <nav class="bg-gray-ui">
@@ -31,12 +36,10 @@ export default function Nav() {
                             </li>
                         </>
                     }
-                    when={user()} keyed>
-                    {(user: USER) => (
-                        <li class={`mx-1.5 sm:mx-6`}>
-                            <span>{user.name}</span>
-                        </li>
-                    )}
+                    when={user()?.activated}>
+                    <li class={`mx-1.5 sm:mx-6`}>
+                        <span>{user()?.name}</span>
+                    </li>
                 </Show>
             </ul>
         </nav>

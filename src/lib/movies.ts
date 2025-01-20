@@ -5,7 +5,7 @@ export const getMovies = query(async () => {
     "use server";
     let token = ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
 
-    console.log("calling token", token.token)
+    console.log("Bearer:", token.token)
 
     const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/movies`, {
         headers: {
@@ -25,7 +25,6 @@ export const getMovie = query(async (id: number) => {
     );
 }, "user")
 
-export type userInput = Pick<USER, "firstName" | "lastName" | "age">
 
 export const addMovie = action(async (data: FormData) => {
     "use server";

@@ -24,6 +24,7 @@ export default function Home() {
     createEffect(() => {
         console.log("movies", movies())
         console.log("auth on index", token())
+
     })
     return (
         <main class="text-center mx-auto p-4">
