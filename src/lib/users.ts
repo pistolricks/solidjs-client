@@ -17,33 +17,6 @@ export const getStorageUser = query(async (id: number) => {
 
 export type userInput = Pick<USER, "firstName" | "lastName" | "age">
 
-export const addStorageUser = action(async (data: FormData) => {
-    "use server";
-    
-    const userInput = {
-        firstName: String(data.get("firstName")),
-        lastName: String(data.get("lastName")),
-        age: Number(data.get("age")),
-    }
-    
-    let [{value: users}, {value: index}] = await storage.getItems([
-        "users:data",
-        "users:counter"
-    ])
-
-    let user;
-    await Promise.all([
-        storage.setItem("users:data", [
-            ...(users as USER[]),
-            (user = {
-                ...userInput,
-                id: index as number,
-            }),
-            storage.setItem("users:counter", (index as number) + 1)
-        ])
-    ])
-    throw redirect("/")
-})
 
 const redirectTo = (path?: string) => {
     let urlPath = `/${path ?? ``}`

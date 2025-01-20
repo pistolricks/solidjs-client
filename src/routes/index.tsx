@@ -20,11 +20,11 @@ export default function Home() {
 
     return (
         <main class="text-center mx-auto p-4">
-            <h1 class="max-6-xs text-6xl  font-thin uppercase my-16">
+            <h1 class="max-6-xs text-6xl text-red-7 font-thin uppercase my-16">
                 SS FE
             </h1>
             <UserList users={users()}/>
-            <A class={"mt-4 w-full h-24"} href={"/users/create"}>New User</A>
+            <A class={"mt-4 w-full h-24 text-red-7"} href={"/users/create"}>New User</A>
         </main>
     );
 }

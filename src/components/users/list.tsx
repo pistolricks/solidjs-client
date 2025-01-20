@@ -9,7 +9,7 @@ type PROPS = {
 const UserList: Component<PROPS> = props => {
     const users = () => props.users ?? [];
     return (
-        <ul>
+        <ul class={'text-gray-11'}>
             <For each={users()}>
                 {user => (
                     <li>
