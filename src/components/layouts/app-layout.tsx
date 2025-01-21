@@ -1,7 +1,7 @@
 import {AccessorWithLatest, createAsync, useLocation} from "@solidjs/router";
 import {USER} from "~/lib/store";
 import {Component, createEffect, JSXElement} from "solid-js";
-import Nav from "~/components/nav";
+import Nav from "~/components/layouts/partials/nav";
 import {getUser, getUserToken} from "~/lib/users";
 import {getMovies} from "~/lib/movies";
 

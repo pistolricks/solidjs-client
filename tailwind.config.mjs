@@ -99,7 +99,17 @@ export default {
         "content-show": "content-show 0.2s ease-out",
         "content-hide": "content-hide 0.2s ease-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite"
-      }
+      },
+      sidebar: {
+        DEFAULT: 'var(--sidebar-background)',
+        foreground: 'var(--sidebar-foreground)',
+        primary: 'var(--sidebar-primary)',
+        'primary-foreground': 'var(--sidebar-primary-foreground)',
+        accent: 'var(--sidebar-accent)',
+        'accent-foreground': 'var(--sidebar-accent-foreground)',
+        border: 'var(--sidebar-border)',
+        ring: 'var(--sidebar-ring)',
+      },
     }
   },
   plugins: [

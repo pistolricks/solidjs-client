@@ -2,7 +2,7 @@ import {AccessorWithLatest, createAsync} from "@solidjs/router";
 import {MoviesData} from "~/lib/store";
 import {createEffect} from "solid-js";
 import {getMovies} from "~/lib/movies";
-import CategoryLayout from "~/components/category-layout";
+import CategoryLayout from "~/components/layouts/category-layout";
 import MoviesList from "~/components/movies/list";
 
 
@@ -20,7 +20,7 @@ export default function Movies() {
         console.log("movies", moviesData())
     })
     return (
-            <CategoryLayout>
+            <CategoryLayout {...moviesData()}>
                 <MoviesList movies={moviesData()}/>
             </CategoryLayout>
     );
