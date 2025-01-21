@@ -1,6 +1,6 @@
 import {A, AccessorWithLatest, createAsync} from "@solidjs/router";
-import {AUTHENTICATION_TOKEN, MoviesData} from "~/lib/store";
-import {getUserToken} from "~/lib/users";
+import {AUTHENTICATION_TOKEN, MoviesData, USER} from "~/lib/store";
+import {getUser, getUserToken} from "~/lib/users";
 import {createEffect, For} from "solid-js";
 import {getMovies} from "~/lib/movies";
 
@@ -8,6 +8,8 @@ import {getMovies} from "~/lib/movies";
 export const route = {
     preload() {
         getMovies();
+        getUserToken();
+        getUser();
     }
 }
 
@@ -17,15 +19,18 @@ export default function Home() {
 
     const token: AccessorWithLatest<AUTHENTICATION_TOKEN | undefined> = createAsync(async () => getUserToken());
 
+    const user: AccessorWithLatest<USER | undefined> = createAsync(async () => getUser());
+
     createEffect(() => {
         console.log("movies", movies())
         console.log("auth on index", token())
+        console.log("user on index", user())
 
     })
     return (
         <main class="text-center mx-auto p-4">
             <h1 class="max-6-xs text-6xl text-red-7 font-thin uppercase my-16">
-                SS FE - {token()?.token}
+                SS FE - {user()?.name} - {token()?.token}
             </h1>
 
             <ul class={'text-gray-11'}>

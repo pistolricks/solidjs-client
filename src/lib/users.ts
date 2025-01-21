@@ -10,7 +10,7 @@ export const getStorageUsers = query(async () => {
 export const getUser = query(async () => {
     "use server";
     console.log("getUser was called")
-    return ((await storage.getItem("user:data")) as USER);
+    return (await storage.getItem("user:data")) as USER;
 }, "user")
 
 const redirectTo = (path?: string) => {
