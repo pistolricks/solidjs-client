@@ -46,12 +46,12 @@ export const addMovie = action(async (data: FormData) => {
 
     const movieInput = {
         title: String(data.get("title")),
-        year: String(data.get("year")),
-        runtime: String(data.get("year")),
-        genres: String(data.get("year")),
+        year: Number(data.get("year")),
+        runtime: String(data.get("runtime")) + ' mins',
+        genres: [String(data.get("genres"))],
     }
 
-    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/users`, {
+    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/movies`, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token.token}`

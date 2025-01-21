@@ -10,6 +10,7 @@ export type USER = {
 }
 
 export type MOVIE = {
+    id: number
     title: string
     year: number
     runtime: string

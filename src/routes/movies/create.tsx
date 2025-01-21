@@ -8,7 +8,7 @@ import CreateMovieForm from "~/components/movies/forms/create-movie-form";
 const Create: Component<VoidComponent> = () => {
 
     return (
-            <FormLayout>
+            <FormLayout title="Add Movie">
                 <CreateMovieForm/>
             </FormLayout>
     );

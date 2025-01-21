@@ -3,6 +3,8 @@ import ViewUser from "~/components/users/view";
 import {createAsync, RouteDefinition, RouteSectionProps} from "@solidjs/router";
 import {getMovie} from "~/lib/movies";
 import {MOVIE, MOVIE_DETAIL} from "~/lib/store";
+import DetailsLayout from "~/components/details-layout";
+import MovieDetails from "~/components/movies/details";
 
 export const route = {
     preload({params}) {
@@ -16,19 +18,15 @@ const View: Component<PROPS> = props => {
 
     const movieData: () => MOVIE_DETAIL = createAsync(async () => getMovie(+props.params.id))
 
-    const movie = () => movieData()?.movie;
-    createEffect(() => console.log(movie()))
+    const details = () => movieData();
+    createEffect(() => console.log(details()))
 
 
 
     return (
-        <Show when={movie()} keyed>
-            {(item: MOVIE) => (
-                <div class={'text-red-dim'}>
-                    {item.title} {item.runtime}
-                </div>
-            )}
-        </Show>
+        <DetailsLayout>
+            <MovieDetails details={details()} />
+        </DetailsLayout>
     );
 };
 

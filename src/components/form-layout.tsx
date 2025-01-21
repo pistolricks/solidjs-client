@@ -16,7 +16,7 @@ const FormLayout: Component<PROPS> = props => {
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img class="mx-auto h-10 w-auto"
                      src={imageSrc()} alt="logo"/>
-                <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+                <h2 class="mt-10 text-center text-2xl/9 tracking-tight text-blue-11 uppercase">
                     {title()}
                 </h2>
             </div>
