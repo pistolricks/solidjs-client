@@ -9,7 +9,7 @@ export const getStorageUsers = query(async () => {
 
 export const getUser = query(async () => {
     "use server";
-    console.log("getStorageUser was called")
+    console.log("getUser was called")
     return ((await storage.getItem("user:data")) as USER);
 }, "user")
 

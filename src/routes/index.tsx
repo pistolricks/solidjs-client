@@ -1,25 +1,21 @@
-import {A, AccessorWithLatest} from "@solidjs/router";
-import UserList from "~/components/users/list";
-import {AUTHENTICATION_TOKEN, MOVIES, MoviesData, USER} from "~/lib/store";
-
-import { createAsync } from "@solidjs/router";
-import {getStorageUsers, getUserToken} from "~/lib/users";
+import {A, AccessorWithLatest, createAsync} from "@solidjs/router";
+import {AUTHENTICATION_TOKEN, MoviesData} from "~/lib/store";
+import {getUserToken} from "~/lib/users";
 import {createEffect, For} from "solid-js";
 import {getMovies} from "~/lib/movies";
 
 
-
 export const route = {
-    preload(){
-        // getStorageUsers();
+    preload() {
+        getMovies();
     }
 }
 
 export default function Home() {
-    
-   const movies: AccessorWithLatest<MoviesData|undefined> = createAsync(async () => getMovies());
 
-    const token: AccessorWithLatest<AUTHENTICATION_TOKEN|undefined> = createAsync(async () => getUserToken());
+    const movies: AccessorWithLatest<MoviesData | undefined> = createAsync(async () => getMovies());
+
+    const token: AccessorWithLatest<AUTHENTICATION_TOKEN | undefined> = createAsync(async () => getUserToken());
 
     createEffect(() => {
         console.log("movies", movies())

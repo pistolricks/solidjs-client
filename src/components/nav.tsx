@@ -6,15 +6,8 @@ import {createEffect, createMemo, Show} from "solid-js";
 export default function Nav() {
     const location = useLocation();
 
-    const userData: AccessorWithLatest<USER | undefined> = createAsync(async () => getUser());
     const active = (path: string) =>
         path == location.pathname ? "border-gray-normal" : "border-transparent hover:border-gray-dim";
-
-    const user = createMemo(() => {
-        console.log("user", userData())
-        return userData()
-    })
-
 
     return (
         <nav class="bg-gray-ui">
@@ -25,22 +18,12 @@ export default function Nav() {
                 <li class={`border-b-2 ${active("/about")} mx-1.5 sm:mx-6`}>
                     <A href={'/about'}>About</A>
                 </li>
-                <Show
-                    fallback={
-                        <>
-                            <li class={`border-b-2 ${active("/login")} mx-1.5 sm:mx-6`}>
-                                <A href={'/login'}>Login</A>
-                            </li>
-                            <li class={`border-b-2 ${active("/register")} mx-1.5 sm:mx-6`}>
-                                <A href={'/register'}>Register</A>
-                            </li>
-                        </>
-                    }
-                    when={user()?.activated}>
-                    <li class={`mx-1.5 sm:mx-6`}>
-                        <span>{user()?.name}</span>
-                    </li>
-                </Show>
+                <li class={`border-b-2 ${active("/login")} mx-1.5 sm:mx-6`}>
+                    <A href={'/login'}>Login</A>
+                </li>
+                <li class={`border-b-2 ${active("/register")} mx-1.5 sm:mx-6`}>
+                    <A href={'/register'}>Register</A>
+                </li>
             </ul>
         </nav>
     );

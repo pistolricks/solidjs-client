@@ -6,7 +6,7 @@ import {USER} from "~/lib/store";
 
 export const route = {
     preload({params}){
-        getUser(+params.id);
+        getUser();
     }
 } satisfies RouteDefinition
 
@@ -14,7 +14,7 @@ type PROPS = RouteSectionProps;
 
 const View: Component<PROPS> = props => {
 
-    const user : () => USER|undefined = createAsync(async () => getUser(+props.params.id)
+    const user : () => USER|undefined = createAsync(async () => getUser()
         
     )
 
