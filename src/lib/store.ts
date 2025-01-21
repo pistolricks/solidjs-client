@@ -9,11 +9,15 @@ export type USER = {
     created_at: string;
 }
 
-export type MOVIES = {
+export type MOVIE = {
     title: string
     year: number
     runtime: string
     genres: string[]
+}
+
+export type MOVIE_DETAIL = {
+    movie: MOVIE
 }
 
 export type MoviesData = {
@@ -25,7 +29,7 @@ export type MoviesData = {
         total_records: number
 
     },
-    movies: MOVIES[]
+    movies: MOVIE[]
 }
 
 export const storage = createStorage({
@@ -50,6 +54,6 @@ export type AUTHENTICATION_TOKEN = {
     expiry: string;
 }
 storage.setItem("auth:token", {
-    token: "XXXXXXXXXXXXXXXXXXXXXXXXXX",
+    token: "",
     expiry: "2022-01-01T00:00:00.000Z"
 })

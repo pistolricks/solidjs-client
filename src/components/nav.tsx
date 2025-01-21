@@ -24,6 +24,11 @@ const Nav: Component<PROPS> = props => {
                     <li class={`border-b-2 ${active("/about")} mx-1.5 sm:mx-6`}>
                         <A href={'/about'}>About</A>
                     </li>
+                    <Show when={user().activated}>
+                        <li class={`border-b-2 ${active("/movies")} mx-1.5 sm:mx-6`}>
+                            <A href={'/movies'}>Movies</A>
+                        </li>
+                    </Show>
                 </ul>
                 <ul class="flex justify-end items-center">
                     <Show

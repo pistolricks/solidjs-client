@@ -2,12 +2,20 @@ import {AccessorWithLatest, createAsync, useLocation} from "@solidjs/router";
 import {USER} from "~/lib/store";
 import {Component, createEffect, JSXElement} from "solid-js";
 import Nav from "~/components/nav";
-import {getUser} from "~/lib/users";
+import {getUser, getUserToken} from "~/lib/users";
+import {getMovies} from "~/lib/movies";
 
 type PROPS = {
     children: JSXElement
 
 }
+
+export const route = {
+    preload() {
+        getUser();
+    }
+}
+
 const AppLayout: Component<PROPS> = props => {
     const location = useLocation();
 
