@@ -3,6 +3,7 @@ import {activateUserHandler} from "~/lib/users";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
 import {showToast} from "~/components/ui/toast";
+import {ChevronLeft} from "~/components/users/forms/login-user-form";
 
 type PROPS = {}
 
@@ -23,7 +24,7 @@ const ActivateUserForm: Component<PROPS> = props => {
     })
 
 
-    const handleSubmit = async() => {
+    const handleSubmit = async () => {
         let res = await activateUserHandler(token())
         setResponse(await res)
     }
@@ -59,10 +60,12 @@ const ActivateUserForm: Component<PROPS> = props => {
                 </TextField>
                 <div class={'flex justify-end space-x-2'}>
                     <Button as={"A"} href={'/resend'} variant={'secondary'} type={"button"}>Resend</Button>
-                <div class={'flex justify-end space-x-2'}>
-                    <Button onClick={handleSubmit} as={"button"} variant={'default'} type={"button"}>Activate</Button>
-                    <Button as={"A"} href={'/'} variant={'secondary'} type={"button"}>Go Back</Button>
-                </div>
+                    <div class={'flex justify-end space-x-2'}>
+                        <Button as={"A"} href={'/'} variant={'secondary'} size={"icon"}
+                                type={"button"}><ChevronLeft/></Button>
+                        <Button onClick={handleSubmit} as={"button"} variant={'default'}
+                                type={"button"}>Activate</Button>
+                    </div>
                 </div>
             </div>
         </>

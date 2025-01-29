@@ -1,3 +1,4 @@
+import { fontFamily } from "tailwindcss/defaultTheme"
 /** @type {import('tailwindcss').Config} */
 import tailwindAnimate from "tailwindcss-animate";
 import radixColors from "tailwindcss-radix-colors";
@@ -14,6 +15,9 @@ export default {
       }
     },
     extend: {
+      fontFamily: {
+        sans: ["Inter", ...fontFamily.sans]
+      },
       colors: {
         border: "var(--border)",
         input: "var(--input)",

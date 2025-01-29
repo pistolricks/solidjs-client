@@ -1,5 +1,6 @@
 import {AUTHENTICATION_TOKEN, storage, USER} from "~/lib/store";
 import {action, query, redirect} from "@solidjs/router";
+import {showToast} from "~/components/ui/toast";
 
 export const getStorageUsers = query(async () => {
     "use server";
@@ -116,7 +117,9 @@ export const logoutUserHandler = action(async (data: FormData) => {
         created_at: res.user.created_at,
     })
 
-    if (status === 201) {
+
+
+    if (status === 200) {
         redirectTo()
     }
     return res;

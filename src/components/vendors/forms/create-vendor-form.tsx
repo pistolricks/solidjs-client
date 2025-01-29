@@ -5,6 +5,7 @@ import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/
 import {Button} from "../../ui/button";
 import {Callout, CalloutContent, CalloutTitle} from "~/components/ui/callout";
 import {showToast} from "~/components/ui/toast";
+import {ChevronLeft} from "~/components/users/forms/login-user-form";
 
 type PROPS = {}
 
@@ -62,8 +63,8 @@ const CreateVendorForm: Component<PROPS> = props => {
                     </Show>
                 </TextField>
                 <div class={'flex justify-end space-x-2'}>
+                    <Button as={"A"} href={'/vendors'} variant={'secondary'} size={"icon"} type={"button"}><ChevronLeft/></Button>
                     <Button as={"button"} variant={'default'} type={"submit"}>Add Vendor</Button>
-                    <Button as={"A"} href={'/'} variant={'secondary'} type={"button"}>Go Back</Button>
                 </div>
             </form>
         </>

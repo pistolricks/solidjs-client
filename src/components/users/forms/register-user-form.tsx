@@ -4,6 +4,7 @@ import {registerUserHandler} from "~/lib/users";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "~/components/ui/button";
 import {showToast} from "~/components/ui/toast";
+import {ChevronLeft} from "~/components/users/forms/login-user-form";
 
 type PROPS = {}
 
@@ -61,8 +62,8 @@ const RegisterUserForm: Component<PROPS> = props => {
                     </Show>
                 </TextField>
                 <div class={'flex justify-end space-x-2'}>
+                    <Button as={"A"} href={'/'} variant={'secondary'} size={"icon"} type={"button"}><ChevronLeft/></Button>
                     <Button as={"button"} variant={'default'} type={"submit"}>Register</Button>
-                    <Button as={"A"} href={'/'} variant={'secondary'} type={"button"}>Go Back</Button>
                 </div>
             </form>
 

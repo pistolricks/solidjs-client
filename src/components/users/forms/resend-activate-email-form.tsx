@@ -4,6 +4,7 @@ import {resendActivateEmailHandler} from "~/lib/users";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
 import {showToast} from "~/components/ui/toast";
+import {ChevronLeft} from "~/components/users/forms/login-user-form";
 
 type PROPS = {}
 
@@ -37,8 +38,8 @@ const ResendActivateEmailForm: Component<PROPS> = props => {
 
                 </TextField>
                 <div class={'flex justify-end space-x-2'}>
+                    <Button as={"A"} href={'/activate'} variant={'secondary'} size={"icon"} type={"button"}><ChevronLeft/></Button>
                     <Button as={"button"} variant={'default'} type={"submit"}>Resend</Button>
-                    <Button as={"A"} href={'/activate'} variant={'secondary'} type={"button"}>Go Back</Button>
                 </div>
             </form>
         </>

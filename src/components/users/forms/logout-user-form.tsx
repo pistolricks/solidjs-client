@@ -12,7 +12,7 @@ const LogoutUserForm: Component<PROPS> = props => {
 
 
     const results = createMemo(() => {
-        console.log(submission, submission.result)
+        console.log("submission", submission, submission.result)
         return submission.result
     })
 
@@ -24,12 +24,20 @@ const LogoutUserForm: Component<PROPS> = props => {
                 description: results()?.error
             })
         }
+
+        if (submission?.pending) {
+            showToast({
+                variant: "success",
+                title: "Logged Out",
+                description: "You have been logged out"
+            })
+        }
     })
     return (
         <>
             <form class={'space-y-4'} action={logoutUserHandler} method="post">
                 <div class={'flex justify-end space-x-2'}>
-                    <Button as={"button"} variant={'default'} type={"submit"}>Logout</Button>
+                    <Button as={"button"} variant={'secondary'} size={"wd"} type={"submit"}>Logout</Button>
                 </div>
             </form>
         </>

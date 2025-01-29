@@ -2,6 +2,13 @@ import {A} from "@solidjs/router";
 import {Component, Show} from "solid-js";
 import {USER} from "~/lib/store";
 import LogoutUserForm from "~/components/users/forms/logout-user-form";
+import {
+    DropdownMenu,
+    DropdownMenuContent, DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from "~/components/ui/dropdown-menu";
 
 type PROPS = {
     user?: USER
@@ -34,7 +41,7 @@ const Nav: Component<PROPS> = props => {
                         </li>
                     </Show>
                 </ul>
-                <ul class="flex justify-end items-center">
+                <ul class="flex justify-end items-center mx-1.5 sm:mx-6">
                     <Show
                         fallback={
                             <>
@@ -49,12 +56,19 @@ const Nav: Component<PROPS> = props => {
                         when={user()} keyed>
                         {(user) => (
                             <>
-                                <li class={`border-b-2 mx-1.5 sm:mx-6`}>
-                                    {user.name}
-                                </li>
-                                <li class={`border-b-2 mx-1.5 sm:mx-6`}>
-                                    <LogoutUserForm/>
-                                </li>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger>{user.name}</DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                                        <DropdownMenuItem>Billing</DropdownMenuItem>
+                                        <DropdownMenuItem>Team</DropdownMenuItem>
+                                        <DropdownMenuItem></DropdownMenuItem>
+                                        <DropdownMenuSeparator />
+                                        <LogoutUserForm/>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             </>
                         )}
 
