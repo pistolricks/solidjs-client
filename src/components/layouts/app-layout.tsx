@@ -21,19 +21,12 @@ const AppLayout: Component<PROPS> = props => {
 
     const userData: AccessorWithLatest<USER | undefined> = createAsync(async () => getUser());
 
-    const user = () => userData() ?? {
-        id: 0,
-        name: "",
-        email: "",
-        activated: false,
-        created_at: "",
-    }
+    const user = () => userData() ?? undefined;
 
-    createEffect(() => console.log(user()))
-
+    createEffect(() => console.log('activate', user()))
     return (
         <>
-            <Nav user={user()} path={location.pathname}/>
+            <Nav user={userData()} path={location.pathname}/>
 
 
             {props.children}

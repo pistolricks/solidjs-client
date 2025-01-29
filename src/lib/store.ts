@@ -33,6 +33,30 @@ export type MoviesData = {
     movies: MOVIE[]
 }
 
+export type VENDOR = {
+    id: number
+    title: string
+    year: number
+    runtime: string
+    genres: string[]
+}
+
+export type VENDOR_DETAIL = {
+    vendor: VENDOR
+}
+
+export type VendorsData = {
+    metadata: {
+        current_page: number,
+        page_size: number,
+        first_page: number,
+        last_page: number,
+        total_records: number
+
+    },
+    vendors: VENDOR[]
+}
+
 export const storage = createStorage({
     driver: fsLiteDriver({
         base: "./storage"

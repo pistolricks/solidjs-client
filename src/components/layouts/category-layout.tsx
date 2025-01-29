@@ -7,8 +7,8 @@ type PROPS = ParentProps
 const CategoryLayout: Component<PROPS> = props => {
 
     return (
-        <SidebarProvider>
-            <AppSidebar title={"Movies"}/>
+        <SidebarProvider defaultOpen={false}>
+            <AppSidebar title={"Menu"}/>
             <main class="container mx-auto p-4">
                 <SidebarTrigger/>
                 {props.children}

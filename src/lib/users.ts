@@ -10,10 +10,15 @@ export const getStorageUsers = query(async () => {
 export const getUser = query(async () => {
     "use server";
     console.log("getUser was called")
-    return (await storage.getItem("user:data")) as USER;
+    let userData = (await storage.getItem("user:data")) as USER;
+    if (userData?.email === "") {
+        return undefined;
+    } else {
+        return userData
+    }
 }, "user")
 
-const redirectTo = (path?: string) => {
+export const redirectTo = (path?: string) => {
     let urlPath = `/${path ?? ``}`
     throw redirect(urlPath)
 }
@@ -60,7 +65,6 @@ export const loginUserHandler = action(async (data: FormData) => {
 
     console.log("full json response", res)
 
-
     await storage.setItem("auth:token", {
         token: res.authentication_token.token,
         expiry: res.authentication_token.expiry,
@@ -77,6 +81,71 @@ export const loginUserHandler = action(async (data: FormData) => {
 
     console.log("user", res.user);
     console.log(res.authentication_token.token);
+
+
+    if (!res?.error) {
+        redirectTo()
+    }
+    return res;
+})
+
+
+export const activateUserHandler = async (token: string) => {
+    "use server";
+
+    const activateInput = {
+        token: token,
+    }
+
+    console.log("activateInput", activateInput, token)
+
+   const response: Response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/users/activated`, {
+        method: "PUT",
+        headers: {},
+        body: JSON.stringify(activateInput)
+    })
+
+    const res: any = await response.json();
+
+    console.log("full json response", res)
+
+    let user = await res.user;
+    console.log("user ()", user)
+
+    await storage.setItem("user:data", {
+        id: user?.id,
+        name: user?.name,
+        email: user?.email,
+        activated: user?.activated,
+        created_at: user?.created_at,
+    })
+
+
+    console.log("storage:user", storage.getItem("user:data"));
+
+
+    if (!res?.error) {
+        redirectTo()
+    }
+    return res;
+}
+
+export const resendActivateEmailHandler = action(async (data: FormData) => {
+    "use server";
+
+    const resendInput = {
+        email: String(data.get("email")),
+    }
+
+    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/tokens/activation`, {
+        method: "POST",
+        headers: {},
+        body: JSON.stringify(resendInput)
+    })
+
+    const res: any = await response.json();
+
+    console.log("full json response", res)
 
 
     if (!res?.error) {

@@ -3,12 +3,12 @@ import {Component, Show} from "solid-js";
 import {USER} from "~/lib/store";
 
 type PROPS = {
-    user: USER
+    user?: USER
     path: string
 }
 const Nav: Component<PROPS> = props => {
 
-    const user = () => props.user;
+    const user = () => props.user ?? undefined;
     const path = () => props.path;
 
     const active = (routePath: string) =>
@@ -24,9 +24,12 @@ const Nav: Component<PROPS> = props => {
                     <li class={`border-b-2 ${active("/about")} mx-1.5 sm:mx-6`}>
                         <A href={'/about'}>About</A>
                     </li>
-                    <Show when={user().activated}>
+                    <Show when={user()}>
                         <li class={`border-b-2 ${active("/movies")} mx-1.5 sm:mx-6`}>
                             <A href={'/movies'}>Movies</A>
+                        </li>
+                        <li class={`border-b-2 ${active("/vendors")} mx-1.5 sm:mx-6`}>
+                            <A href={'/vendors'}>Vendors</A>
                         </li>
                     </Show>
                 </ul>
@@ -42,10 +45,13 @@ const Nav: Component<PROPS> = props => {
                                 </li>
                             </>
                         }
-                        when={user().activated}>
+                        when={user()} keyed>
+                        {(user) => (
                             <li class={`border-b-2 mx-1.5 sm:mx-6`}>
-                                {user().name}
+                                {user.name}
                             </li>
+                        )}
+
                     </Show>
                 </ul>
             </div>
