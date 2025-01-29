@@ -1,6 +1,7 @@
 import {A} from "@solidjs/router";
 import {Component, Show} from "solid-js";
 import {USER} from "~/lib/store";
+import LogoutUserForm from "~/components/users/forms/logout-user-form";
 
 type PROPS = {
     user?: USER
@@ -47,9 +48,14 @@ const Nav: Component<PROPS> = props => {
                         }
                         when={user()} keyed>
                         {(user) => (
-                            <li class={`border-b-2 mx-1.5 sm:mx-6`}>
-                                {user.name}
-                            </li>
+                            <>
+                                <li class={`border-b-2 mx-1.5 sm:mx-6`}>
+                                    {user.name}
+                                </li>
+                                <li class={`border-b-2 mx-1.5 sm:mx-6`}>
+                                    <LogoutUserForm/>
+                                </li>
+                            </>
                         )}
 
                     </Show>

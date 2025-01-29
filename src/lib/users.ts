@@ -91,6 +91,36 @@ export const loginUserHandler = action(async (data: FormData) => {
     return res;
 })
 
+export const logoutUserHandler = action(async (data: FormData) => {
+    "use server";
+
+    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/users/logout`, {
+        method: "POST",
+    })
+
+    const res: any = await response.json();
+    const status: number = response.status;
+    console.log("full json status", status)
+    console.log("full json response", res)
+
+    await storage.setItem("auth:token", {
+        token: undefined,
+        expiry: undefined,
+    })
+
+    await storage.setItem("user:data", {
+        id: res.user.id,
+        name: res.user.name,
+        email: res.user.email,
+        activated: res.user.activated,
+        created_at: res.user.created_at,
+    })
+
+    if (status === 201) {
+        redirectTo()
+    }
+    return res;
+})
 
 export const activateUserHandler = async (token: string) => {
     "use server";
@@ -154,6 +184,7 @@ export const resendActivateEmailHandler = action(async (data: FormData) => {
 
     const status: number = response.status;
     console.log("full json response", status)
+
 
     if (status === 200) {
         redirectTo()

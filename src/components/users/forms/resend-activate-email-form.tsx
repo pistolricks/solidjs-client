@@ -7,7 +7,7 @@ import {showToast} from "~/components/ui/toast";
 
 type PROPS = {}
 
-const LoginUserForm: Component<PROPS> = props => {
+const ResendActivateEmailForm: Component<PROPS> = props => {
     const submission = useSubmission(resendActivateEmailHandler);
 
 
@@ -45,4 +45,4 @@ const LoginUserForm: Component<PROPS> = props => {
     );
 };
 
-export default LoginUserForm;
+export default ResendActivateEmailForm;
