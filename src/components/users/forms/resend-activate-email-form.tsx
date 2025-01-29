@@ -3,17 +3,26 @@ import {useSubmission} from "@solidjs/router";
 import {resendActivateEmailHandler} from "~/lib/users";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
+import {showToast} from "~/components/ui/toast";
 
 type PROPS = {}
 
 const LoginUserForm: Component<PROPS> = props => {
     const submission = useSubmission(resendActivateEmailHandler);
-    createEffect(() => {
-        console.log(submission.result);
-    });
+
 
     const results = createMemo(() => {
         return submission.result
+    })
+
+    createEffect(() => {
+        if (results()?.error) {
+            showToast({
+                variant: "error",
+                title: "Error",
+                description: results()?.error
+            })
+        }
     })
     return (
         <>

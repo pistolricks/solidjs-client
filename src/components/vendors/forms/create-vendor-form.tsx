@@ -3,20 +3,31 @@ import {useSubmission} from "@solidjs/router";
 import {addVendor} from "~/lib/vendors";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
+import {Callout, CalloutContent, CalloutTitle} from "~/components/ui/callout";
+import {showToast} from "~/components/ui/toast";
 
 type PROPS = {}
 
 const CreateVendorForm: Component<PROPS> = props => {
     const submission = useSubmission(addVendor);
-    createEffect(() => {
-        if (submission.pending) console.log(submission.result, "error", submission.result, "result");
-    });
 
     const results = createMemo(() => {
         return submission.result
     })
+
+    createEffect(() => {
+        if (results()?.error) {
+            showToast({
+                variant: "error",
+                title: "Error",
+                description: results()?.error
+            })
+        }
+    })
+
     return (
         <>
+
             <form class={'space-y-4'} action={addVendor} method="post">
                 <TextField>
                     <TextFieldInput type="text" autocomplete="none" name="title" placeholder="title"/>

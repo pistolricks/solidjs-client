@@ -38,10 +38,11 @@ export const registerUserHandler = action(async (data: FormData) => {
         body: JSON.stringify(userInput)
     })
     const res: any = await response.json();
-    console.log(res);
+    const status: number = response.status;
+    console.log("full json response", status)
 
-    if (!res?.error) {
-        redirectTo()    
+    if (status === 201) {
+        redirectTo()
     }
     return res;
 })
@@ -57,7 +58,6 @@ export const loginUserHandler = action(async (data: FormData) => {
 
     const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/tokens/authentication`, {
         method: "POST",
-        headers: {},
         body: JSON.stringify(userInput)
     })
 
@@ -82,8 +82,10 @@ export const loginUserHandler = action(async (data: FormData) => {
     console.log("user", res.user);
     console.log(res.authentication_token.token);
 
+    const status: number = response.status;
+    console.log("full json response", status)
 
-    if (!res?.error) {
+    if (status === 201) {
         redirectTo()
     }
     return res;
@@ -123,8 +125,10 @@ export const activateUserHandler = async (token: string) => {
 
     console.log("storage:user", storage.getItem("user:data"));
 
+    const status: number = response.status;
+    console.log("full json response", status)
 
-    if (!res?.error) {
+    if (status === 201) {
         redirectTo()
     }
     return res;
@@ -148,7 +152,10 @@ export const resendActivateEmailHandler = action(async (data: FormData) => {
     console.log("full json response", res)
 
 
-    if (!res?.error) {
+    const status: number = response.status;
+    console.log("full json response", status)
+
+    if (status === 200) {
         redirectTo()
     }
     return res;

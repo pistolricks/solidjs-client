@@ -1,7 +1,8 @@
-import {Component, createMemo, createSignal, JSX, Show} from "solid-js";
+import {Component, createEffect, createMemo, createSignal, JSX, Show} from "solid-js";
 import {activateUserHandler} from "~/lib/users";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
+import {showToast} from "~/components/ui/toast";
 
 type PROPS = {}
 
@@ -31,6 +32,16 @@ const ActivateUserForm: Component<PROPS> = props => {
     const results = createMemo<any>(async () => {
         console.log(getResponse())
         return getResponse()
+    })
+
+    createEffect(() => {
+        if (results()?.error) {
+            showToast({
+                variant: "error",
+                title: "Error",
+                description: results()?.error
+            })
+        }
     })
 
     return (

@@ -3,18 +3,28 @@ import {useSubmission} from "@solidjs/router";
 import {loginUserHandler} from "~/lib/users";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
+import {showToast} from "~/components/ui/toast";
 
 type PROPS = {}
 
 const LoginUserForm: Component<PROPS> = props => {
     const submission = useSubmission(loginUserHandler);
-    createEffect(() => {
-        if (submission.pending) console.log(submission.result, "error", submission.result, "result");
-    });
+
 
     const results = createMemo(() => {
         return submission.result
     })
+
+    createEffect(() => {
+        if (results()?.error) {
+            showToast({
+                variant: "error",
+                title: "Error",
+                description: results()?.error
+            })
+        }
+    })
+
     return (
         <>
             <form class={'space-y-4'} action={loginUserHandler} method="post">

@@ -4,6 +4,7 @@ import { Suspense } from "solid-js";
 import Nav from "~/components/layouts/partials/nav";
 import "./css/app.css";
 import "@fontsource/inter";
+import {Toaster} from "~/components/ui/toast";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
       )}
     >
       <FileRoutes />
+        <Toaster />
     </Router>
   );
 }

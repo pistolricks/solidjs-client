@@ -31,6 +31,7 @@ export const getVendor = query(async (id: number) => {
         },
     })
     const res: any = await response.json();
+
     console.log(res);
     return res;
 }, "vendor")
@@ -58,10 +59,12 @@ export const addVendor = action(async (data: FormData) => {
         },
         body: JSON.stringify(vendorInput)
     })
-    const res: any = await response.json();
-    console.log(res);
 
-    if (!res?.error) {
+    const res: any = await response.json();
+    const status: number = response.status;
+    console.log("full json response", status)
+
+    if (status === 201) {
         redirectTo("vendors")
     }
     return res;
