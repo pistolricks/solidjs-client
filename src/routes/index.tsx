@@ -1,4 +1,6 @@
-import AppLayout from "~/components/layouts/app-layout";
+import {lazy} from "solid-js";
+
+const AppLayout = lazy(() => import("~/components/layouts/app-layout"));
 
 
 export default function Home() {

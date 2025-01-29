@@ -1,6 +1,6 @@
-import {Component, VoidComponent} from "solid-js";
-import FormLayout from "~/components/layouts/form-layout";
-import CreateVendorForm from "~/components/vendors/forms/create-vendor-form";
+import {Component, lazy, VoidComponent} from "solid-js";
+const FormLayout = lazy(() => import( "~/components/layouts/form-layout"));
+const CreateVendorForm = lazy(() => import( "~/components/vendors/forms/create-vendor-form"));
 
 
 const Create: Component<VoidComponent> = () => {

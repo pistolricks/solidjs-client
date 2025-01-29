@@ -1,12 +1,11 @@
-import {Accessor, Component, createEffect, lazy, Show, VoidComponent} from "solid-js";
-import ActivateUserForm from '~/components/users/forms/activate-user-form';
-import FormLayout from "~/components/layouts/form-layout";
-import AppLayout from "~/components/layouts/app-layout";
+import {Component, createEffect, lazy, Show, VoidComponent} from "solid-js";
 import {AccessorWithLatest, createAsync} from "@solidjs/router";
 import {USER} from "~/lib/store";
 import {getUser, redirectTo} from "~/lib/users";
-import LoginUserForm from "~/components/users/forms/login-user-form";
-import ResendActivateEmailForm from "~/components/users/forms/resend-activate-email-form";
+const ResendActivateEmailForm = lazy(() => import( "~/components/users/forms/resend-activate-email-form"));
+const LoginUserForm = lazy(() => import('~/components/users/forms/login-user-form'));
+const FormLayout = lazy(() => import("~/components/layouts/form-layout"));
+const AppLayout = lazy(() => import("~/components/layouts/app-layout"));
 
 
 const Resend: Component<VoidComponent> = () => {
@@ -16,7 +15,7 @@ const Resend: Component<VoidComponent> = () => {
     const user = () => userData() ?? undefined;
 
     createEffect(() => {
-        if(user()?.activated) {
+        if (user()?.activated) {
             redirectTo("/")
         }
     })

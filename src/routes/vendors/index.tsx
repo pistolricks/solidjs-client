@@ -1,9 +1,9 @@
 import {AccessorWithLatest, createAsync} from "@solidjs/router";
 import {VendorsData} from "~/lib/store";
-import {createEffect} from "solid-js";
+import {createEffect, lazy} from "solid-js";
 import {getVendors} from "~/lib/vendors";
-import CategoryLayout from "~/components/layouts/category-layout";
-import VendorsList from "~/components/vendors/list";
+const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
+const VendorsList = lazy(() => import( "~/components/vendors/list"));
 
 
 export const route = {

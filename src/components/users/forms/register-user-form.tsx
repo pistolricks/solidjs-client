@@ -1,5 +1,5 @@
 import {Component, createEffect, createMemo, Show} from "solid-js";
-import {A, useSubmission} from "@solidjs/router";
+import {useSubmission} from "@solidjs/router";
 import {registerUserHandler} from "~/lib/users";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "~/components/ui/button";
@@ -62,7 +62,8 @@ const RegisterUserForm: Component<PROPS> = props => {
                     </Show>
                 </TextField>
                 <div class={'flex justify-end space-x-2'}>
-                    <Button as={"A"} href={'/'} variant={'secondary'} size={"icon"} type={"button"}><ChevronLeft/></Button>
+                    <Button as={"A"} href={'/'} variant={'secondary'} size={"icon"}
+                            type={"button"}><ChevronLeft/></Button>
                     <Button as={"button"} variant={'default'} type={"submit"}>Register</Button>
                 </div>
             </form>

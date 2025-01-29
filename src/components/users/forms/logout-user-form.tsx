@@ -1,7 +1,6 @@
-import {Component, createEffect, createMemo, Show} from "solid-js";
+import {Component, createEffect, createMemo} from "solid-js";
 import {useSubmission} from "@solidjs/router";
-import {logoutUserHandler, resendActivateEmailHandler} from "~/lib/users";
-import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
+import {logoutUserHandler} from "~/lib/users";
 import {Button} from "../../ui/button";
 import {showToast} from "~/components/ui/toast";
 

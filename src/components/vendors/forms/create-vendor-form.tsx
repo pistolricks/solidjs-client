@@ -3,7 +3,6 @@ import {useSubmission} from "@solidjs/router";
 import {addVendor} from "~/lib/vendors";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
-import {Callout, CalloutContent, CalloutTitle} from "~/components/ui/callout";
 import {showToast} from "~/components/ui/toast";
 import {ChevronLeft} from "~/components/users/forms/login-user-form";
 
@@ -63,7 +62,8 @@ const CreateVendorForm: Component<PROPS> = props => {
                     </Show>
                 </TextField>
                 <div class={'flex justify-end space-x-2'}>
-                    <Button as={"A"} href={'/vendors'} variant={'secondary'} size={"icon"} type={"button"}><ChevronLeft/></Button>
+                    <Button as={"A"} href={'/vendors'} variant={'secondary'} size={"icon"}
+                            type={"button"}><ChevronLeft/></Button>
                     <Button as={"button"} variant={'default'} type={"submit"}>Add Vendor</Button>
                 </div>
             </form>

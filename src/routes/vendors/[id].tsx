@@ -1,9 +1,9 @@
-import {Component, createEffect} from "solid-js";
+import {Component, createEffect, lazy} from "solid-js";
 import {createAsync, RouteDefinition, RouteSectionProps} from "@solidjs/router";
 import {getVendor} from "~/lib/vendors";
 import {VENDOR_DETAIL} from "~/lib/store";
-import DetailsLayout from "~/components/layouts/details-layout";
-import VendorDetails from "~/components/vendors/details";
+const DetailsLayout = lazy(() => import("~/components/layouts/details-layout"));
+const VendorDetails = lazy(() => import("~/components/vendors/details"));
 
 export const route = {
     preload({params}) {

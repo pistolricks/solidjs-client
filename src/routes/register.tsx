@@ -1,7 +1,7 @@
-import {Component} from "solid-js";
-import RegisterUserForm from '~/components/users/forms/register-user-form';
-import FormLayout from "~/components/layouts/form-layout";
-import AppLayout from "~/components/layouts/app-layout";
+import {Component, lazy} from "solid-js";
+const RegisterUserForm = lazy(() => import('~/components/users/forms/register-user-form'));
+const FormLayout = lazy(() => import("~/components/layouts/form-layout"));
+const AppLayout = lazy(() => import("~/components/layouts/app-layout"));
 
 type PROPS = {}
 

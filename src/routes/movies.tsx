@@ -1,5 +1,5 @@
-import {Component, JSXElement} from "solid-js";
-import AppLayout from "~/components/layouts/app-layout";
+import {Component, JSXElement, lazy} from "solid-js";
+const AppLayout = lazy(() => import("~/components/layouts/app-layout"));
 import {RouteSectionProps} from "@solidjs/router";
 
 const MoviesLayout: Component<RouteSectionProps> = props => {

@@ -1,9 +1,8 @@
-import {Component}                      from "solid-js";
-import ViewUser                                          from "~/components/users/view";
+import {Component, lazy} from "solid-js";
 import {createAsync, RouteDefinition, RouteSectionProps} from "@solidjs/router";
 import {getUser}                 from "~/lib/users";
 import {USER} from "~/lib/store";
-
+const ViewUser = lazy(() => import("~/components/users/view"));
 export const route = {
     preload({params}){
         getUser();

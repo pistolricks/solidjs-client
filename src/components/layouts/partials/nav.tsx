@@ -1,14 +1,16 @@
 import {A} from "@solidjs/router";
-import {Component, Show} from "solid-js";
+import {Component, lazy, Show} from "solid-js";
 import {USER} from "~/lib/store";
-import LogoutUserForm from "~/components/users/forms/logout-user-form";
 import {
     DropdownMenu,
-    DropdownMenuContent, DropdownMenuItem,
+    DropdownMenuContent,
+    DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "~/components/ui/dropdown-menu";
+
+const LogoutUserForm = lazy(() => import("~/components/users/forms/logout-user-form"));
 
 type PROPS = {
     user?: USER
@@ -23,7 +25,7 @@ const Nav: Component<PROPS> = props => {
         routePath == path() ? "border-gray-normal" : "border-transparent hover:border-gray-dim";
 
     return (
-        <nav class="bg-gray-ui">
+        <nav class="bg-gray-ui fixed top-0 inset-x-0 h-[50px]">
             <div class="container flex justify-between items-center p-3 text-gray-normal">
                 <ul class="flex justify-start items-center">
                     <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
@@ -60,12 +62,12 @@ const Nav: Component<PROPS> = props => {
                                     <DropdownMenuTrigger class={""}>{user.name}</DropdownMenuTrigger>
                                     <DropdownMenuContent>
                                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                        <DropdownMenuSeparator />
+                                        <DropdownMenuSeparator/>
                                         <DropdownMenuItem>Profile</DropdownMenuItem>
                                         <DropdownMenuItem>Billing</DropdownMenuItem>
                                         <DropdownMenuItem>Team</DropdownMenuItem>
                                         <DropdownMenuItem></DropdownMenuItem>
-                                        <DropdownMenuSeparator />
+                                        <DropdownMenuSeparator/>
                                         <LogoutUserForm/>
                                     </DropdownMenuContent>
                                 </DropdownMenu>

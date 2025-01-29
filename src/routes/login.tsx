@@ -1,8 +1,7 @@
 import {Component, lazy, VoidComponent} from "solid-js";
-import LoginUserForm from '~/components/users/forms/login-user-form';
-import FormLayout from "~/components/layouts/form-layout";
-import AppLayout from "~/components/layouts/app-layout";
-
+const LoginUserForm = lazy(() => import('~/components/users/forms/login-user-form'));
+const FormLayout = lazy(() => import("~/components/layouts/form-layout"));
+const AppLayout = lazy(() => import("~/components/layouts/app-layout"));
 
 const Login: Component<VoidComponent> = () => {
 
