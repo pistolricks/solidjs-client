@@ -57,7 +57,7 @@ const Nav: Component<PROPS> = props => {
                         {(user) => (
                             <>
                                 <DropdownMenu>
-                                    <DropdownMenuTrigger>{user.name}</DropdownMenuTrigger>
+                                    <DropdownMenuTrigger class={""}>{user.name}</DropdownMenuTrigger>
                                     <DropdownMenuContent>
                                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
