@@ -1,5 +1,4 @@
 import { defineConfig } from "@solidjs/start/config";
-import solidPlugin from 'vite-plugin-solid';
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
@@ -7,7 +6,6 @@ export default defineConfig({
         // vite options
         plugins: [
             tailwindcss(),
-            solidPlugin({})
         ],
         server: {
             port: 3000,
