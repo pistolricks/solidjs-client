@@ -1,6 +1,7 @@
 import {action} from "@solidjs/router";
 import {AUTHENTICATION_TOKEN, storage} from "~/lib/store";
 import {redirectTo} from "~/lib/users";
+import {createSignal} from "solid-js";
 
 
 export const uploadFileHandler = (async (data: FormDataEntryValue[]) => {
@@ -10,12 +11,13 @@ export const uploadFileHandler = (async (data: FormDataEntryValue[]) => {
 
     console.log("Bearer:", token.token)
     console.log("data", data[0])
+    const [getFile, setFile] = createSignal<any>(data[0])
 
     const vendorInput = {
-        name:   String("test image"),
-        src: String(data),
-        type:   "image/jpeg",
-        size:  String(400),
+        name:   getFile()?.name,
+        src: getFile()?.name,
+        type:   getFile()?.type,
+        size:  getFile()?.size,
         width: String(400),
         height: String(400),
         sort_order: String(1),
