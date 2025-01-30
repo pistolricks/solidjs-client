@@ -5,7 +5,7 @@ export default defineConfig({
     vite: {
         // vite options
         plugins: [
-            tailwindcss(),
+ //           tailwindcss(),
         ],
         server: {
             port: 3000,

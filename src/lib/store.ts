@@ -82,3 +82,17 @@ storage.setItem("auth:token", {
     token: "",
     expiry: "2022-01-01T00:00:00.000Z"
 })
+
+
+export type CONTENT = {
+    id: string;
+    created: string;
+    name: string;
+    src: string;
+    type: string;
+    size: number;
+    width: number;
+    height: number;
+    sort_order: number;
+    user_id: string;
+}
