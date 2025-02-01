@@ -8,8 +8,6 @@ type PROPS = {}
 
 const FileUploader: Component<PROPS> = props => {
 
-
-    let formRef: HTMLFormElement | undefined;
     const [getRef, setRef] = createSignal<HTMLFormElement | undefined>()
     const onSubmit = async (e: SubmitEvent) => {
         // handle form submission.
