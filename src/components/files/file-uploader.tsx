@@ -3,6 +3,7 @@ import {uploadFileHandler} from "~/lib/contents";
 import {Button} from "~/components/ui/button";
 import {ChevronLeft} from "~/components/users/forms/login-user-form";
 import {showToast} from "~/components/ui/toast";
+import {redirect} from "@solidjs/router";
 
 
 type PROPS = {}
@@ -18,7 +19,9 @@ const FileUploader: Component<PROPS> = props => {
         console.log(src)
         let res  = await uploadFileHandler(src)
 
+
         getRef()?.reset()
+
     };
 
 
