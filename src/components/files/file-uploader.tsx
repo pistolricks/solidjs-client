@@ -45,7 +45,7 @@ const FileUploader: Component<PROPS> = props => {
                     </div>
                 </div>
             </div>
-            <div class={'flex justify-end space-x-2'}>
+            <div class={'flex justify-end space-x-2 py-2'}>
                 <Button as={"A"} href={'/vendors'} variant={'secondary'} size={"icon"}
                         type={"button"}><ChevronLeft/></Button>
                 <Button as={"button"} variant={'default'} type={"submit"}>Upload Image</Button>
