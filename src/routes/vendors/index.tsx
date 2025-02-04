@@ -1,4 +1,4 @@
-import {AccessorWithLatest, createAsync} from "@solidjs/router";
+import {A, AccessorWithLatest, createAsync} from "@solidjs/router";
 import {VendorsData} from "~/lib/store";
 import {createEffect, lazy} from "solid-js";
 import {getVendors} from "~/lib/vendors";
@@ -21,6 +21,9 @@ export default function Vendors() {
     })
     return (
             <CategoryLayout {...vendorsData()}>
+                <A class={'text-gray-7'} href={"/vendors/create"}>
+                    Create
+                </A>
                 <VendorsList vendors={vendorsData()}/>
             </CategoryLayout>
     );

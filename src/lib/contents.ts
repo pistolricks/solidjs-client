@@ -15,12 +15,17 @@ export const uploadFileHandler = (async (data: FormDataEntryValue[]) => {
 
     const vendorInput = {
         name:   getFile()?.name,
-        src: getFile()?.name,
+        src: getFile(),
         type:   getFile()?.type,
         size:  getFile()?.size,
-        width: String(400),
-        height: String(400),
-        sort_order: String(1),
+    }
+
+    const formData  = new FormData();
+    if(vendorInput.src) {
+        formData.append("file", vendorInput.src);
+        formData.append("name", vendorInput.name);
+        formData.append("size", vendorInput.size);
+        formData.append("type", vendorInput.type);
     }
 
     console.log("vendorInput", vendorInput)
@@ -30,15 +35,12 @@ export const uploadFileHandler = (async (data: FormDataEntryValue[]) => {
         headers: {
             Authorization: `Bearer ${token.token}`,
         },
-        body: JSON.stringify(vendorInput)
+        body: formData
     })
 
-    const res: any = await response.json();
+    const res: Response = await response.json();
     const status: number = response.status;
     console.log("full json response", status)
 
-    if (status === 201) {
-        redirectTo("vendors")
-    }
     return res;
 })

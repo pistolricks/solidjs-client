@@ -2,6 +2,7 @@ import {Component, createSignal} from "solid-js";
 import {uploadFileHandler} from "~/lib/contents";
 import {Button} from "~/components/ui/button";
 import {ChevronLeft} from "~/components/users/forms/login-user-form";
+import {showToast} from "~/components/ui/toast";
 
 
 type PROPS = {}
@@ -10,11 +11,14 @@ const FileUploader: Component<PROPS> = props => {
 
     const [getRef, setRef] = createSignal<HTMLFormElement | undefined>()
     const onSubmit = async (e: SubmitEvent) => {
+        e.preventDefault();
         // handle form submission.
         const formData = new FormData(getRef());
         const src: FormDataEntryValue[] = formData.getAll("src");
         console.log(src)
-        await uploadFileHandler(src)
+        let res  = await uploadFileHandler(src)
+
+        getRef()?.reset()
     };
 
 
