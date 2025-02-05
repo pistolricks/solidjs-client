@@ -2,7 +2,8 @@ import { fontFamily } from "tailwindcss/defaultTheme"
 /** @type {import('tailwindcss').Config} */
 import tailwindAnimate from "tailwindcss-animate";
 import radixColors from "tailwindcss-radix-colors";
-import scrollbarHide from 'tailwind-scrollbar-hide'
+import scrollbarHide from 'tailwind-scrollbar-hide';
+import corvu from '@corvu/tailwind';
 
 export default {
   darkMode: ["variant", [".dark &", '[data-kb-theme="dark"] &']],
@@ -121,6 +122,7 @@ export default {
   plugins: [
       tailwindAnimate,
       radixColors,
-      scrollbarHide
+      scrollbarHide,
+      corvu
   ]
 }

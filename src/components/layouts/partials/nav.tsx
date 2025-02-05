@@ -1,16 +1,9 @@
 import {A} from "@solidjs/router";
 import {Component, lazy, Show} from "solid-js";
 import {USER} from "~/lib/store";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from "~/components/ui/dropdown-menu";
+import Drawer from "@corvu/drawer";
 
-const LogoutUserForm = lazy(() => import("~/components/users/forms/logout-user-form"));
+
 
 type PROPS = {
     user?: USER
@@ -55,19 +48,10 @@ const Nav: Component<PROPS> = props => {
                         when={user()} keyed>
                         {(user) => (
                             <>
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger class={""}>{user.name}</DropdownMenuTrigger>
-                                    <DropdownMenuContent>
-                                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                        <DropdownMenuSeparator/>
-                                        <DropdownMenuItem>Profile</DropdownMenuItem>
-                                        <DropdownMenuItem>Billing</DropdownMenuItem>
-                                        <DropdownMenuItem>Team</DropdownMenuItem>
-                                        <DropdownMenuItem></DropdownMenuItem>
-                                        <DropdownMenuSeparator/>
-                                        <LogoutUserForm/>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
+                                <Drawer.Trigger as={"button"}>
+                                    {user.name}
+                                </Drawer.Trigger>
+
                             </>
                         )}
 
