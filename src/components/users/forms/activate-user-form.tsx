@@ -4,6 +4,7 @@ import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/
 import {Button} from "../../ui/button";
 import {showToast} from "~/components/ui/toast";
 import {ChevronLeft} from "~/components/users/forms/login-user-form";
+import {useNavigate} from "@solidjs/router";
 
 type PROPS = {}
 
@@ -12,6 +13,8 @@ const ActivateUserForm: Component<PROPS> = props => {
     const [getToken, setToken] = createSignal("")
 
     const [getResponse, setResponse] = createSignal<any>()
+
+    const navigate = useNavigate();
 
     const handleToken: JSX.EventHandler<HTMLInputElement, InputEvent> = (event) => {
         console.log("Input changed to", event.currentTarget.value)
@@ -24,50 +27,51 @@ const ActivateUserForm: Component<PROPS> = props => {
     })
 
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: SubmitEvent) => {
+        e.preventDefault()
         let res = await activateUserHandler(token())
         setResponse(await res)
-    }
 
+        console.log("activate-response", getResponse())
+        if (getResponse()?.user?.activated) {
+            showToast({
+                variant: "success",
+                title: "Success",
+                description: "You are activated successfully!",
+            })
+            navigate("/login")
+        }
 
-    const results = createMemo<any>(async () => {
-        console.log(getResponse())
-        return getResponse()
-    })
-
-    createEffect(() => {
-        if (results()?.error) {
+        if (getResponse()?.error?.token) {
             showToast({
                 variant: "error",
                 title: "Error",
-                description: results()?.error
+                description: getResponse()?.error?.token,
             })
         }
-    })
+
+
+    }
+
 
     return (
         <>
-            <div class={'space-y-4'}>
+            <form onSubmit={handleSubmit} class={'space-y-4'}>
 
                 <TextField>
                     <TextFieldInput onInput={handleToken} type="text" autocomplete={'none'} required name="token"
                                     placeholder="activation token"/>
-                    <Show when={results()?.error?.token}>
-                        <TextFieldErrorMessage>
-                            {results()?.error?.token}
-                        </TextFieldErrorMessage>
-                    </Show>
                 </TextField>
                 <div class={'flex justify-end space-x-2'}>
                     <Button as={"A"} href={'/resend'} variant={'secondary'} type={"button"}>Resend</Button>
                     <div class={'flex justify-end space-x-2'}>
                         <Button as={"A"} href={'/'} variant={'secondary'} size={"icon"}
                                 type={"button"}><ChevronLeft/></Button>
-                        <Button onClick={handleSubmit} as={"button"} variant={'default'}
-                                type={"button"}>Activate</Button>
+                        <Button as={"button"} variant={'default'}
+                                type={"submit"}>Activate</Button>
                     </div>
                 </div>
-            </div>
+            </form>
         </>
     );
 };

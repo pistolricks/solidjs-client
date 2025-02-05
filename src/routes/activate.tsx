@@ -1,4 +1,4 @@
-import {Component, lazy, Show, VoidComponent} from "solid-js";
+import {Component, lazy, Match, Show, Switch, VoidComponent} from "solid-js";
 import ActivateUserForm from '~/components/users/forms/activate-user-form';
 import FormLayout from "~/components/layouts/form-layout";
 import AppLayout from "~/components/layouts/app-layout";
@@ -17,18 +17,17 @@ const Activate: Component<VoidComponent> = () => {
     return (
         <AppLayout>
             <FormLayout>
-                <Show
-                    fallback={<LoginUserForm/>}
-                    when={user()} keyed>
-                    {(user) => (
-                        <Show
-                            fallback={<ActivateUserForm/>}
-                            when={user?.activated}>
-                            <>TEST</>
-                        </Show>
-                    )}
-                </Show>
-
+                <Switch>
+                 <Match when={user()?.activated}>
+                     <LoginUserForm/>
+                 </Match>
+                    <Match when={!user()?.activated}>
+                        <ActivateUserForm/>
+                    </Match>
+                    <Match when={!user()}>
+                        <ActivateUserForm/>
+                    </Match>
+                </Switch>
             </FormLayout>
         </AppLayout>
     );

@@ -35,9 +35,6 @@ const Nav: Component<PROPS> = props => {
                         <A href={'/about'}>About</A>
                     </li>
                     <Show when={user()}>
-                        <li class={`border-b-2 ${active("/movies")} mx-1.5 sm:mx-6`}>
-                            <A href={'/movies'}>Movies</A>
-                        </li>
                         <li class={`border-b-2 ${active("/vendors")} mx-1.5 sm:mx-6`}>
                             <A href={'/vendors'}>Vendors</A>
                         </li>

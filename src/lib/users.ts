@@ -161,9 +161,7 @@ export const activateUserHandler = async (token: string) => {
     const status: number = response.status;
     console.log("full json response", status)
 
-    if (status === 201) {
-        redirectTo()
-    }
+
     return res;
 }
 
