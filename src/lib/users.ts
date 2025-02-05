@@ -43,7 +43,7 @@ export const registerUserHandler = action(async (data: FormData) => {
     console.log("full json response", status)
 
     if (status === 201) {
-        redirectTo()
+        redirectTo("activate")
     }
     return res;
 })
@@ -146,17 +146,6 @@ export const activateUserHandler = async (token: string) => {
 
     let user = await res.user;
     console.log("user ()", user)
-
-    await storage.setItem("user:data", {
-        id: user?.id,
-        name: user?.name,
-        email: user?.email,
-        activated: user?.activated,
-        created_at: user?.created_at,
-    })
-
-
-    console.log("storage:user", storage.getItem("user:data"));
 
     const status: number = response.status;
     console.log("full json response", status)
