@@ -22,11 +22,9 @@ const Nav: Component<PROPS> = props => {
             <div class="container flex justify-between items-center p-3 text-gray-normal">
                 <ul class="flex justify-start items-center">
                     <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
-                        <A href="/">Home</A>
+                        <A href="/">{import.meta.env.VITE_APP_NAME}</A>
                     </li>
-                    <li class={`border-b-2 ${active("/about")} mx-1.5 sm:mx-6`}>
-                        <A href={'/about'}>About</A>
-                    </li>
+
                     <Show when={user()}>
                         <li class={`border-b-2 ${active("/vendors")} mx-1.5 sm:mx-6`}>
                             <A href={'/vendors'}>Vendors</A>
