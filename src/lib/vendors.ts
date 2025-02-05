@@ -13,6 +13,7 @@ export const getVendors = query(async () => {
         },
     })
     const res: any = await response.json();
+
     console.log(res);
     return res;
 }, "vendors")

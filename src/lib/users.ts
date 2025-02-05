@@ -87,9 +87,7 @@ export const loginUserHandler = action(async (data: FormData) => {
     console.log("full json response", status)
 
     if (status === 201) {
-        if(!res.user.activated) {
-            redirectTo("activate")
-        }
+        if (!res.user.activated) throw redirect("/activate");
         if(res.user.activated) {
             redirectTo()
         }

@@ -7,6 +7,7 @@
     "start": "vinxi start"
   },
   "dependencies": {
+    "@corvu/drawer": "^0.2.3",
     "@fontsource/inter": "^5.1.1",
     "@kobalte/core": "^0.13.7",
     "@solidjs/router": "^0.15.0",
