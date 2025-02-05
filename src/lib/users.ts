@@ -72,22 +72,27 @@ export const loginUserHandler = action(async (data: FormData) => {
     })
 
     await storage.setItem("user:data", {
-        id: res.user.id,
-        name: res.user.name,
-        email: res.user.email,
-        activated: res.user.activated,
-        created_at: res.user.created_at,
+        id: res.user?.id,
+        name: res.user?.name,
+        email: res.user?.email,
+        activated: res.user?.activated,
+        created_at: res.user?.created_at,
     })
 
 
-    console.log("user", res.user);
+    console.log("user", res?.user);
     console.log(res.authentication_token.token);
 
     const status: number = response.status;
     console.log("full json response", status)
 
     if (status === 201) {
-        redirectTo()
+        if(!res.user.activated) {
+            redirectTo("activate")
+        }
+        if(res.user.activated) {
+            redirectTo()
+        }
     }
     return res;
 })
