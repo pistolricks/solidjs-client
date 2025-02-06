@@ -20,7 +20,7 @@ const ComboboxItem = <T extends ValidComponent = "li">(
   return (
     <ComboboxPrimitive.Item
       class={cn(
-        "relative flex cursor-default select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled]:pointer-events-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:opacity-50",
+        "relative flex cursor-default select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-hidden data-disabled:pointer-events-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:opacity-50",
         local.class
       )}
       {...others}
@@ -104,7 +104,7 @@ const ComboboxInput = <T extends ValidComponent = "input">(
   return (
     <ComboboxPrimitive.Input
       class={cn(
-        "flex size-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+        "flex size-full rounded-md bg-transparent py-3 text-sm outline-hidden placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
         local.class
       )}
       {...others}
@@ -156,7 +156,7 @@ const ComboboxContent = <T extends ValidComponent = "div">(
     <ComboboxPrimitive.Portal>
       <ComboboxPrimitive.Content
         class={cn(
-          "relative z-50 h-64 overflow-y-auto min-w-32  rounded-md border bg-popover text-popover-foreground shadow-md animate-in fade-in-80",
+          "relative z-50 max-h-64 overflow-y-auto min-w-32  rounded-md border bg-popover text-popover-foreground shadow-md animate-in fade-in-80",
           local.class
         )}
         {...others}

@@ -1,95 +1,133 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-@import "drawer.css";
+@import 'tailwindcss';
+@import './drawer.css' layer(utilities);
 
 
+@plugin "tailwindcss-animate";
+@plugin "tailwindcss-radix-colors";
+@plugin "tailwind-scrollbar-hide";
+@plugin "@tailwindcss/forms";
+
+
+
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@utility step {
+  counter-increment: step;
+
+  &:before {
+    @apply absolute w-9 h-9 bg-muted rounded-full font-mono font-medium text-center text-base inline-flex items-center justify-center -indent-px border-4 border-background;
+    @apply ml-[-50px] mt-[-4px];
+    content: counter(step);
+  }
+}
+@theme {
+  --color-background: #FCFCFC;
+  --color-foreground: #F9F9F9;
+
+  --color-muted: #202020;
+  --color-muted-foreground: #646464;
+
+  --color-popover: #FFFFFF;
+  --color-popover-foreground: #838383;
+
+  --color-border: #D9D9D9;
+  --color-input: #D9D9E0;
+
+  --color-card: #FFFFFF;
+  --color-card-foreground: #838383;
+
+  --color-primary: #E8E8E8;
+  --color-primary-foreground: #F0F0F0;
+
+  --color-secondary: #E8E8EC;
+  --color-secondary-foreground: #F0F0F3;
+
+  --color-accent: #E7D9D3;
+  --color-accent-foreground: #7D5E54;
+
+  --color-destructive: #FFDBDC;
+  --color-destructive-foreground: #CE2C31;
+
+  --color-info: #D5EFFF;
+  --color-info-foreground: #0D74CE;
+
+  --color-success: #C8F4E9;
+  --color-success-foreground: #027864;
+
+  --color-warning: #FFEE9C;
+  --color-warning-foreground: #AB6400;
+
+  --color-error: #FFDCD3;
+  --color-error-foreground: #D13415;
+
+  --color-ring: #BBBBBB;
+
+  --radius: 0.5rem;
+
+
+  --sidebar-background: #FCFCFC;
+  --sidebar-foreground: #F9F9F9;
+
+  --sidebar-muted: #202020;
+  --sidebar-muted-foreground: #646464;
+
+  --sidebar-popover: #FFFFFF;
+  --sidebar-popover-foreground: #838383;
+
+  --sidebar-border: #D9D9D9;
+  --sidebar-input: #D9D9E0;
+
+  --sidebar-card: #FFFFFF;
+  --sidebar-card-foreground: #838383;
+
+  --sidebar-primary: #E8E8E8;
+  --sidebar-primary-foreground: #F0F0F0;
+
+  --sidebar-secondary: #E8E8EC;
+  --sidebar-secondary-foreground: #F0F0F3;
+
+  --sidebar-accent: #E7D9D3;
+  --sidebar-accent-foreground: #7D5E54;
+
+  --sidebar-destructive: #FFDBDC;
+  --sidebar-destructive-foreground: #CE2C31;
+
+  --sidebar-info: #D5EFFF;
+  --sidebar-info-foreground: #0D74CE;
+
+  --sidebar-success: #C8F4E9;
+  --sidebar-success-foreground: #027864;
+
+  --sidebar-warning: #FFEE9C;
+  --sidebar-warning-foreground: #AB6400;
+
+  --sidebar-error: #FFDCD3;
+  --sidebar-error-foreground: #D13415;
+
+  --sidebar-ring: #BBBBBB;
+}
 @layer base {
   :root {
-    --background: #FCFCFC;
-    --foreground: #F9F9F9;
-
-    --muted: #202020;
-    --muted-foreground: #646464;
-
-    --popover: #FFFFFF;
-    --popover-foreground: #838383;
-
-    --border: #D9D9D9;
-    --input: #D9D9E0;
-
-    --card: #FFFFFF;
-    --card-foreground: #838383;
-
-    --primary: #E8E8E8;
-    --primary-foreground: #F0F0F0;
-
-    --secondary: #E8E8EC;
-    --secondary-foreground: #F0F0F3;
-
-    --accent: #E7D9D3;
-    --accent-foreground: #7D5E54;
-
-    --destructive: #FFDBDC;
-    --destructive-foreground: #CE2C31;
-
-    --info: #D5EFFF;
-    --info-foreground: #0D74CE;
-
-    --success: #C8F4E9;
-    --success-foreground: #027864;
-
-    --warning: #FFEE9C;
-    --warning-foreground: #AB6400;
-
-    --error: #FFDCD3;
-    --error-foreground: #D13415;
-
-    --ring: #BBBBBB;
-
     --radius: 0.5rem;
 
 
-    --sidebar-background: #FCFCFC;
-    --sidebar-foreground: #F9F9F9;
-
-    --sidebar-muted: #202020;
-    --sidebar-muted-foreground: #646464;
-
-    --sidebar-popover: #FFFFFF;
-    --sidebar-popover-foreground: #838383;
-
-    --sidebar-border: #D9D9D9;
-    --sidebar-input: #D9D9E0;
-
-    --sidebar-card: #FFFFFF;
-    --sidebar-card-foreground: #838383;
-
-    --sidebar-primary: #E8E8E8;
-    --sidebar-primary-foreground: #F0F0F0;
-
-    --sidebar-secondary: #E8E8EC;
-    --sidebar-secondary-foreground: #F0F0F3;
-
-    --sidebar-accent: #E7D9D3;
-    --sidebar-accent-foreground: #7D5E54;
-
-    --sidebar-destructive: #FFDBDC;
-    --sidebar-destructive-foreground: #CE2C31;
-
-    --sidebar-info: #D5EFFF;
-    --sidebar-info-foreground: #0D74CE;
-
-    --sidebar-success: #C8F4E9;
-    --sidebar-success-foreground: #027864;
-
-    --sidebar-warning: #FFEE9C;
-    --sidebar-warning-foreground: #AB6400;
-
-    --sidebar-error: #FFDCD3;
-    --sidebar-error-foreground: #D13415;
-
-    --sidebar-ring: #BBBBBB;
 
   }
 
@@ -152,18 +190,6 @@
   }
 }
 
-@layer utilities {
-  .step {
-    counter-increment: step;
-  }
-
-  .step:before {
-    @apply absolute w-9 h-9 bg-muted rounded-full font-mono font-medium text-center text-base inline-flex items-center justify-center -indent-px border-4 border-background;
-    @apply ml-[-50px] mt-[-4px];
-    content: counter(step);
-  }
-}
-
 @media (max-width: 640px) {
   .container {
     @apply px-4;
@@ -184,3 +210,5 @@
 ::-webkit-scrollbar-corner {
   display: none;
 }
+
+
