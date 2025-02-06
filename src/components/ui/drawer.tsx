@@ -1,5 +1,6 @@
 import Drawer from '@corvu/drawer'
 import {RouteSectionProps} from "@solidjs/router";
+import {Dynamic} from "solid-js/web";
 
 function BaseDrawer<T>(props: RouteSectionProps<T>) {
     const children = () => props.children;
@@ -24,8 +25,7 @@ function BaseDrawer<T>(props: RouteSectionProps<T>) {
                         />
                         <Drawer.Content class={"w-full sm:max-w-lg"}>
                             <Drawer.Label class={'text-gray-8 flex justify-between items-center p-4'}>
-                                <span>{data()?.title} </span>
-                                <span>{data()?.logout}</span>
+                                <Dynamic title={data()?.title} component={data()?.menu}/>
                             </Drawer.Label>
                             <Drawer.Description>
 

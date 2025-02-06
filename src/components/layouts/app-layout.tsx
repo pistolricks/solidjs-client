@@ -4,7 +4,8 @@ import {Component, createEffect, JSXElement, lazy} from "solid-js";
 const Nav = lazy(() => import('~/components/layouts/partials/nav'));
 import {getUser} from "~/lib/users";
 import BaseDrawer from "~/components/ui/drawer";
-const LogoutUserForm = lazy(() => import("~/components/users/forms/logout-user-form"));
+const SideNavMenu = lazy(() => import("~/components/layouts/partials/side-nav-menu"))
+
 
 
 type PROPS = RouteSectionProps
@@ -27,8 +28,7 @@ const AppLayout: Component<PROPS> = props => {
         <div class={''}>
             <BaseDrawer<any> {...props} data={{
                 title: user()?.name ?? "Login",
-                menu: [],
-                logout: LogoutUserForm
+                menu: SideNavMenu,
             }}>
             <header class={"relative h-[50px] w-full"}>
                 <Nav user={userData()} path={location.pathname}/>
