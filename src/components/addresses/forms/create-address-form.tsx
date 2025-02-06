@@ -4,7 +4,7 @@ import {addVendor} from "~/lib/vendors";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
 import {showToast} from "~/components/ui/toast";
-import {ChevronLeft} from "~/components/users/forms/login-user-form";
+import {ChevronLeft} from "~/components/svg";
 import {addAddress, addressFieldNames, getAddressField} from "~/lib/addresses";
 import {AreaSelect, CountryData} from "~/lib/store";
 import {

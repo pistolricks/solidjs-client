@@ -3,7 +3,7 @@ import {activateUserHandler} from "~/lib/users";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
 import {showToast} from "~/components/ui/toast";
-import {ChevronLeft} from "~/components/users/forms/login-user-form";
+import {ChevronLeft} from "~/components/svg";
 import {useNavigate} from "@solidjs/router";
 
 type PROPS = {}
@@ -62,11 +62,17 @@ const ActivateUserForm: Component<PROPS> = props => {
                 </TextField>
                 <div class={'flex justify-end space-x-2'}>
                     <Button as={"A"} href={'/resend'} variant={'secondary'} type={"button"}>Resend</Button>
-                    <div class={'flex justify-end space-x-2'}>
-                        <Button as={"A"} href={'/'} variant={'secondary'} size={"icon"}
-                                type={"button"}><ChevronLeft/></Button>
-                        <Button as={"button"} variant={'default'}
-                                type={"submit"}>Activate</Button>
+                    <div class={'items-center flex flex-row-reverse space-x-2 space-x-reverse'}>
+                        <Button as={"button"} variant={'default'} type={"submit"}>Login</Button>
+                        <Button
+                            as={"A"}
+                            href={'/'}
+                            variant={'secondary'}
+                            size={"icon"}
+                            type={"button"}
+                        >
+                            <ChevronLeft/>
+                        </Button>
                     </div>
                 </div>
             </form>

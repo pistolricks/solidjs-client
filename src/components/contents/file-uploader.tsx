@@ -1,7 +1,7 @@
 import {Component, createSignal} from "solid-js";
 import {uploadFileHandler} from "~/lib/contents";
 import {Button} from "~/components/ui/button";
-import {ChevronLeft} from "~/components/users/forms/login-user-form";
+import {ChevronLeft} from "~/components/svg";
 import {showToast} from "~/components/ui/toast";
 import {redirect} from "@solidjs/router";
 
@@ -52,10 +52,17 @@ const FileUploader: Component<PROPS> = props => {
                     </div>
                 </div>
             </div>
-            <div class={'flex justify-end space-x-2 py-2'}>
-                <Button as={"A"} href={'/vendors'} variant={'secondary'} size={"icon"}
-                        type={"button"}><ChevronLeft/></Button>
-                <Button as={"button"} variant={'default'} type={"submit"}>Upload Image</Button>
+            <div class={'items-center flex flex-row-reverse space-x-2 space-x-reverse'}>
+                <Button as={"button"} variant={'default'} type={"submit"}>Upload</Button>
+                <Button
+                    as={"A"}
+                    href={'/contents'}
+                    variant={'secondary'}
+                    size={"icon"}
+                    type={"button"}
+                >
+                    <ChevronLeft/>
+                </Button>
             </div>
         </form>
     )

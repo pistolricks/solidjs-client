@@ -4,6 +4,7 @@ import {loginUserHandler} from "~/lib/users";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
 import {showToast} from "~/components/ui/toast";
+import {ChevronLeft} from "~/components/svg";
 
 type PROPS = {}
 
@@ -47,9 +48,17 @@ const LoginUserForm: Component<PROPS> = props => {
                         </TextFieldErrorMessage>
                     </Show>
                 </TextField>
-                <div class={'flex justify-end space-x-2'}>
-                    <Button as={"A"} href={'/'} variant={'secondary'} size={"icon"} type={"button"}><ChevronLeft/></Button>
+                <div class={'items-center flex flex-row-reverse space-x-2 space-x-reverse'}>
                     <Button as={"button"} variant={'default'} type={"submit"}>Login</Button>
+                    <Button
+                        as={"A"}
+                        href={'/'}
+                        variant={'secondary'}
+                        size={"icon"}
+                        type={"button"}
+                    >
+                        <ChevronLeft/>
+                    </Button>
                 </div>
             </form>
         </>
@@ -57,11 +66,4 @@ const LoginUserForm: Component<PROPS> = props => {
 };
 
 export default LoginUserForm;
-
-export const ChevronLeft = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={1.5} stroke="currentColor"
-         class="size-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
-    </svg>
-)
 

@@ -4,7 +4,7 @@ import {addVendor} from "~/lib/vendors";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
 import {showToast} from "~/components/ui/toast";
-import {ChevronLeft} from "~/components/users/forms/login-user-form";
+import {ChevronLeft} from "~/components/svg";
 
 type PROPS = {}
 
@@ -61,10 +61,17 @@ const CreateVendorForm: Component<PROPS> = props => {
                         </TextFieldErrorMessage>
                     </Show>
                 </TextField>
-                <div class={'flex justify-end space-x-2'}>
-                    <Button as={"A"} href={'/vendors'} variant={'secondary'} size={"icon"}
-                            type={"button"}><ChevronLeft/></Button>
+                <div class={'items-center flex flex-row-reverse space-x-2 space-x-reverse'}>
                     <Button as={"button"} variant={'default'} type={"submit"}>Add Vendor</Button>
+                    <Button
+                        as={"A"}
+                        href={'/'}
+                        variant={'secondary'}
+                        size={"icon"}
+                        type={"button"}
+                    >
+                        <ChevronLeft/>
+                    </Button>
                 </div>
             </form>
         </>

@@ -19,7 +19,7 @@ const Nav: Component<PROPS> = props => {
 
     return (
         <nav class="bg-gray-ui fixed top-0 inset-x-0 h-[50px]">
-            <div class="container flex justify-between items-center p-3 text-gray-normal">
+            <div class="flex justify-between items-center p-3 text-gray-normal">
                 <ul class="flex justify-start items-center">
                     <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
                         <A href="/">{import.meta.env.VITE_APP_NAME}</A>
