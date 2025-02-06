@@ -1,4 +1,4 @@
-import {action} from "@solidjs/router";
+import {action, query} from "@solidjs/router";
 import {AUTHENTICATION_TOKEN, storage} from "~/lib/store";
 import {redirectTo} from "~/lib/users";
 
@@ -12,12 +12,14 @@ export const addAddress = action(async (data: FormData) => {
 
 
     const addressInput = {
-        street_address: String(data.get("street_address")),
+        street_address: [String(data.get("street_address"))],
         locality: String(data.get("locality")),
         administrative_area: String(data.get("administrative_area")),
         post_code: String(data.get("post_code")),
-        country: "USA",
+        country: "US",
     }
+
+    console.log("Address:", addressInput)
 
     const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/addresses`, {
         method: "POST",
@@ -29,10 +31,66 @@ export const addAddress = action(async (data: FormData) => {
 
     const res: any = await response.json();
     const status: number = response.status;
-    console.log("full json response", status)
+    console.log("status", status)
+    console.log("res", res)
+    console.log("address", res?.address)
+    console.log("coordinates", res?.coordinates)
 
     if (status === 201) {
         redirectTo()
     }
     return res;
 })
+
+
+export const getAddressFormFormats = query(async () => {
+    "use server";
+
+    let token = ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
+
+    console.log("Bearer:", token.token)
+
+    console.log("getFormFormats was called")
+
+
+    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/addresses/create`, {
+        headers: {
+            Authorization: `Bearer ${token.token}`
+        },
+    })
+    const res: any = await response.json();
+
+    console.log(await res.form);
+    return res.form;
+}, "formats")
+
+
+export const addressFieldNames: string[] = [
+    "none",
+    "Area",
+    "City",
+    "County",
+    "Department",
+    "District",
+    "DoSi",
+    "Eircode",
+    "Emirate",
+    "Island",
+     "Neighborhood",
+     "Oblast",
+     "PINCode",
+     "Parish",
+     "PostTown",
+     "PostalCode",
+     "Prefecture",
+     "Province",
+     "State",
+     "Suburb",
+     "Townland",
+     "VillageTownship",
+     "ZipCode",
+    ]
+
+export function getAddressField(n: number) {
+    return addressFieldNames[n];
+}

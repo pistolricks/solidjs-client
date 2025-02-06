@@ -96,3 +96,28 @@ export type CONTENT = {
     sort_order: number;
     user_id: string;
 }
+
+
+export type AreaSelect = {
+    ID: string;
+    Localities?: string
+    Name: string;
+}
+export type postCodeRegex = {
+    Regex:           string
+    SubdivisionRegex: any
+}
+
+export type CountryData = {
+    Format?: string
+    LatinizedFormat?: string
+    Required?: string[]
+    Allowed?: string[]
+    DefaultLanguage?: string
+    AdministrativeAreaNameType?: number
+    LocalityNameType?: number
+    DependentLocalityNameType?: number
+    PostCodeNameType?: number
+    PostCodeRegex?: postCodeRegex
+    AdministrativeAreas?: any
+}

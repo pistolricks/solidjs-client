@@ -1,15 +1,31 @@
-import {Component, lazy, VoidComponent} from "solid-js";
+import {Component, createEffect, lazy, Show} from "solid-js";
 import CreateAddressForm from "~/components/addresses/forms/create-address-form";
+import {AccessorWithLatest, createAsync, RouteSectionProps} from "@solidjs/router";
+import {CountryData} from "~/lib/store";
+import {getAddressFormFormats} from "~/lib/addresses";
+import {getVendors} from "~/lib/vendors";
 
 const FormLayout = lazy(() => import( "~/components/layouts/form-layout"));
-const CreateVendorForm = lazy(() => import( "~/components/vendors/forms/create-vendor-form"));
+
+export const route = {
+    preload() {
+        getAddressFormFormats();
+    }
+}
 
 
-const Create: Component<VoidComponent> = () => {
+const Create: Component<RouteSectionProps> = props => {
+    const formFormats: AccessorWithLatest<CountryData | undefined> = createAsync(async () => getAddressFormFormats());
+
+    createEffect(() => {
+        console.log(formFormats())
+    })
 
     return (
         <FormLayout title="Add Address">
-            <CreateAddressForm/>
+            <Show when={formFormats()}>
+                <CreateAddressForm {...formFormats()}/>
+            </Show>
         </FormLayout>
     );
 };
