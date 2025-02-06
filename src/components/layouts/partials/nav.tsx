@@ -25,12 +25,6 @@ const Nav: Component<PROPS> = props => {
                     <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
                         <A href="/">{import.meta.env.VITE_APP_NAME}</A>
                     </li>
-
-                    <Show when={user()}>
-                        <li class={`border-b-2 ${active("/vendors")} mx-1.5 sm:mx-6`}>
-                            <A href={'/vendors'}>Vendors</A>
-                        </li>
-                    </Show>
                 </ul>
                 <ul class="flex justify-end items-center mx-1.5 sm:mx-6">
                     <Show
