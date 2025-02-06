@@ -3,7 +3,7 @@ import {RouteSectionProps} from "@solidjs/router";
 
 const AppLayout = lazy(() => import("~/components/layouts/app-layout"));
 
-const VendorsLayout: Component<RouteSectionProps> = props => {
+const AddressesLayout: Component<RouteSectionProps> = props => {
 
     return (
         <AppLayout {...props}>
@@ -12,4 +12,4 @@ const VendorsLayout: Component<RouteSectionProps> = props => {
     );
 };
 
-export default VendorsLayout;
+export default AddressesLayout;

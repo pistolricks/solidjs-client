@@ -2,12 +2,12 @@ import {Component, createEffect, lazy, Match, Show, Switch, VoidComponent} from 
 import ActivateUserForm from '~/components/users/forms/activate-user-form';
 import FormLayout from "~/components/layouts/form-layout";
 import AppLayout from "~/components/layouts/app-layout";
-import {AccessorWithLatest, createAsync, useNavigate} from "@solidjs/router";
+import {AccessorWithLatest, createAsync, RouteSectionProps, useNavigate} from "@solidjs/router";
 import {USER} from "~/lib/store";
 import {getUser} from "~/lib/users";
 const LoginUserForm = lazy(() => import("~/components/users/forms/login-user-form"));
 
-const Activate: Component<VoidComponent> = () => {
+const Activate: Component<RouteSectionProps> = props => {
     const navigate = useNavigate();
 
     const userData: AccessorWithLatest<USER | undefined> = createAsync(async () => getUser());
@@ -21,7 +21,7 @@ const Activate: Component<VoidComponent> = () => {
     })
 
     return (
-        <AppLayout>
+        <AppLayout {...props}>
             <FormLayout>
                 <Switch>
                     <Match when={!user()?.activated}>

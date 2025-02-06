@@ -49,8 +49,6 @@ const ActivateUserForm: Component<PROPS> = props => {
                 description: getResponse()?.error?.token,
             })
         }
-
-
     }
 
 
