@@ -132,11 +132,18 @@ const CreateAddressForm: Component<PROPS> = props => {
                             </TextFieldErrorMessage>
                         </Show>
                     </TextField>
-                </div>`
-                <div class={'flex justify-end space-x-2'}>
-                    <Button as={"A"} href={'/addresses'} variant={'secondary'} size={"icon"}
-                            type={"button"}><ChevronLeft/></Button>
+                </div>
+                <div class={'items-center flex flex-row-reverse space-x-2 space-x-reverse'}>
                     <Button as={"button"} variant={'default'} type={"submit"}>Add Address</Button>
+                    <Button
+                        as={"A"}
+                        href={'/addresses'}
+                        variant={'secondary'}
+                        size={"icon"}
+                        type={"button"}
+                    >
+                        <ChevronLeft/>
+                    </Button>
                 </div>
             </form>
         </>
