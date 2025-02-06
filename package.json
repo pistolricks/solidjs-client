@@ -10,6 +10,7 @@
     "@corvu/drawer": "^0.2.3",
     "@fontsource/inter": "^5.1.1",
     "@kobalte/core": "^0.13.7",
+    "@radix-ui/colors": "^3.0.0",
     "@solidjs/router": "^0.15.0",
     "@solidjs/start": "^1.0.10",
     "@tailwindcss/postcss": "^4.0.0",

@@ -41,7 +41,7 @@ const FileUploader: Component<PROPS> = props => {
                             </svg>
                             <div class="mt-4 flex text-sm/6 text-gray-6">
                                 <label for="src"
-                                       class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-5/90 focus-within:outline-hidden focus-within:ring-2 focus-within:ring-indigo-6 focus-within:ring-offset-2 hover:text-indigo-6">
+                                       class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-5/90 focus-within:outline-hidden focus-within:outline-2 focus-within:outline-indigo-6 focus-within:outline-offset-2 hover:text-indigo-6">
                                     <span>Upload a file</span>
                                     <input id="src" name="src" type="file" class="sr-only"/>
                                 </label>
