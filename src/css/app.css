@@ -39,12 +39,14 @@
     content: counter(step);
   }
 }
-@theme {
+@theme inline {
   --color-background: var(--gray-1);
   --color-foreground: var(--gray-2);
 
-  --color-muted: var(--mauve-11);
-  --color-muted-foreground: var(--mauve-12);
+  --color-muted: var(--gray-8);
+  --color-muted-foreground: var(--gray-9);
+
+
 
   --color-popover: #FFFFFF;
   --color-popover-foreground: #838383;
@@ -61,23 +63,23 @@
   --color-secondary: #E8E8EC;
   --color-secondary-foreground: #F0F0F3;
 
-  --color-accent: #E7D9D3;
-  --color-accent-foreground: #7D5E54;
+  --color-accent: var(--mint-6);
+  --color-accent-foreground: var(--mint-11);
 
-  --color-destructive: #FFDBDC;
-  --color-destructive-foreground: #CE2C31;
+  --color-destructive: var(--red-4);
+  --color-destructive-foreground: var(--red-12);
 
-  --color-info: #D5EFFF;
-  --color-info-foreground: #0D74CE;
+  --color-info:  var(--blue-4);
+  --color-info-foreground:  var(--blue-12);
 
-  --color-success: #C8F4E9;
-  --color-success-foreground: #027864;
+  --color-success:  var(--grass-4);
+  --color-success-foreground:  var(--grass-12);
 
-  --color-warning: #FFEE9C;
-  --color-warning-foreground: #AB6400;
+  --color-warning:  var(--amber-4);
+  --color-warning-foreground:  var(--amber-12);
 
-  --color-error: #FFDCD3;
-  --color-error-foreground: #D13415;
+  --color-error:  var(--tomato-4);
+  --color-error-foreground:  var(--tomato-12);
 
   --color-ring: #BBBBBB;
 

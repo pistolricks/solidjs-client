@@ -2,6 +2,7 @@ import {A} from "@solidjs/router";
 import {Component, lazy, Show} from "solid-js";
 import {USER} from "~/lib/store";
 import Drawer from "@corvu/drawer";
+import {UserCircle} from "~/components/svg";
 
 
 
@@ -47,7 +48,7 @@ const Nav: Component<PROPS> = props => {
                         {(user) => (
                             <>
                                 <Drawer.Trigger as={"button"}>
-                                    {user.name}
+                                    <UserCircle/>
                                 </Drawer.Trigger>
 
                             </>
