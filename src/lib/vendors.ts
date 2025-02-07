@@ -1,5 +1,6 @@
 import {AUTHENTICATION_TOKEN, storage, USER} from "~/lib/store";
 import {action, query, redirect} from "@solidjs/router";
+import {baseApi} from "~/lib/server";
 
 export const getVendors = query(async () => {
     "use server";
@@ -7,7 +8,7 @@ export const getVendors = query(async () => {
 
     console.log("Bearer:", token.token)
 
-    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/vendors`, {
+    const response = await fetch(`${baseApi}/vendors`, {
         headers: {
             Authorization: `Bearer ${token.token}`
         },
@@ -26,7 +27,7 @@ export const getVendor = query(async (id: number) => {
     console.log("Bearer:", token.token)
 
     console.log("getVendor was called")
-    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/vendors/${id}`, {
+    const response = await fetch(`${baseApi}/vendors/${id}`, {
         headers: {
             Authorization: `Bearer ${token.token}`
         },
@@ -53,7 +54,7 @@ export const addVendor = action(async (data: FormData) => {
         genres: [String(data.get("genres"))],
     }
 
-    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/vendors`, {
+    const response = await fetch(`${baseApi}/vendors`, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token.token}`

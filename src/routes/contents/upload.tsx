@@ -7,7 +7,7 @@ const FormLayout = lazy(() => import( "~/components/layouts/form-layout"));
 const Upload: Component<RouteSectionProps> = props => {
 
     return (
-        <FormLayout title="Upload">
+        <FormLayout title="">
             <FileUploader/>
         </FormLayout>
     );

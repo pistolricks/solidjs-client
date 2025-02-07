@@ -25,6 +25,13 @@ const LoginUserForm: Component<PROPS> = props => {
                 description: results()?.error
             })
         }
+        if (submission?.error) {
+            showToast({
+                variant: "error",
+                title: "Error",
+                description: "Retry Login"
+            })
+        }
     })
 
     return (

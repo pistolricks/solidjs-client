@@ -1,7 +1,24 @@
 import {action, query} from "@solidjs/router";
 import {AUTHENTICATION_TOKEN, storage} from "~/lib/store";
 import {redirectTo} from "~/lib/users";
+import {baseApi} from "~/lib/server";
 
+export const getAddresses = query(async () => {
+    "use server";
+    let token = ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
+
+    console.log("Bearer:", token.token)
+
+    const response = await fetch(`${baseApi}/addresses`, {
+        headers: {
+            Authorization: `Bearer ${token.token}`
+        },
+    })
+    const res: any = await response.json();
+
+    console.log(res);
+    return res;
+}, "addresses")
 
 export const addAddress = action(async (data: FormData) => {
     "use server";
@@ -21,7 +38,7 @@ export const addAddress = action(async (data: FormData) => {
 
     console.log("Address:", addressInput)
 
-    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/addresses`, {
+    const response = await fetch(`${baseApi}/addresses`, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token.token}`
@@ -53,7 +70,7 @@ export const getAddressFormFormats = query(async () => {
     console.log("getFormFormats was called")
 
 
-    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/addresses/create`, {
+    const response = await fetch(`${baseApi}/addresses/create`, {
         headers: {
             Authorization: `Bearer ${token.token}`
         },

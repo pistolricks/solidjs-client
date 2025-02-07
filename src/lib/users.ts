@@ -1,12 +1,33 @@
 import {AUTHENTICATION_TOKEN, storage, USER} from "~/lib/store";
 import {action, query, redirect} from "@solidjs/router";
 import {showToast} from "~/components/ui/toast";
+import {
+    baseApi,
+    getSession,
+    logout as logoutSession,
+} from "~/lib/server";
+import {db} from "~/lib/db";
 
 export const getStorageUsers = query(async () => {
     "use server";
     console.log("getStorageUsers was called")
     return [];
 }, "users")
+
+export const getUserA = query(async () => {
+    "use server";
+    try {
+        const session = await getSession();
+        const userId = session.data.userId;
+        if (userId === undefined) throw new Error("User not found");
+        const user = await db.user.findUnique({ where: { id: userId } });
+        if (!user) throw new Error("User not found");
+        return { id: user.id, email: user.email };
+    } catch {
+        await logoutSession();
+        throw redirect("/login");
+    }
+}, "user");
 
 export const getUser = query(async () => {
     "use server";
@@ -33,7 +54,7 @@ export const registerUserHandler = action(async (data: FormData) => {
         password: String(data.get("password")),
     }
 
-    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/users`, {
+    const response = await fetch(`${baseApi}/users`, {
         method: "POST",
         headers: {},
         body: JSON.stringify(userInput)
@@ -57,7 +78,7 @@ export const loginUserHandler = action(async (data: FormData) => {
         password: String(data.get("password")),
     }
 
-    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/tokens/authentication`, {
+    const response = await fetch(`${baseApi}/tokens/authentication`, {
         method: "POST",
         body: JSON.stringify(userInput)
     })
@@ -79,6 +100,16 @@ export const loginUserHandler = action(async (data: FormData) => {
         created_at: res.user?.created_at,
     })
 
+    try {
+
+        const session = await getSession();
+        await session.update(d => {
+            d.userId = res.user?.id;
+        });
+
+    } catch (err) {
+        return err as Error;
+    }
 
     console.log("user", res?.user);
     console.log(res.authentication_token.token);
@@ -98,7 +129,7 @@ export const loginUserHandler = action(async (data: FormData) => {
 export const logoutUserHandler = action(async (data: FormData) => {
     "use server";
 
-    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/users/logout`, {
+    const response = await fetch(`${baseApi}/users/logout`, {
         method: "POST",
     })
 
@@ -120,6 +151,7 @@ export const logoutUserHandler = action(async (data: FormData) => {
         created_at: res.user.created_at,
     })
 
+    await logoutSession();
 
 
     if (status === 200) {
@@ -137,7 +169,7 @@ export const activateUserHandler = async (token: string) => {
 
     console.log("activateInput", activateInput, token)
 
-   const response: Response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/users/activated`, {
+    const response = await fetch(`${baseApi}/users/activated`, {
         method: "PUT",
         headers: {},
         body: JSON.stringify(activateInput)
@@ -164,7 +196,7 @@ export const resendActivateEmailHandler = action(async (data: FormData) => {
         email: String(data.get("email")),
     }
 
-    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/tokens/activation`, {
+    const response = await fetch(`${baseApi}/tokens/activation`, {
         method: "POST",
         headers: {},
         body: JSON.stringify(resendInput)

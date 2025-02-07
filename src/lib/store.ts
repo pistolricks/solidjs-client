@@ -88,15 +88,32 @@ export type CONTENT = {
     id: string;
     created: string;
     name: string;
+    original: string;
+    hash: string;
     src: string;
     type: string;
     size: number;
-    width: number;
-    height: number;
-    sort_order: number;
     user_id: string;
 }
 
+export type CONTENT_DETAIL = {
+    content: CONTENT
+}
+
+export type ContentsData = {
+    metadata: {
+        current_page: number,
+        page_size: number,
+        first_page: number,
+        last_page: number,
+        total_records: number
+
+    },
+    contents: CONTENT[]
+}
+
+
+export type AddressData = any;
 
 export type AreaSelect = {
     ID: string;

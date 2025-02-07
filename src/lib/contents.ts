@@ -1,7 +1,44 @@
-import {action} from "@solidjs/router";
+import {action, query} from "@solidjs/router";
 import {AUTHENTICATION_TOKEN, storage} from "~/lib/store";
 import {redirectTo} from "~/lib/users";
 import {createSignal} from "solid-js";
+import {baseApi} from "~/lib/server";
+
+export const getContents = query(async () => {
+    "use server";
+    let token = ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
+
+    console.log("Bearer:", token.token)
+
+    const response = await fetch(`${baseApi}/contents`, {
+        headers: {
+            Authorization: `Bearer ${token.token}`
+        },
+    })
+    const res: any = await response.json();
+
+    console.log(res);
+    return res;
+}, "contents")
+
+export const getContent = query(async (id: number) => {
+    "use server";
+
+    let token = ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
+
+    console.log("Bearer:", token.token)
+
+    console.log("getContent was called")
+    const response = await fetch(`${baseApi}/contents/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token.token}`
+        },
+    })
+    const res: any = await response.json();
+
+    console.log(res);
+    return res;
+}, "content")
 
 
 export const uploadFileHandler = (async (data: FormDataEntryValue[]) => {
@@ -13,7 +50,7 @@ export const uploadFileHandler = (async (data: FormDataEntryValue[]) => {
     console.log("data", data[0])
     const [getFile, setFile] = createSignal<any>(data[0])
 
-    const vendorInput = {
+    const contentInput = {
         name:   getFile()?.name,
         src: getFile(),
         type:   getFile()?.type,
@@ -21,16 +58,16 @@ export const uploadFileHandler = (async (data: FormDataEntryValue[]) => {
     }
 
     const formData  = new FormData();
-    if(vendorInput.src) {
-        formData.append("file", vendorInput.src);
-        formData.append("name", vendorInput.name);
-        formData.append("size", vendorInput.size);
-        formData.append("type", vendorInput.type);
+    if(contentInput.src) {
+        formData.append("file", contentInput.src);
+        formData.append("name", contentInput.name);
+        formData.append("size", contentInput.size);
+        formData.append("type", contentInput.type);
     }
 
-    console.log("vendorInput", vendorInput)
+    console.log("contentInput", contentInput)
 
-    const response = await fetch(`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/upload/image`, {
+    const response: Response = await fetch(`${baseApi}/upload/image`, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token.token}`,
@@ -38,8 +75,9 @@ export const uploadFileHandler = (async (data: FormDataEntryValue[]) => {
         body: formData
     })
 
-    const res: Response = await response.json();
+    const res: any  = await response.json();
     const status: number = response.status;
+    console.log("response", res);
     console.log("full json response", status)
 
     return res;
