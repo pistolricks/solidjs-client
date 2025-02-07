@@ -16,12 +16,14 @@ const ContentsList: Component<PROPS> = props => {
                 {(content, i) => (
                     <li class={''}>
                         <Button as={A} href={`/contents/${content.id}`}>
-                            <img src={`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${import.meta.env.VITE_API_VERSION}/${content?.src}`} class={'w-full h-full'} alt={''} />
+                            <img src={`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${content?.src}`} class={'w-full h-full'} alt={''} />
                         </Button>
 
                     </li>
                 )}
             </For>
+            http://localhost:4000/static/RM9BlkLOAr/
+            <img src={`http://localhost:4000/static/RM9BlkLOAr/img_20150218_213534387-1738965046.jpg`} class={'w-full h-full'} alt={''} />
         </ul>
     );
 };
