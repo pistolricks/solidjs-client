@@ -10,7 +10,7 @@
     "@ark-ui/solid": "^4.10.1",
     "@corvu/drawer": "^0.2.3",
     "@fontsource/inter": "^5.1.1",
-    "@kobalte/core": "^0.13.7",
+    "@kobalte/core": "^0.13.8",
     "@radix-ui/colors": "^3.0.0",
     "@solidjs/router": "^0.15.0",
     "@solidjs/start": "^1.0.10",

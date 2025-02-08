@@ -79,7 +79,7 @@ const FileUploader: Component<PROPS> = props => {
                     </div>
                 </div>
             </div>
-            <div class={'items-center flex flex-row-reverse space-x-2 space-x-reverse'}>
+            <div class={'items-center flex flex-row-reverse space-x-2 space-x-reverse py-3'}>
                 <Button as={"button"} variant={'default'} type={"submit"}>Upload</Button>
                 <Button
                     as={"A"}
