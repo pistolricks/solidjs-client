@@ -1,8 +1,9 @@
 import {action, query} from "@solidjs/router";
-import {AUTHENTICATION_TOKEN, storage} from "~/lib/store";
+import {AUTHENTICATION_TOKEN, CONTENT, storage} from "~/lib/store";
 import {redirectTo} from "~/lib/users";
 import {createSignal} from "solid-js";
 import {baseApi} from "~/lib/server";
+import {USER} from "~/lib/db";
 
 export const getContents = query(async () => {
     "use server";
@@ -16,7 +17,6 @@ export const getContents = query(async () => {
         },
     })
     const res: any = await response.json();
-
     console.log(res);
     return res;
 }, "contents")

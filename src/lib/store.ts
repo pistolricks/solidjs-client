@@ -86,7 +86,7 @@ storage.setItem("auth:token", {
 
 export type CONTENT = {
     id: string;
-    created: string;
+    created_at: string;
     name: string;
     original: string;
     hash: string;
@@ -95,6 +95,19 @@ export type CONTENT = {
     size: number;
     user_id: string;
 }
+
+storage.setItem("contents:data", [{
+    id: "",
+    created_at: "",
+    name: "",
+    original: "",
+    hash: "",
+    src: "",
+    type: "",
+    size: 0,
+    user_id: "",
+
+}]);
 
 export type CONTENT_DETAIL = {
     content: CONTENT

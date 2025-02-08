@@ -23,7 +23,7 @@ const SideNavMenu: Component<PROPS> = props => {
     ]
     return (
         <aside id="nav-menu-1" aria-label="Side navigation"
-               class="fixed top-0 bottom-0 left-0 z-40 flex flex-col transition-transform -translate-x-full bg-white border-r w-full sm:translate-x-0 border-r-slate-200">
+               class=" flex flex-col  border-r-slate-200">
             <div class="flex flex-col items-center gap-4 p-6 border-b border-slate-200">
                 <div class="shrink-0">
                     <a href="#" class="relative flex items-center justify-center w-12 h-12 text-white rounded-full">

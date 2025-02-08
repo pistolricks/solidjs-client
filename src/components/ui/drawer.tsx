@@ -23,14 +23,14 @@ function BaseDrawer<T>(props: RouteSectionProps<T>) {
                                 })`,
                             }}
                         />
-                        <Drawer.Content class={"w-full sm:max-w-lg"}>
+                        <Drawer.Content class={"w-screen sm:max-w-lg"}>
                             <Drawer.Label class={'text-gray-8 flex justify-between items-center p-4'}>
-                                <Dynamic title={data()?.title} component={data()?.menu}/>
                             </Drawer.Label>
                             <Drawer.Description>
 
-                            </Drawer.Description>
 
+                            </Drawer.Description>
+                            <Dynamic title={data()?.title} component={data()?.menu}/>
                             {/*
                             <p class="hidden_frog">🐸 You found froggy!</p>
                            */}
