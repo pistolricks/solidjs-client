@@ -40,8 +40,8 @@
   }
 }
 @theme inline {
-  --color-background: var(--gray-1);
-  --color-foreground: var(--gray-2);
+  --color-background: var(--gray-9);
+  --color-foreground: var(--gray-11);
 
   --color-muted: var(--gray-8);
   --color-muted-foreground: var(--gray-9);
