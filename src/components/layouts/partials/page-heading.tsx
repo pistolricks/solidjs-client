@@ -32,7 +32,7 @@ const PageHeading: Component<PROPS> = props => {
 
 
     return (
-        <div class={'flex justify-between items-center w-full py-3 px-1 text-gray-normal'}>
+        <div class={'flex justify-between items-center w-full py-3 px-3 text-gray-normal'}>
             <Breadcrumb class={''}>
                 <BreadcrumbList>
                     <BreadcrumbItem>
