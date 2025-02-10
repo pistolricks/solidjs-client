@@ -1,5 +1,5 @@
 import {Component, lazy} from "solid-js";
-import FileUploader from "~/components/contents/file-uploader";
+import FileUploader from "~/components/ui/file-uploader";
 import {RouteSectionProps} from "@solidjs/router";
 
 const FormLayout = lazy(() => import( "~/components/layouts/form-layout"));

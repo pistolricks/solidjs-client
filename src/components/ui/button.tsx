@@ -4,7 +4,7 @@ import {splitProps} from "solid-js"
 import * as ButtonPrimitive from "@kobalte/core/button"
 import type {PolymorphicProps} from "@kobalte/core/polymorphic"
 
-import {Bases, classNames, Sizes, Variants} from "~/lib/utils"
+import {Bases, cn, Sizes, Variants} from "~/lib/utils"
 
 
 export type ButtonProps<T extends ValidComponent = "button"> = ButtonPrimitive.ButtonRootProps<T> &
@@ -45,7 +45,7 @@ const Button = <T extends ValidComponent = "button">(
     }[size()]
 
     return (
-        <ButtonPrimitive.Root class={classNames(
+        <ButtonPrimitive.Root class={cn(
             bases,
             variants,
             sizes,

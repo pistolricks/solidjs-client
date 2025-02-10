@@ -9,7 +9,7 @@ type PROPS = {
 const FormLayout: Component<PROPS> = props => {
 
     const title = () => props.title ?? '';
-    const imageSrc = () => props.imageSrc ?? 'https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600'
+    const imageSrc = () => props.imageSrc ?? import.meta.env.VITE_APP_LOGO;
 
     return (
         <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">

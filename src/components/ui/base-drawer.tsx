@@ -1,12 +1,20 @@
 import Drawer from '@corvu/drawer'
 import {RouteSectionProps} from "@solidjs/router";
 import {Dynamic} from "solid-js/web";
+import SideNavMenu from "~/components/layouts/partials/side-nav-menu";
+import {createEffect} from "solid-js";
 
 function BaseDrawer<T>(props: RouteSectionProps<T>) {
     const children = () => props.children;
 
-
     const data = () => props.data as T | any;
+
+    const title = () => data()?.title ?? import.meta.env.VITE_APP_TITLE;
+
+    const component = () => data()?.menu ?? SideNavMenu;
+
+
+    createEffect(() => console.log(data()?.user))
 
     return (
         <Drawer breakPoints={[0.75]} side={"right"}>
@@ -30,7 +38,7 @@ function BaseDrawer<T>(props: RouteSectionProps<T>) {
 
 
                             </Drawer.Description>
-                            <Dynamic title={data()?.title} component={data()?.menu}/>
+                            <Dynamic title={title()} component={component()}/>
                             {/*
                             <p class="hidden_frog">🐸 You found froggy!</p>
                            */}

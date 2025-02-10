@@ -1,7 +1,6 @@
 import {Component, createEffect, createSignal, For} from "solid-js";
 import {ContentsData} from "~/lib/store";
 import {ByteWithLocale} from "~/components/ui/format-byte";
-import {baseApi} from "~/lib";
 
 type PROPS = {
     contents: ContentsData | undefined;
