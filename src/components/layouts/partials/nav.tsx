@@ -24,8 +24,8 @@ const Nav: Component<PROPS> = props => {
 
     return (
         <>
-        <header class={"relative w-full bg-gray-ui"}>
-            <nav class="container items-center w-full" aria-label="Global">
+        <header class={"w-full bg-gray-ui sticky top-0"}>
+            <nav class="container items-center" aria-label="Global">
                 <div class="flex justify-between items-center w-full py-3 text-gray-normal">
                     <ul class="flex justify-start items-center">
                         <li class={`${active("/")}`}>

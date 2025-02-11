@@ -23,19 +23,19 @@ export default function Contents() {
         console.log("getAllContents", getAllContents())
     })
     return (
-        <div class={'relative h-full w-full container'}>
+        <CategoryLayout {...getAllContents()}>
             <Dialog.Content>
                 <FileUploader/>
             </Dialog.Content>
 
-            <CategoryLayout {...getAllContents()}>
-                <ContentsList contents={getAllContents()}/>
-            </CategoryLayout>
+
+            <ContentsList contents={getAllContents()}/>
+
             <FooterMenu title={"Contents"}>
                 <Dialog.Trigger as={Button} class={'uppercase bg-white'} variant={"outline"}
                                 size={'sm'}>Upload</Dialog.Trigger>
             </FooterMenu>
-        </div>
+        </CategoryLayout>
     );
 }
 

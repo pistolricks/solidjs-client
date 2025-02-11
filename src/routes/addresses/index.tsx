@@ -6,6 +6,7 @@ import {getAddresses} from "~/lib/addresses";
 import AddressesList from "~/components/addresses/list";
 import FooterMenu from "~/components/layouts/partials/footer-menu";
 import {Button} from "~/components/ui/button";
+
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 const VendorsList = lazy(() => import( "~/components/vendors/list"));
 
@@ -24,14 +25,15 @@ export default function Vendors() {
         console.log("addresses", addressData())
     })
     return (
-        <div class={'relative h-full w-full container'}>
-            <CategoryLayout {...addressData()}>
-                <AddressesList addresses={addressData()}/>
-            </CategoryLayout>
+        <CategoryLayout {...addressData()}>
+
+            <AddressesList addresses={addressData()}/>
+
 
             <FooterMenu title={"Addresses"}>
-                <Button as={A} href={'/addresses/create'} class={'uppercase bg-white'} variant={"outline"} size={'sm'}>Create</Button>
+                <Button as={A} href={'/addresses/create'} class={'uppercase bg-white'} variant={"outline"}
+                        size={'sm'}>Create</Button>
             </FooterMenu>
-        </div>
+        </CategoryLayout>
     );
 }
