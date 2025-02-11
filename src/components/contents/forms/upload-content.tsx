@@ -1,10 +1,8 @@
 import {Component, lazy} from "solid-js";
 import FileUploader from "~/components/ui/file-uploader";
-import {RouteSectionProps} from "@solidjs/router";
-
 const FormLayout = lazy(() => import( "~/components/layouts/form-layout"));
 
-const Upload: Component<RouteSectionProps> = props => {
+const UploadContent: Component = props => {
 
     return (
         <FormLayout title="">
@@ -13,4 +11,4 @@ const Upload: Component<RouteSectionProps> = props => {
     );
 };
 
-export default Upload;
+export default UploadContent;

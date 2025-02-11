@@ -27,7 +27,7 @@ const ContentsList: Component<PROPS> = props => {
                             class="group overflow-hidden rounded-lg h-3/4 focus-within:ring-2 focus-within:ring-blue-5 focus-within:ring-offset-2 focus-within:ring-offset-gray-1">
                             <img
                                 src={`http://localhost:4000/${content.src}`}
-                                alt="" class="pointer-events-none aspect-[7/7] object-cover group-hover:opacity-75"/>
+                                alt="" class="pointer-events-none aspect-[1/1] object-cover group-hover:opacity-75"/>
                             <button type="button" class="absolute inset-0 focus:outline-none">
                                 <span class="sr-only">{content.original}</span>
                             </button>

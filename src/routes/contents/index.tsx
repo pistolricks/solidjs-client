@@ -2,16 +2,12 @@ import {AccessorWithLatest, createAsync} from "@solidjs/router";
 import {ContentsData} from "~/lib/store";
 import {createEffect, createSignal, lazy} from "solid-js";
 import {getContents} from "~/lib/contents";
+import FooterMenu from "~/components/layouts/partials/footer-menu";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 const ContentsList = lazy(() => import( "~/components/contents/list"));
 
 
-export const route = {
-    preload() {
-        getContents();
-    }
-}
 
 export default function Contents() {
 
@@ -25,9 +21,15 @@ export default function Contents() {
         console.log("getAllContents", getAllContents())
     })
     return (
-        <CategoryLayout {...getAllContents()}>
-            <ContentsList contents={getAllContents()}/>
-        </CategoryLayout>
+        <div class={'relative h-full w-full container'}>
+            <CategoryLayout {...getAllContents()}>
+                <ContentsList contents={getAllContents()}/>
+            </CategoryLayout>
+
+            <div class={'absolute bottom-0 w-full'}>
+            <FooterMenu />
+            </div>
+        </div>
     );
 }
 

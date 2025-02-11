@@ -1,14 +1,17 @@
 import {Component, For, lazy, ParentProps} from "solid-js";
 import {A} from "@solidjs/router";
 import Drawer from "@corvu/drawer";
+import {USER} from "~/lib/store";
 
 const LogoutUserForm = lazy(() => import("~/components/users/forms/logout-user-form"));
 type PROPS = {
-    title?: string;
+    user?: USER
 }
 
 const SideNavMenu: Component<PROPS> = props => {
-    const title = () => props.title ?? "Login"
+
+    const user = () => props.user;
+    const title = () => user()?.name ?? "Login"
 
     const menus: MenuItem[] = [
         {title: "Vendors", href: "/vendors"},

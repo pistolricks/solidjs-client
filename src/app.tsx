@@ -13,7 +13,7 @@ export default function App() {
         <Router
             root={props => (
                 <>
-                    <BaseDrawer {...props}>
+                    <BaseDrawer id={'drawer-1'} {...props}>
                         <Nav {...props}/>
                         <Suspense>{props.children}</Suspense>
                     </BaseDrawer>

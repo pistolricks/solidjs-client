@@ -1,10 +1,11 @@
 import {A, AccessorWithLatest, createAsync, RouteSectionProps, useLocation} from "@solidjs/router";
-import {Component, lazy, Show} from "solid-js";
+import {Component, lazy, ParentProps, Show} from "solid-js";
 import {USER} from "~/lib/store";
 import Drawer from "@corvu/drawer";
 import {UserCircle} from "~/components/svg";
 import {getUser} from "~/lib/users";
-import PageHeading from "~/components/layouts/partials/page-heading";
+import Breadcrumbs from "~/components/layouts/partials/breadcrumbs";
+import SideNavMenu from "~/components/layouts/partials/side-nav-menu";
 
 export const route = {
     preload() {
@@ -13,7 +14,7 @@ export const route = {
 }
 
 
-type PROPS = RouteSectionProps
+type PROPS = ParentProps
 const Nav: Component<PROPS> = props => {
     const location = useLocation();
     const user: AccessorWithLatest<USER | undefined> = createAsync(async () => getUser());
@@ -23,15 +24,16 @@ const Nav: Component<PROPS> = props => {
         routePath == path() ? "border-gray-normal" : "border-transparent hover:border-gray-dim";
 
     return (
+        <>
         <header class={"relative w-full bg-gray-ui"}>
             <nav class="container items-center w-full" aria-label="Global">
-                <div class="flex justify-between items-center w-full p-3 text-gray-normal">
+                <div class="flex justify-between items-center w-full py-3 text-gray-normal">
                     <ul class="flex justify-start items-center">
-                        <li class={`${active("/")} mx-1.5 sm:mx-6`}>
+                        <li class={`${active("/")}`}>
                             <A href="/">{import.meta.env.VITE_APP_NAME}</A>
                         </li>
                     </ul>
-                    <ul class="flex justify-end items-center mx-1.5 sm:mx-6">
+                    <ul class="flex justify-end items-center">
                         <Show
                             fallback={
                                 <>
@@ -60,12 +62,19 @@ const Nav: Component<PROPS> = props => {
             </nav>
             <div class={'bg-gray-app border-b border-gray-normal'}>
                 <div class="container w-full">
-                    <div class={'container'}>
-                        <PageHeading path={path()}/>
-                    </div>
+                        <Breadcrumbs path={path()}/>
                 </div>
             </div>
         </header>
+            <Drawer.Content class={"w-screen sm:max-w-lg"}>
+
+                <SideNavMenu user={user()}/>
+
+                {/*
+                            <p class="hidden_frog">🐸 You found froggy!</p>
+                           */}
+            </Drawer.Content>
+            </>
     );
 }
 
