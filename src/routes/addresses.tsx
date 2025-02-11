@@ -8,9 +8,9 @@ type PROPS = {
 const AddressesLayout: Component<PROPS> = props => {
 
     return (
-        <>
+        <main>
             {props.children}
-        </>
+        </main>
     );
 };
 

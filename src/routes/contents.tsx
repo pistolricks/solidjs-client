@@ -7,9 +7,9 @@ type PROPS = {
 const ContentsLayout: Component<PROPS> = props => {
 
     return (
-        <>
+        <main>
             {props.children}
-        </>
+        </main>
     );
 };
 

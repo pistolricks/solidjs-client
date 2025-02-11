@@ -6,9 +6,14 @@ import {UserCircle} from "~/components/svg";
 import {getUser} from "~/lib/users";
 import Breadcrumbs from "~/components/layouts/partials/breadcrumbs";
 import SideNavMenu from "~/components/layouts/partials/side-nav-menu";
+import {getVendors} from "~/lib/vendors";
 
 
-
+export const route = {
+    preload() {
+        getVendors();
+    }
+}
 
 type PROPS = ParentProps
 const Nav: Component<PROPS> = props => {
