@@ -27,7 +27,7 @@ const Breadcrumbs: Component<PROPS> = props => {
 
     return (
         <Show when={splitPath()?.length > 0 && splitPath()?.[1]?.length > 0}>
-            <div class={'flex justify-between items-center w-full py-3 px-0.5 text-gray-normal'}>
+            <div class={'flex justify-between items-center w-full pt-3 mb-3 px-0.5 text-gray-normal'}>
                 <Breadcrumb class={''}>
                     <BreadcrumbList>
 
