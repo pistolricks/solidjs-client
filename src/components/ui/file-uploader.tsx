@@ -80,12 +80,12 @@ const FileUploader: Component<PROPS> = props => {
                     </div>
                 </div>
             </div>
-            <div class={'items-center flex flex-row-reverse space-x-2 space-x-reverse py-3'}>
+            <div class={'items-center flex flex-row-reverse space-x-4 space-x-reverse py-3'}>
                 <Dialog.Close class={''}>
-                    <Button as={"button"} variant={'default'} type={"submit"}><UploadCloud/></Button>
+                    <Button as={"button"} variant={'default'} class={'bg-white'} size={"icon"} type={"submit"}><UploadCloud/></Button>
                 </Dialog.Close>
                 <Dialog.Close class={''}>
-                    <Button as={"button"} variant={'default'} type={"button"}><XMark/></Button>
+                    <Button as={"button"} variant={'default'} class={'bg-white'} size={"icon"} type={"button"}><XMark/></Button>
                 </Dialog.Close>
             </div>
         </form>

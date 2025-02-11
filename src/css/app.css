@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './drawer.css' layer(utilities);
+@import './dialog.css' layer(utilities);
 @import './colors.css';
 
 @plugin "tailwindcss-animate";
@@ -124,6 +125,7 @@
   --sidebar-error-foreground:  var(--tomato-12);
 
   --sidebar-ring: var(--gray-10);
+
 }
 
 
