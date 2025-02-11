@@ -7,17 +7,13 @@ import {getUser} from "~/lib/users";
 import Breadcrumbs from "~/components/layouts/partials/breadcrumbs";
 import SideNavMenu from "~/components/layouts/partials/side-nav-menu";
 
-export const route = {
-    preload() {
-        getUser();
-    }
-}
+
 
 
 type PROPS = ParentProps
 const Nav: Component<PROPS> = props => {
-    const location = useLocation();
     const user: AccessorWithLatest<USER | undefined> = createAsync(async () => getUser());
+    const location = useLocation();
     const path = () => location.pathname;
 
     const active = (routePath: string) =>
