@@ -9,12 +9,12 @@ import {
 
 
 type PROPS = {
-    path: string;
+    path?: string;
 }
 
 const Breadcrumbs: Component<PROPS> = props => {
 
-    const path = () => props.path;
+    const path = () => props.path ?? "";
 
 
     const splitPath = createMemo(() => {
@@ -27,7 +27,7 @@ const Breadcrumbs: Component<PROPS> = props => {
 
     return (
         <Show when={splitPath()?.length > 0 && splitPath()?.[1]?.length > 0}>
-            <div class={'flex justify-between items-center w-full py-3 px-1 text-gray-normal'}>
+            <div class={'flex justify-between items-center w-full py-3 px-0.5 text-gray-normal'}>
                 <Breadcrumb class={''}>
                     <BreadcrumbList>
 

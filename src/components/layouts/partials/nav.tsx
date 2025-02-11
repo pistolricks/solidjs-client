@@ -9,18 +9,16 @@ import SideNavMenu from "~/components/layouts/partials/side-nav-menu";
 import {getVendors} from "~/lib/vendors";
 
 
-export const route = {
-    preload() {
-        getVendors();
-    }
+
+
+type PROPS = {
+    user?: USER;
+    path?: string;
 }
-
-type PROPS = ParentProps
 const Nav: Component<PROPS> = props => {
-    const user: AccessorWithLatest<USER | undefined> = createAsync(async () => getUser());
-    const location = useLocation();
-    const path = () => location.pathname;
 
+    const user = () => props.user;
+    const path = () => props.path;
     const active = (routePath: string) =>
         routePath == path() ? "border-gray-normal" : "border-transparent hover:border-gray-dim";
 

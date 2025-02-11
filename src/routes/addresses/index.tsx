@@ -4,6 +4,8 @@ import {createEffect, lazy} from "solid-js";
 import {getVendors} from "~/lib/vendors";
 import {getAddresses} from "~/lib/addresses";
 import AddressesList from "~/components/addresses/list";
+import FooterMenu from "~/components/layouts/partials/footer-menu";
+import {Button} from "~/components/ui/button";
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 const VendorsList = lazy(() => import( "~/components/vendors/list"));
 
@@ -22,11 +24,14 @@ export default function Vendors() {
         console.log("addresses", addressData())
     })
     return (
-        <CategoryLayout {...addressData()}>
-            <A class={'text-gray-7'} href={"/addresses/create"}>
-                Create
-            </A>
-            <AddressesList addresses={addressData()}/>
-        </CategoryLayout>
+        <div class={'relative h-full w-full container'}>
+            <CategoryLayout {...addressData()}>
+                <AddressesList addresses={addressData()}/>
+            </CategoryLayout>
+
+            <FooterMenu title={"Addresses"}>
+                <Button as={A} href={'/addresses/create'} class={'uppercase bg-white'} variant={"outline"} size={'sm'}>Create</Button>
+            </FooterMenu>
+        </div>
     );
 }
