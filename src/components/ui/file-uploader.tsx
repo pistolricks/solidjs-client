@@ -1,10 +1,11 @@
 import {Component, createEffect, createSignal, Show} from "solid-js";
-import {uploadFileHandler} from "~/lib/contents";
+import {getContents, uploadFileHandler} from "~/lib/contents";
 import {Button} from "~/components/ui/button";
 import {ChevronLeft, UploadCloud, XMark} from "~/components/svg";
 import {useObjectUrl} from 'solidjs-use'
 import {showToast} from "~/components/ui/toast";
 import Dialog from "@corvu/dialog";
+import {revalidate} from "@solidjs/router";
 
 
 type PROPS = {}
@@ -35,6 +36,8 @@ const FileUploader: Component<PROPS> = props => {
                 description: res?.error
             })
         }
+
+        await revalidate(getContents.keyFor(), true);
 
     };
 

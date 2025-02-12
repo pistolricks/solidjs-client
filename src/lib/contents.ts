@@ -1,4 +1,4 @@
-import {action, query} from "@solidjs/router";
+import {action, query, revalidate} from "@solidjs/router";
 import {createSignal} from "solid-js";
 import {baseApi, getUserToken} from "~/lib/server";
 
@@ -71,9 +71,10 @@ export const uploadFileHandler = (async (data: FormDataEntryValue[]) => {
         },
         body: formData
     })
-
     const res: any  = await response.json();
     const status: number = response.status;
+
+
     console.log("response", res);
     console.log("full json response", status)
 

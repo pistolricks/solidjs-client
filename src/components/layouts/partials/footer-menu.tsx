@@ -14,7 +14,7 @@ const FooterMenu: Component<PROPS> = props => {
 
     return (
         <footer class={'bg-gray-ui fixed inset-x-0 bottom-0 w-full rounded-none border-l border-t border-gray-normal'}>
-                <div class="py-2 flex items-center justify-between px-2">
+                <div class="p-2 flex items-center justify-between">
                     <Button class={'uppercase'} variant={'default'} size={'sm'}>{title()}</Button>
                     <div class="space-x-2">
                         {children()}
