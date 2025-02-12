@@ -57,30 +57,6 @@ export type VendorsData = {
     vendors: VENDOR[]
 }
 
-export const storage = createStorage({
-    driver: fsLiteDriver({
-        base: "./storage"
-    })
-})
-
-storage.setItem("user:data", {
-        id: 0,
-        name: "",
-        email: "",
-        activated: false,
-        created_at: "",
-    }
-)
-
-// storage.setItem("users:counter", 2)
-
-
-storage.setItem("auth:token", {
-    token: "",
-    expiry: "2022-01-01T00:00:00.000Z"
-})
-
-
 export type CONTENT = {
     id: string;
     created_at: string;
@@ -93,18 +69,6 @@ export type CONTENT = {
     user_id: string;
 }
 
-storage.setItem("contents:data", [{
-    id: "",
-    created_at: "",
-    name: "",
-    original: "",
-    hash: "",
-    src: "",
-    type: "",
-    size: 0,
-    user_id: "",
-
-}]);
 
 export type CONTENT_DETAIL = {
     content: CONTENT

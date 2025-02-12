@@ -39,7 +39,7 @@ export async function updateSessionUser(user: USER, authentication_token: AUTHEN
     }
 }
 
-export async function getSessionUser(): Promise<USER | null> {
+export async function getSessionUser(): Promise<USER | undefined> {
     const session = await getSession();
 
     const user = {
@@ -50,11 +50,12 @@ export async function getSessionUser(): Promise<USER | null> {
         created_at: session.data.created_at
     }
 
-    if (!user.id) return null;
+    if (user.email === "") return undefined;
+
     return user;
 }
 
-export async function getSessionToken(): Promise<AUTHENTICATION_TOKEN | null> {
+export async function getSessionToken(): Promise<AUTHENTICATION_TOKEN | undefined> {
     const session = await getSession();
 
     const token = {
@@ -62,7 +63,7 @@ export async function getSessionToken(): Promise<AUTHENTICATION_TOKEN | null> {
         expiry: session.data.expiry
     }
 
-    if (!token.token) return null;
+    if (!token.token) return undefined;
     return token;
 }
 

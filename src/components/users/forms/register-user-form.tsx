@@ -18,6 +18,7 @@ const RegisterUserForm: Component<PROPS> = props => {
 
     createEffect(() => {
         if (results()?.error) {
+            console.log(results()?.error)
             showToast({
                 variant: "error",
                 title: "Error",

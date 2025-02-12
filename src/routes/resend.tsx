@@ -1,7 +1,8 @@
 import {Component, createEffect, lazy, Show, VoidComponent} from "solid-js";
 import {AccessorWithLatest, createAsync, RouteSectionProps} from "@solidjs/router";
 import {USER} from "~/lib/store";
-import {getUser, redirectTo} from "~/lib/users";
+import {getUser} from "~/lib/users";
+import {redirectTo} from "~/lib";
 
 const ResendActivateEmailForm = lazy(() => import( "~/components/users/forms/resend-activate-email-form"));
 const LoginUserForm = lazy(() => import('~/components/users/forms/login-user-form'));

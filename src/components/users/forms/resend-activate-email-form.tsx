@@ -13,6 +13,8 @@ const ResendActivateEmailForm: Component<PROPS> = props => {
 
 
     const results = createMemo(() => {
+        console.log("submission", submission)
+        console.log("submission-result", submission.result)
         return submission.result
     })
 

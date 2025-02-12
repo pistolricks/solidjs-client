@@ -10,8 +10,10 @@ type PROPS = {}
 
 const LoginUserForm: Component<PROPS> = props => {
     const submission = useSubmission(loginUserHandler);
-    const navigate = useNavigate();
 
+    const errors = createMemo(() => {
+        return submission.error
+    })
 
     const results = createMemo(() => {
         return submission.result
@@ -39,9 +41,9 @@ const LoginUserForm: Component<PROPS> = props => {
             <form class={'space-y-4'} action={loginUserHandler} method="post">
                 <TextField>
                     <TextFieldInput type="email" autocomplete={'username'} name="email" placeholder="Email"/>
-                    <Show when={results()?.error?.email}>
+                    <Show when={errors()?.error?.email}>
                         <TextFieldErrorMessage>
-                            {results()?.error?.email}
+                            {errors()?.error?.email}
                         </TextFieldErrorMessage>
                     </Show>
 
@@ -49,9 +51,9 @@ const LoginUserForm: Component<PROPS> = props => {
                 <TextField>
                     <TextFieldInput type="password" autocomplete={'current-password'} required name="password"
                                     placeholder="Password"/>
-                    <Show when={results()?.error?.password}>
+                    <Show when={errors()?.error?.password}>
                         <TextFieldErrorMessage>
-                            {results()?.error?.password}
+                            {errors()?.error?.password}
                         </TextFieldErrorMessage>
                     </Show>
                 </TextField>

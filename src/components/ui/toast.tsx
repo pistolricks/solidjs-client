@@ -14,12 +14,12 @@ const toastVariants = cva(
   {
     variants: {
       variant: {
-        default: "border bg-background text-foreground",
+        default: "border border-gray-normal bg-gray-ui text-gray-normal",
         destructive:
-          "destructive group border-destructive bg-destructive text-destructive-foreground",
-        success: "success border-success-foreground bg-success text-success-foreground",
-        warning: "warning border-warning-foreground bg-warning text-warning-foreground",
-        error: "error border-error-foreground bg-error text-error-foreground"
+          "destructive group border-tomato-normal bg-tomato-ui text-tomato-normal",
+        success: "success border-green-normal bg-green-ui text-green-normal",
+        warning: "warning border-yellow-normal bg-yellow-ui text-yellow-normal",
+        error: "error border-red-normal bg-red-ui text-red-normal"
       }
     },
     defaultVariants: {

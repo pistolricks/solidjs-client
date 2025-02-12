@@ -65,7 +65,7 @@ const CreateVendorForm: Component<PROPS> = props => {
                     <Button as={"button"} variant={'default'} type={"submit"}>Add Vendor</Button>
                     <Button
                         as={"A"}
-                        href={'/'}
+                        href={'/vendors'}
                         variant={'secondary'}
                         size={"icon"}
                         type={"button"}

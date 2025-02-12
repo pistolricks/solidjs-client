@@ -8,55 +8,71 @@ export type USER = {
     created_at: string;
 }
 
+/*USER*/
+const fetchRegister = async (userInput: { name: string, email: string, password: string }) =>
+    (await fetch(`${baseApi}/users`, {
+            method: "POST",
+            body: JSON.stringify(userInput),
+        })
+    ).json()
 
-const fetchLogin = async (userInput: { email: string , password: string }) =>
+const fetchActivate = async (activateInput: { token: string }) =>
+    (await fetch(`${baseApi}/users/activated`, {
+            method: "PUT",
+            body: JSON.stringify(activateInput),
+        })
+    ).json()
+
+const fetchResendActivateEmail = async (resendInput: { email: string }) =>
+    (await fetch(`${baseApi}/tokens/activation`, {
+            method: "POST",
+            body: JSON.stringify(resendInput),
+        })
+    ).json()
+
+const fetchLogin = async (userInput: { email: string, password: string }) =>
     (await fetch(`${baseApi}/tokens/authentication`, {
             method: "POST",
             body: JSON.stringify(userInput),
         })
-    )
+    ).json()
 
-const fetchLogout = async (userInput: { email: string , password: string }) =>
-    (await fetch(`${baseApi}/tokens/authentication`, {
+const fetchLogout = async () =>
+    (await fetch(`${baseApi}/users/logout`, {
             method: "POST",
-            body: JSON.stringify(userInput),
         })
-    )
+    ).json()
 
 const fetchUser = async (userInput: { email: string, tokenPlaintext: string }) =>
     (await fetch(`${baseApi}/users/find`, {
             method: "POST",
             body: JSON.stringify(userInput),
         })
-    )
+    ).json()
 
-const fetchByToken = async (email: string) =>
-    (await fetch(`${baseApi}/users/find/token`, {
-            method: "POST",
-            body: JSON.stringify({email}),
-        })
-    )
+
 
 export const db = {
     user: {
-        async login({ where: { userInput } }: { where: { userInput: {email: string; password: string} } }) {
-            const response: Response = await fetchLogin(userInput);
-            const res: any = await response.json();
-            return {
-                user: res.user,
-                authentication_token: res.authentication_token,
-                status: response.status
-            };
+        async register({where: {userInput}}: {
+            where: { userInput: { name: string; email: string; password: string } }
+        }) {
+            return await fetchRegister(userInput);
         },
-        async findUser({where: {userInput}}:  { where: { userInput: {email: string; tokenPlaintext: string} } }) {
-            const response: Response = await fetchUser(userInput);
-            const res: any = await response.json();
-            return res.user;
+        async activate({where: {activateInput}}: { where: { activateInput: { token: string }; } }) {
+            return await fetchActivate(activateInput);
         },
-        async findByToken({where: {tokenPlaintext}}: { where: { tokenPlaintext: string } }) {
-            const response: Response = await fetchByToken(tokenPlaintext);
-            const res: any = await response.json();
-            return res.user;
-        }
+        async resendActivateEmail({where: {resendInput}}: { where: { resendInput: { email: string }; } }) {
+            return await fetchResendActivateEmail(resendInput);
+        },
+        async login({where: {userInput}}: { where: { userInput: { email: string; password: string } } }) {
+            return await fetchLogin(userInput);
+        },
+        async logout() {
+            return await fetchLogout();
+        },
+        async findUser({where: {userInput}}: { where: { userInput: { email: string; tokenPlaintext: string } } }) {
+            return await fetchUser(userInput);
+        },
     }
 }

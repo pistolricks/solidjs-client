@@ -19,6 +19,7 @@ const AppLayout: Component<PROPS> = props => {
     const location = useLocation();
     const path = () => location.pathname;
 
+    console.log('name', user()?.name)
 
     return (
         <BaseDrawer>
