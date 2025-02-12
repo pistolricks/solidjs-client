@@ -8,7 +8,15 @@ export type USER = {
     created_at: string;
 }
 
+
 const fetchLogin = async (userInput: { email: string , password: string }) =>
+    (await fetch(`${baseApi}/tokens/authentication`, {
+            method: "POST",
+            body: JSON.stringify(userInput),
+        })
+    )
+
+const fetchLogout = async (userInput: { email: string , password: string }) =>
     (await fetch(`${baseApi}/tokens/authentication`, {
             method: "POST",
             body: JSON.stringify(userInput),

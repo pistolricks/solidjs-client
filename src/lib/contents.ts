@@ -1,13 +1,10 @@
 import {action, query} from "@solidjs/router";
-import {AUTHENTICATION_TOKEN, CONTENT, storage} from "~/lib/store";
-import {redirectTo} from "~/lib/users";
 import {createSignal} from "solid-js";
-import {baseApi} from "~/lib/server";
-import {USER} from "~/lib/db";
+import {baseApi, getUserToken} from "~/lib/server";
 
 export const getContents = query(async () => {
     "use server";
-    let token = ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
+    let token = await getUserToken();
 
     console.log("Bearer:", token.token)
 
@@ -24,7 +21,7 @@ export const getContents = query(async () => {
 export const getContent = query(async (id: number) => {
     "use server";
 
-    let token = ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
+    let token = await getUserToken();
 
     console.log("Bearer:", token.token)
 
@@ -44,7 +41,7 @@ export const getContent = query(async (id: number) => {
 export const uploadFileHandler = (async (data: FormDataEntryValue[]) => {
     "use server";
 
-    let token = ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
+    let token = await getUserToken();
 
     console.log("Bearer:", token.token)
     console.log("data", data[0])

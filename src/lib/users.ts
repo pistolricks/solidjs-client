@@ -1,14 +1,14 @@
-import {AUTHENTICATION_TOKEN, storage, USER} from "~/lib/store";
+import {storage} from "~/lib/store";
 import {action, query, redirect} from "@solidjs/router";
 import {baseApi, login,} from "~/lib/server";
-import {db} from "~/lib/db";
 import {redirectTo} from "~/lib/index";
-import {getSession, SessionUser} from "~/lib/session";
+import {getSessionUser, SessionUser, updateSessionUser} from "~/lib/session";
+import {USER} from "~/lib/db";
 
 export const getUser = query(async () => {
     "use server";
     console.log("getUser was called")
-    let userData = (await storage.getItem("user:data")) as USER;
+    let userData = (await getSessionUser()) as USER;
     if (userData?.email === "") {
         return undefined;
     } else {
@@ -53,39 +53,18 @@ export const loginUserHandler = action(async (data: FormData) => {
 
     let res = await login(userInput)
 
-    console.log("user", res.user, "token", res.authentication_token.token)
-
-    try {
-      const session = await getSession();
-      await session.update((d: SessionUser) => {
-          d.id = res.user?.id;
-          d.name = res.user?.name;
-          d.email = res.user?.email;
-          d.token = res.authentication_token?.token;
-          d.expiry = res.authentication_token?.expiry;
-      });
-
-    } catch (err) {
-        return err as Error;
-    }
-
+    await updateSessionUser(res.user, res.authentication_token)
 
     const status: number = res.status;
     console.log("full json response", status)
 
-    if (status === 201) {
-        if (!res.user.activated) throw redirect("/activate");
-        if (res.user.activated) {
-            redirectTo()
-        }
-    }
     return res;
 })
 
 export const logoutUserHandler = action(async (data: FormData) => {
     "use server";
 
-    const response = await fetch(`${baseApi}/users/logout`, {
+   const response = await fetch(`${baseApi}/users/logout`, {
         method: "POST",
     })
 
@@ -93,22 +72,6 @@ export const logoutUserHandler = action(async (data: FormData) => {
     const status: number = response.status;
     console.log("full json status", status)
     console.log("full json response", res)
-
-    await storage.setItem("auth:token", {
-        token: undefined,
-        expiry: undefined,
-    })
-
-    await storage.setItem("user:data", {
-        id: res.user.id,
-        name: res.user.name,
-        email: res.user.email,
-        activated: res.user.activated,
-        created_at: res.user.created_at,
-    })
-
-   // await logoutSession();
-
 
     if (status === 200) {
         redirectTo()
@@ -173,10 +136,3 @@ export const resendActivateEmailHandler = action(async (data: FormData) => {
     return res;
 })
 
-export const getUserToken = query(async () => {
-    "use server";
-
-    console.log("getUserToken")
-    return ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
-
-}, 'token')

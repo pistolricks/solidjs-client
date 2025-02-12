@@ -74,10 +74,7 @@ storage.setItem("user:data", {
 
 // storage.setItem("users:counter", 2)
 
-export type AUTHENTICATION_TOKEN = {
-    token: string;
-    expiry: string;
-}
+
 storage.setItem("auth:token", {
     token: "",
     expiry: "2022-01-01T00:00:00.000Z"

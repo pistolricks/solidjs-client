@@ -1,11 +1,10 @@
 import {action, query} from "@solidjs/router";
-import {AUTHENTICATION_TOKEN, storage} from "~/lib/store";
-import {redirectTo} from "~/lib/users";
-import {baseApi} from "~/lib/server";
+import {baseApi, getUserToken} from "~/lib/server";
+import {redirectTo} from "~/lib/index";
 
 export const getAddresses = query(async () => {
     "use server";
-    let token = ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
+    let token = await getUserToken();
 
     console.log("Bearer:", token.token)
 
@@ -23,7 +22,7 @@ export const getAddresses = query(async () => {
 export const addAddress = action(async (data: FormData) => {
     "use server";
 
-    let token = ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
+    let token = await getUserToken();
 
     console.log("Bearer:", token.token)
 
@@ -63,7 +62,7 @@ export const addAddress = action(async (data: FormData) => {
 export const getAddressFormFormats = query(async () => {
     "use server";
 
-    let token = ((await storage.getItem("auth:token")) as AUTHENTICATION_TOKEN);
+    let token = await getUserToken();
 
     console.log("Bearer:", token.token)
 
