@@ -1,5 +1,4 @@
-import { createStorage } from "unstorage";
-import fsLiteDriver from "unstorage/drivers/fs-lite";
+import {baseApi} from "~/lib/server";
 
 export type USER = {
     id: number;
@@ -9,32 +8,47 @@ export type USER = {
     created_at: string;
 }
 
-const storage = createStorage({
-    driver: fsLiteDriver({
-        base: "./.data"
-    })
-});
-storage.setItem("users:data", [{ id: 0, email: "kody", password: "twixrox" }]);
-storage.setItem("users:counter", 1);
+const fetchLogin = async (userInput: { email: string , password: string }) =>
+    (await fetch(`${baseApi}/tokens/authentication`, {
+            method: "POST",
+            body: JSON.stringify(userInput),
+        })
+    )
+
+const fetchUser = async (userInput: { email: string, tokenPlaintext: string }) =>
+    (await fetch(`${baseApi}/users/find`, {
+            method: "POST",
+            body: JSON.stringify(userInput),
+        })
+    )
+
+const fetchByToken = async (email: string) =>
+    (await fetch(`${baseApi}/users/find/token`, {
+            method: "POST",
+            body: JSON.stringify({email}),
+        })
+    )
 
 export const db = {
     user: {
-        async create({ data }: { data: { email: string; password: string } }) {
-            const [{ value: users }, { value: index }] = await storage.getItems(["users:data", "users:counter"]);
-            const user = { ...data, id: index as number };
-            await Promise.all([
-                storage.setItem("users:data", [...(users as USER[]), user]),
-                storage.setItem("users:counter", index as number + 1)
-            ]);
-            return user;
+        async login({ where: { userInput } }: { where: { userInput: {email: string; password: string} } }) {
+            const response: Response = await fetchLogin(userInput);
+            const res: any = await response.json();
+            return {
+                user: res.user,
+                authentication_token: res.authentication_token,
+                status: response.status
+            };
         },
-        async findUnique({ where: { email = undefined, id = undefined } }: { where: { email?: string; id?: number } }) {
-            const users = await storage.getItem("users:data") as USER[];
-            if (id !== undefined) {
-                return users.find(user => user.id === id);
-            } else {
-                return users.find(user => user.email === email);
-            }
+        async findUser({where: {userInput}}:  { where: { userInput: {email: string; tokenPlaintext: string} } }) {
+            const response: Response = await fetchUser(userInput);
+            const res: any = await response.json();
+            return res.user;
+        },
+        async findByToken({where: {tokenPlaintext}}: { where: { tokenPlaintext: string } }) {
+            const response: Response = await fetchByToken(tokenPlaintext);
+            const res: any = await response.json();
+            return res.user;
         }
     }
-};
+}

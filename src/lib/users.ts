@@ -1,33 +1,9 @@
 import {AUTHENTICATION_TOKEN, storage, USER} from "~/lib/store";
 import {action, query, redirect} from "@solidjs/router";
-import {showToast} from "~/components/ui/toast";
-import {
-    baseApi,
-    getSession,
-    logout as logoutSession,
-} from "~/lib/server";
+import {baseApi, login,} from "~/lib/server";
 import {db} from "~/lib/db";
-
-export const getStorageUsers = query(async () => {
-    "use server";
-    console.log("getStorageUsers was called")
-    return [];
-}, "users")
-
-export const getUserA = query(async () => {
-    "use server";
-    try {
-        const session = await getSession();
-        const userId = session.data.userId;
-        if (userId === undefined) throw new Error("User not found");
-        const user = await db.user.findUnique({ where: { id: userId } });
-        if (!user) throw new Error("User not found");
-        return { id: user.id, email: user.email };
-    } catch {
-        await logoutSession();
-        throw redirect("/login");
-    }
-}, "user");
+import {redirectTo} from "~/lib/index";
+import {getSession, SessionUser} from "~/lib/session";
 
 export const getUser = query(async () => {
     "use server";
@@ -40,10 +16,7 @@ export const getUser = query(async () => {
     }
 }, "user")
 
-export const redirectTo = (path?: string) => {
-    let urlPath = `/${path ?? ``}`
-    throw redirect(urlPath)
-}
+
 
 export const registerUserHandler = action(async (data: FormData) => {
     "use server";
@@ -78,48 +51,31 @@ export const loginUserHandler = action(async (data: FormData) => {
         password: String(data.get("password")),
     }
 
-    const response = await fetch(`${baseApi}/tokens/authentication`, {
-        method: "POST",
-        body: JSON.stringify(userInput)
-    })
+    let res = await login(userInput)
 
-    const res: any = await response.json();
-
-    console.log("full json response", res)
-
-    await storage.setItem("auth:token", {
-        token: res.authentication_token.token,
-        expiry: res.authentication_token.expiry,
-    })
-
-    await storage.setItem("user:data", {
-        id: res.user?.id,
-        name: res.user?.name,
-        email: res.user?.email,
-        activated: res.user?.activated,
-        created_at: res.user?.created_at,
-    })
+    console.log("user", res.user, "token", res.authentication_token.token)
 
     try {
-
-        const session = await getSession();
-        await session.update(d => {
-            d.userId = res.user?.id;
-        });
+      const session = await getSession();
+      await session.update((d: SessionUser) => {
+          d.id = res.user?.id;
+          d.name = res.user?.name;
+          d.email = res.user?.email;
+          d.token = res.authentication_token?.token;
+          d.expiry = res.authentication_token?.expiry;
+      });
 
     } catch (err) {
         return err as Error;
     }
 
-    console.log("user", res?.user);
-    console.log(res.authentication_token.token);
 
-    const status: number = response.status;
+    const status: number = res.status;
     console.log("full json response", status)
 
     if (status === 201) {
         if (!res.user.activated) throw redirect("/activate");
-        if(res.user.activated) {
+        if (res.user.activated) {
             redirectTo()
         }
     }
@@ -151,7 +107,7 @@ export const logoutUserHandler = action(async (data: FormData) => {
         created_at: res.user.created_at,
     })
 
-    await logoutSession();
+   // await logoutSession();
 
 
     if (status === 200) {
