@@ -1,12 +1,11 @@
-import {action, query} from "@solidjs/router";
-import {activateUser, baseApi, login, logout, register, resendActivateEmail,} from "~/lib/server";
-import {redirectTo} from "~/lib/index";
+import {action, query, redirect} from "@solidjs/router";
+import {activateUser, login, logout, register, resendActivateEmail,} from "~/lib/server";
 import {getSessionUser} from "~/lib/session";
 import {USER} from "~/lib/db";
 
 export const getUser = query(async () => {
     "use server";
-    let userData = (await getSessionUser()) as USER|undefined;
+    let userData = (await getSessionUser()) as USER | undefined;
     console.log("getUser", userData)
     return userData;
 }, "user")
@@ -18,7 +17,10 @@ export const registerUserHandler = action(async (data: FormData) => {
         email: String(data.get("email")),
         password: String(data.get("password")),
     }
-    return await register(userInput)
+    let res = await register(userInput)
+    if (res.user?.id) {
+        throw redirect("/activate")
+    }
 })
 
 export const activateUserHandler = async (token: string) => {
@@ -34,7 +36,7 @@ export const resendActivateEmailHandler = action(async (data: FormData) => {
     const resendInput = {
         email: String(data.get("email")),
     }
-   return resendActivateEmail(resendInput)
+    return resendActivateEmail(resendInput)
 })
 
 export const loginUserHandler = action(async (data: FormData) => {

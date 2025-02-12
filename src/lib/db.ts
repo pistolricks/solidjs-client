@@ -54,8 +54,7 @@ const fetchUser = async (userInput: { email: string, tokenPlaintext: string }) =
 
 export const db = {
     user: {
-        async register({where: {userInput}}: {
-            where: { userInput: { name: string; email: string; password: string } }
+        async register({where: {userInput}}: { where: { userInput: { name: string; email: string; password: string } }
         }) {
             return await fetchRegister(userInput);
         },

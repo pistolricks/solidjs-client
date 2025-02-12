@@ -1,5 +1,5 @@
 import {Component, createEffect, createMemo, Show} from "solid-js";
-import {useSubmission} from "@solidjs/router";
+import {redirect, useSubmission} from "@solidjs/router";
 import {registerUserHandler} from "~/lib/users";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "~/components/ui/button";
@@ -16,13 +16,19 @@ const RegisterUserForm: Component<PROPS> = props => {
         return submission.result
     })
 
+
     createEffect(() => {
         if (results()?.error) {
             console.log(results()?.error)
+            let message: string = results()?.error?.name
+                ?? results()?.error?.email
+                ?? results()?.error?.password
+
+
             showToast({
                 variant: "error",
                 title: "Error",
-                description: results()?.error
+                description: message
             })
         }
     })
