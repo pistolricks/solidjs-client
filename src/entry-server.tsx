@@ -1,6 +1,5 @@
 // @refresh reload
 import { createHandler, StartServer } from "@solidjs/start/server";
-import {Toaster} from "~/components/ui/toast";
 
 export default createHandler(() => (
   <StartServer

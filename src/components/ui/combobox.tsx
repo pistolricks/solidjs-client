@@ -20,7 +20,7 @@ const ComboboxItem = <T extends ValidComponent = "li">(
   return (
     <ComboboxPrimitive.Item
       class={cn(
-        "relative flex cursor-default select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-hidden data-disabled:pointer-events-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:opacity-50",
+        "relative flex cursor-default select-none items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-hidden data-disabled:pointer-events-none data-highlighted:bg-green-ui data-highlighted:text-green-normal data-disabled:opacity-50",
         local.class
       )}
       {...others}
@@ -88,7 +88,7 @@ const ComboboxControl = <T, U extends ValidComponent = "div">(
   const [local, others] = splitProps(props as ComboboxControlProps<T>, ["class"])
   return (
     <ComboboxPrimitive.Control
-      class={cn("flex h-10 items-center rounded-md border px-3", local.class)}
+      class={cn("flex h-10 items-center rounded-md border text-dim border-input px-3", local.class)}
       {...others}
     />
   )
@@ -104,7 +104,7 @@ const ComboboxInput = <T extends ValidComponent = "input">(
   return (
     <ComboboxPrimitive.Input
       class={cn(
-        "flex size-full rounded-md bg-transparent py-3 text-sm outline-hidden placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+        "flex size-full rounded-md bg-transparent py-3 text-sm outline-hidden placeholder:text-dim disabled:cursor-not-allowed disabled:opacity-50",
         local.class
       )}
       {...others}
@@ -156,7 +156,7 @@ const ComboboxContent = <T extends ValidComponent = "div">(
     <ComboboxPrimitive.Portal>
       <ComboboxPrimitive.Content
         class={cn(
-          "relative z-50 max-h-64 overflow-y-auto min-w-32  rounded-md border bg-popover text-popover-foreground shadow-md animate-in fade-in-80",
+          "relative z-50 max-h-64 overflow-y-auto min-w-32  rounded-md border border-gray-dim bg-gray-dim text-gray-dim shadow-md animate-in fade-in-80",
           local.class
         )}
         {...others}

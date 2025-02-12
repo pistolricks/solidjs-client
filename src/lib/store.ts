@@ -1,6 +1,3 @@
-import {createStorage} from "unstorage";
-import fsLiteDriver from "unstorage/drivers/fs-lite";
-
 export type USER = {
     id: number;
     name: string;

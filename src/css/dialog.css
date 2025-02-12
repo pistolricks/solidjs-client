@@ -16,11 +16,11 @@
     transition-duration: 100ms;
     animation-duration: 100ms;
 }
-
+/*
 [data-corvu-dialog-trigger]:hover {
-
+    color: var(--blue-8);
 }
-
+*/
 [data-corvu-dialog-trigger]:active {
     transform: translate(0px, 0.125rem);
 }
@@ -57,7 +57,6 @@
     --tw-enter-scale: initial;
     --tw-enter-rotate: initial;
     --tw-enter-translate-x: initial;
-;
     --tw-enter-translate-y: initial;
     --tw-enter-scale: .95;
     --tw-enter-translate-y: -10%;
@@ -119,7 +118,8 @@ textarea:focus {
     display: flex;
     justify-content: space-between;
 }
-
+/*
 [data-corvu-dialog-close] {
 
 }
+*/
