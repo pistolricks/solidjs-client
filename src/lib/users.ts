@@ -18,9 +18,8 @@ export const registerUserHandler = action(async (data: FormData) => {
         password: String(data.get("password")),
     }
     let res = await register(userInput)
-    if (res.user?.id) {
-        throw redirect("/activate")
-    }
+    if (res.user?.id) throw redirect("/activate")
+    else return res;
 })
 
 export const activateUserHandler = async (token: string) => {

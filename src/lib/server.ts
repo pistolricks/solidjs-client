@@ -8,9 +8,8 @@ export const baseApi = (`http://localhost:${import.meta.env.VITE_SERVER_PORT}/${
 
 export async function register(userInput: { name: string, email: string, password: string }) {
     const res = await db.user.register({where: {userInput}});
-    console.log('status', res.status)
-    if (res.status === 201) throw redirect("/activate");
-    else return res;
+    console.log('register-res', res)
+    return res;
 }
 
 export async function activateUser(activateInput: { token: string }) {
