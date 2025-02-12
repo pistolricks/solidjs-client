@@ -1,4 +1,4 @@
-import {AccessorWithLatest, createAsync} from "@solidjs/router";
+import {AccessorWithLatest, createAsync, RouteDefinition} from "@solidjs/router";
 import {ContentsData} from "~/lib/store";
 import {createEffect, createSignal, lazy} from "solid-js";
 import {getContents} from "~/lib/contents";
@@ -6,11 +6,16 @@ import FooterMenu from "~/components/layouts/partials/footer-menu";
 import {Button} from "~/components/ui/button";
 import Dialog from "@corvu/dialog";
 import FileUploader from "~/components/ui/file-uploader";
+import {getUser} from "~/lib/users";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 const ContentsList = lazy(() => import( "~/components/contents/list"));
 
-
+export const route = {
+    preload({params}){
+        getContents();
+    }
+} satisfies RouteDefinition
 export default function Contents() {
 
     const contentsData: AccessorWithLatest<ContentsData | undefined> = createAsync(async () => getContents());
