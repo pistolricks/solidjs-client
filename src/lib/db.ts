@@ -6,6 +6,7 @@ export type USER = {
     email: string;
     activated: boolean;
     created_at: string;
+    folder?: string;
 }
 
 /*USER*/

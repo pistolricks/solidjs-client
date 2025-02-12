@@ -10,18 +10,21 @@ export type SessionUser = {
     created_at?: string;
     token?: string
     expiry?: string
+    folder?: string
 }
 
 
 
 
 export function getSession() {
+    "use server";
     return useSession({
         password: import.meta.env.VITE_SESSION_SECRET ?? "areallylongsecretthatyoushouldreplace"
     });
 }
 
-export async function updateSessionUser(user: USER, authentication_token: AUTHENTICATION_TOKEN ) {
+export async function updateSessionUser(user: USER, authentication_token: AUTHENTICATION_TOKEN, folder: string ) {
+    "use server";
     try {
         const session = await getSession();
         await session.update((d: SessionUser) => {
@@ -32,6 +35,7 @@ export async function updateSessionUser(user: USER, authentication_token: AUTHEN
             d.created_at = user?.created_at;
             d.token = authentication_token?.token;
             d.expiry = authentication_token?.expiry;
+            d.folder = folder
         });
 
     } catch (err) {
@@ -40,6 +44,7 @@ export async function updateSessionUser(user: USER, authentication_token: AUTHEN
 }
 
 export async function getSessionUser(): Promise<USER | undefined> {
+    "use server";
     const session = await getSession();
 
     const user = {
@@ -47,7 +52,8 @@ export async function getSessionUser(): Promise<USER | undefined> {
         name: session.data.name,
         email: session.data.email,
         activated: session.data.activated,
-        created_at: session.data.created_at
+        created_at: session.data.created_at,
+        folder: session.data.folder,
     }
 
     if (user.email === "") return undefined;
@@ -56,6 +62,7 @@ export async function getSessionUser(): Promise<USER | undefined> {
 }
 
 export async function getSessionToken(): Promise<AUTHENTICATION_TOKEN | undefined> {
+    "use server";
     const session = await getSession();
 
     const token = {
@@ -67,8 +74,18 @@ export async function getSessionToken(): Promise<AUTHENTICATION_TOKEN | undefine
     return token;
 }
 
+export async function getSessionFolder(): Promise<string | undefined> {
+    "use server";
+    const session = await getSession();
+
+    const folderName: string = session.data.folder;
+
+    if (!folderName) return undefined;
+    return folderName;
+}
 
 export async function clearSessionUser() {
+    "use server";
     try {
         const session = await getSession();
         await session.update((d: SessionUser) => {
@@ -79,6 +96,7 @@ export async function clearSessionUser() {
             d.created_at = undefined;
             d.token = undefined;
             d.expiry = undefined;
+            d.folder = undefined;
         });
 
     } catch (err) {

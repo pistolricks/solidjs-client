@@ -1,5 +1,5 @@
 import {action, query, redirect} from "@solidjs/router";
-import {activateUser, login, logout, register, resendActivateEmail,} from "~/lib/server";
+import {activateUser, getUserToken, login, logout, register, resendActivateEmail,} from "~/lib/server";
 import {getSessionUser} from "~/lib/session";
 import {USER} from "~/lib/db";
 
@@ -51,3 +51,9 @@ export const logoutUserHandler = action(async () => {
     "use server";
     return await logout()
 })
+
+export const showLoginHandler = query(async () => {
+    let token = await getUserToken();
+    if (token) throw redirect("/")
+    else return "PLease Login"
+}, "login")

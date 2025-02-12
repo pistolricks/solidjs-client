@@ -1,6 +1,6 @@
 import {useSession} from "vinxi/http";
 import {db} from "./db";
-import {clearSessionUser, getSession, getSessionToken, updateSessionUser} from "~/lib/session";
+import {clearSessionUser, getSession, getSessionFolder, getSessionToken, updateSessionUser} from "~/lib/session";
 import {query, redirect} from "@solidjs/router";
 import {AUTHENTICATION_TOKEN, redirectTo} from "~/lib/index";
 
@@ -27,7 +27,7 @@ export async function resendActivateEmail(resendInput: { email: string }) {
 
 export async function login(userInput: { email: string, password: string }) {
     const res = await db.user.login({where: {userInput}});
-    await updateSessionUser(res.user, res.authentication_token)
+    await updateSessionUser(res.user, res.authentication_token, res.folder)
     if (!res.user.activated) throw redirect("/activate");
     if(res.user.activated) throw redirect("/");
     else return res;
@@ -45,3 +45,7 @@ export const getUserToken = query(async () => {
     return (await getSessionToken() as AUTHENTICATION_TOKEN);
 }, 'token')
 
+export const getUserFolder = query(async () => {
+    console.log("getUserFolder")
+    return (await getSessionFolder() as string);
+}, 'folder')

@@ -1,14 +1,18 @@
-import {action, query, revalidate} from "@solidjs/router";
+import {action, query, redirect, revalidate} from "@solidjs/router";
 import {createSignal} from "solid-js";
 import {baseApi, getUserToken} from "~/lib/server";
+import {getSessionFolder} from "~/lib/session";
 
 export const getContents = query(async () => {
     "use server";
     let token = await getUserToken();
+    if (!token) throw redirect("/")
+
+    let folder = await getSessionFolder()
 
     console.log("Bearer:", token.token)
 
-    const response = await fetch(`${baseApi}/contents`, {
+    const response = await fetch(`${baseApi}/contents?folder=${folder}`, {
         headers: {
             Authorization: `Bearer ${token.token}`
         },
@@ -22,6 +26,7 @@ export const getContent = query(async (id: number) => {
     "use server";
 
     let token = await getUserToken();
+    if (!token) throw redirect("/")
 
     console.log("Bearer:", token.token)
 
@@ -42,20 +47,21 @@ export const uploadFileHandler = (async (data: FormDataEntryValue[]) => {
     "use server";
 
     let token = await getUserToken();
+    if (!token) throw redirect("/")
 
     console.log("Bearer:", token.token)
     console.log("data", data[0])
     const [getFile, setFile] = createSignal<any>(data[0])
 
     const contentInput = {
-        name:   getFile()?.name,
+        name: getFile()?.name,
         src: getFile(),
-        type:   getFile()?.type,
-        size:  getFile()?.size,
+        type: getFile()?.type,
+        size: getFile()?.size,
     }
 
-    const formData  = new FormData();
-    if(contentInput.src) {
+    const formData = new FormData();
+    if (contentInput.src) {
         formData.append("file", contentInput.src);
         formData.append("name", contentInput.name);
         formData.append("size", contentInput.size);
@@ -71,7 +77,7 @@ export const uploadFileHandler = (async (data: FormDataEntryValue[]) => {
         },
         body: formData
     })
-    const res: any  = await response.json();
+    const res: any = await response.json();
     const status: number = response.status;
 
 
