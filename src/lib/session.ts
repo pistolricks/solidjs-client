@@ -17,7 +17,7 @@ export type SessionUser = {
 
 export function getSession() {
     return useSession({
-        password: process.env.SESSION_SECRET ?? "areallylongsecretthatyoushouldreplace"
+        password: import.meta.env.VITE_SESSION_SECRET ?? "areallylongsecretthatyoushouldreplace"
     });
 }
 
