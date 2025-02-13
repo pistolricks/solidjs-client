@@ -33,7 +33,7 @@ export default function Vendors() {
 
             <AddressesList addresses={addressData()}/>
 
-            <FooterMenu size="icon" class={"bg-sky-4"} title={<MapPin class={'stroke-green-11'}/>}>
+            <FooterMenu sectionClass={'flex justify-center items-center md:justify-between'} childClass={'w-full md:w-1/2 pl-2'} size="icon" titleClass={"bg-sky-4"} title={<MapPin class={'stroke-green-11'}/>}>
                 <AddressSearchForm/>
             </FooterMenu>
         </CategoryLayout>
