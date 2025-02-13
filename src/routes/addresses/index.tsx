@@ -1,14 +1,14 @@
-import {AccessorWithLatest, createAsync, redirect, useSubmission} from "@solidjs/router";
-import {createEffect, createMemo, createSignal, For, lazy, Show} from "solid-js";
-import {addressDetailsHandler, addressPositionHandler, addressSearchHandler, getAddresses} from "~/lib/addresses";
+import {AccessorWithLatest, createAsync, useSubmission} from "@solidjs/router";
+import {createEffect, createMemo, createSignal, For, lazy} from "solid-js";
+import {addressPositionHandler, addressSearchHandler, getAddresses} from "~/lib/addresses";
 import AddressesList from "~/components/addresses/list";
 import FooterMenu from "~/components/layouts/partials/footer-menu";
-import {MagnifyingGlass, MapPin} from "~/components/svg";
+import {MapPin} from "~/components/svg";
 import AddressSearchForm from "~/components/addresses/forms/address-search-form";
-import {DrawerContent, DrawerTrigger } from "~/components/ui/drawer";
-import { Button } from "~/components/ui/button";
+import {DrawerContent, DrawerTrigger} from "~/components/ui/drawer";
+import {Button} from "~/components/ui/button";
 import {LookupResult, OsmOutput} from "~/lib/store";
-import {db} from "~/lib/db";
+import Geolocation from "~/components/ui/geolocation";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 
@@ -33,6 +33,7 @@ export default function Addresses() {
 
 
     createEffect(() => {
+        console.log("getDetails", getDetails())
         console.log("getPlace", getPlace())
         console.log("results_index", results()?.results)
         console.log("addresses", addressData())
@@ -44,7 +45,7 @@ export default function Addresses() {
     };
 
 
-    const handleGetDetails = async(data: OsmOutput, event: Event) => {
+    const handleGetDetails = async (data: OsmOutput, event: Event) => {
         if (!data) return;
         // let res = await addressDetailsHandler(data.place_id)
         let res = await addressPositionHandler(data.lat, data.lon)
@@ -62,35 +63,36 @@ export default function Addresses() {
 
     return (
         <div>
-            <DrawerContent class={"relative h-full overflow-y-auto"}>
-                <pre>{JSON.stringify(details(), null, 2)}</pre>
-            </DrawerContent>
-        <CategoryLayout {...addressData()}>
-
-            <For each={results()?.results}>
-                {(place) => (
-
-                    <DrawerTrigger as={Button<"button">} onClick={[handleGetDetails, place]} class={'bg-gray-1'}>
-                        <p>{place.osm_id}</p>
-                        <p>{place.osm_type}</p>
-                        <p>{place.display_name}</p>
-                    </DrawerTrigger>
-                )}
-            </For>
+            <CategoryLayout {...addressData()}>
+                <DrawerContent class={"relative h-full overflow-y-auto"}>
+                    <pre>{JSON.stringify(details(), null, 2)}</pre>
+                </DrawerContent>
 
 
-            <AddressesList addresses={addressData()}/>
+                <For each={results()?.results}>
+                    {(place) => (
+
+                        <DrawerTrigger as={Button<"button">} onClick={[handleGetDetails, place]} class={'bg-gray-1'}>
+                            <p>{place.osm_id}</p>
+                            <p>{place.osm_type}</p>
+                            <p>{place.display_name}</p>
+                        </DrawerTrigger>
+                    )}
+                </For>
 
 
+                <AddressesList addresses={addressData()}/>
 
-            <FooterMenu sectionClass={'flex justify-center items-center md:justify-between'}
-                        childClass={'w-full md:w-1/2 pl-2'} size="icon" titleClass={"bg-sky-4"}
-                        title={<MapPin class={'stroke-green-11'}/>}>
+                <Geolocation/>
+
+                <FooterMenu sectionClass={'flex justify-center items-center md:justify-between'}
+                            childClass={'w-full md:w-1/2 pl-2'} size="icon" titleClass={"bg-sky-4"}
+                            title={<MapPin class={'stroke-green-11'}/>}>
 
 
-                <AddressSearchForm/>
-            </FooterMenu>
-        </CategoryLayout>
+                    <AddressSearchForm/>
+                </FooterMenu>
+            </CategoryLayout>
         </div>
     );
 }

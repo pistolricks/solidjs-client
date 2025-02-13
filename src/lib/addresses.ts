@@ -142,6 +142,34 @@ export const addressPositionHandler = async (lat: string, lon: string) => {
     return res;
 }
 
+export const actionPositionHandler = action(async (data: FormData) => {
+    "use server";
+    let token = await getUserToken();
+    if (!token) throw redirect("/")
+
+    console.log("Bearer:", token.token)
+
+    const inputItems = {
+        lat: String(data.get("lat")),
+        lon: String(data.get("lon")),
+    }
+
+    const response = await fetch(`${baseApi}/addresses/position`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token.token}`
+        },
+        body: JSON.stringify(inputItems)
+    })
+
+    const res: any = await response.json();
+    const status: number = response.status;
+    console.log("status", status)
+    console.log("res", res.address)
+
+    return res;
+})
+
 
 export const getAddressFormFormats = query(async () => {
     "use server";
