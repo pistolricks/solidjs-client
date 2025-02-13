@@ -2,6 +2,8 @@ import {action, query, redirect} from "@solidjs/router";
 import {baseApi, getUserToken} from "~/lib/server";
 import {redirectTo} from "~/lib/index";
 import {OsmOutput, setOsmResults} from "~/lib/store";
+import {createPositionMapHandler} from "~/lib/maps";
+
 
 export const getAddresses = query(async () => {
     "use server";
@@ -168,6 +170,16 @@ export const actionPositionHandler = action(async (data: FormData) => {
     const status: number = response.status;
     console.log("status", status)
     console.log("res", res)
+
+    let mapInput = {
+        title: res.results.display_name,
+        filename:   `${res.results.osm_type}-${res.results.osm_id}`,
+        lat: res.results.lat,
+        lng: res.results.lon,
+    }
+
+    await createPositionMapHandler(mapInput)
+
 
     return res;
 })

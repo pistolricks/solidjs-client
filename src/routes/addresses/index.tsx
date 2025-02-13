@@ -23,7 +23,7 @@ export default function Addresses() {
     const addressData: AccessorWithLatest<any | undefined> = createAsync(async () => getAddresses());
     const submission = useSubmission(addressSearchHandler);
 
-    const currentLocation = useSubmission(actionPositionHandler);
+    const currentPosition = useSubmission(actionPositionHandler);
 
     const [getPlace, setPlace] = createSignal<OsmOutput | undefined>()
     const [getDetails, setDetails] = createSignal<LookupResult | undefined>()
@@ -40,7 +40,9 @@ export default function Addresses() {
         console.log("results_index", results()?.results)
         console.log("addresses", addressData())
 
-        console.log("currentLocation", currentLocation.result)
+        console.log("currentPosition", currentPosition.result)
+
+
     })
 
     const selectPlace = (data: OsmOutput, event: Event) => {
