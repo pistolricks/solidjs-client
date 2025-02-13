@@ -55,7 +55,7 @@ const DrawerContent = <T extends ValidComponent = "div">(
       <DrawerOverlay />
       <DrawerPrimitive.Content
         class={cn(
-          "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background after:absolute after:inset-x-0 after:top-full after:h-1/2 after:bg-inherit data-[transitioning]:transition-transform data-[transitioning]:duration-300 md:select-none",
+          "fixed right-0 bottom-0 z-50 w-screen md:max-w-lg mt-24 md:mt-0 flex h-auto flex-col rounded-t-[10px] md:rounded-none border bg-background after:absolute after:inset-x-0 after:top-full after:h-1/2 after:bg-inherit data-[transitioning]:transition-transform data-[transitioning]:duration-300 md:select-none",
           props.class
         )}
         {...rest}

@@ -37,7 +37,7 @@ export default function Contents() {
             <ContentsList contents={getAllContents()}/>
 
             <FooterMenu title={"Contents"}>
-                <Dialog.Trigger as={Button} class={'uppercase bg-white'} variant={"outline"}
+                <Dialog.Trigger as={Button<"button">} class={'uppercase bg-white'} variant={"outline"}
                                 size={'sm'}>Upload</Dialog.Trigger>
             </FooterMenu>
         </CategoryLayout>

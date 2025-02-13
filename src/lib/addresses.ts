@@ -1,10 +1,11 @@
-import {action, query} from "@solidjs/router";
+import {action, query, redirect} from "@solidjs/router";
 import {baseApi, getUserToken} from "~/lib/server";
 import {redirectTo} from "~/lib/index";
 
 export const getAddresses = query(async () => {
     "use server";
     let token = await getUserToken();
+    if (!token) throw redirect("/")
 
     console.log("Bearer:", token.token)
 
@@ -21,8 +22,8 @@ export const getAddresses = query(async () => {
 
 export const addAddress = action(async (data: FormData) => {
     "use server";
-
     let token = await getUserToken();
+    if (!token) throw redirect("/")
 
     console.log("Bearer:", token.token)
 
@@ -52,17 +53,14 @@ export const addAddress = action(async (data: FormData) => {
     console.log("address", res?.address)
     console.log("coordinates", res?.coordinates)
 
-    if (status === 201) {
-        redirectTo()
-    }
     return res;
 })
 
 
 export const getAddressFormFormats = query(async () => {
     "use server";
-
     let token = await getUserToken();
+    if (!token) throw redirect("/")
 
     console.log("Bearer:", token.token)
 

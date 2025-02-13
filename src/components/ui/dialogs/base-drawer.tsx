@@ -12,7 +12,7 @@ import {
     DrawerTrigger
 } from "~/components/ui/drawer"
 
-export function SideDrawer() {
+export function BaseDrawer() {
     const [goal, setGoal] = createSignal(250)
 
     const onClick = (change: number) => {
@@ -20,7 +20,7 @@ export function SideDrawer() {
     }
 
     return (
-        <Drawer dialogId="dialog-drawer-1" breakPoints={[0.75]} side={"right"}>
+        <Drawer dialogId="base-drawer-1" breakPoints={[0.75]} side={"right"}>
             <DrawerTrigger as={Button<"button">} variant="outline">
                 Open Drawer
             </DrawerTrigger>

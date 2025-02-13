@@ -1,20 +1,17 @@
 import {A, AccessorWithLatest, createAsync} from "@solidjs/router";
-import {CountryData, VendorsData} from "~/lib/store";
+import {CountryData} from "~/lib/store";
 import {createEffect, lazy, Show} from "solid-js";
-import {getVendors} from "~/lib/vendors";
 import {getAddresses, getAddressFormFormats} from "~/lib/addresses";
 import AddressesList from "~/components/addresses/list";
 import FooterMenu from "~/components/layouts/partials/footer-menu";
 import {Button} from "~/components/ui/button";
-import Drawer from "@corvu/drawer";
-import SideNavMenu from "~/components/layouts/partials/side-nav-menu";
+import {DrawerContent, DrawerTrigger} from "~/components/ui/drawer";
 import CreateAddressForm from "~/components/addresses/forms/create-address-form";
-import {ResponsiveDialog} from "~/components/ui/responsive-dialog";
-import {SideDrawer} from "~/components/ui/side-drawer";
-import {ResponsiveDrawer} from "~/components/ui/responsive-drawer";
+import FormLayout from "~/components/layouts/form-layout";
+import {MagnifyingGlass} from "~/components/svg";
+import MiniFormLayout from "~/components/layouts/mini-form-layout";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
-const FormLayout = lazy(() => import( "~/components/layouts/form-layout"));
 
 
 export const route = {
@@ -36,19 +33,20 @@ export default function Vendors() {
 
             <AddressesList addresses={addressData()}/>
 
-            <SideDrawer/>
-            <ResponsiveDialog/>
 
-            <ResponsiveDrawer/>
+            <DrawerContent class={"relative h-full"}>
+                <MiniFormLayout title="Address Search">
+                    <Show when={formFormats()}>
+                        <CreateAddressForm {...formFormats()}/>
+                    </Show>
+                </MiniFormLayout>
+            </DrawerContent>
+
             <FooterMenu title={"Addresses"}>
-                <Button as={A} href={'/addresses/create'} class={'uppercase bg-white'} variant={"outline"}
-                        size={'sm'}>Create</Button>
+                <DrawerTrigger as={Button<"button">} class={'uppercase bg-white'} size={"icon"} variant={"outline"}>
+                    <MagnifyingGlass/>
+                </DrawerTrigger>
             </FooterMenu>
-            <Drawer.Content class={"w-screen sm:max-w-lg"}>
-                <Show when={formFormats()}>
-                    <CreateAddressForm {...formFormats()}/>
-                </Show>
-            </Drawer.Content>
         </CategoryLayout>
     );
 }

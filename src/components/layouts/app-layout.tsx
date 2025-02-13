@@ -1,7 +1,7 @@
 import {Component, ParentProps, Suspense} from "solid-js";
-import BaseDrawer from "~/components/ui/base-drawer";
+import SideDrawer from "~/components/ui/dialogs/side-drawer";
 import Nav from "~/components/layouts/partials/nav";
-import BaseDialog from "~/components/ui/base-dialog";
+import BaseDialog from "~/components/ui/dialogs/base-dialog";
 import {AccessorWithLatest, createAsync, useLocation} from "@solidjs/router";
 import {USER} from "~/lib/store";
 import {getUser} from "~/lib/users";
@@ -22,12 +22,12 @@ const AppLayout: Component<PROPS> = props => {
     console.log('name', user()?.name)
 
     return (
-        <BaseDrawer>
+        <SideDrawer>
             <Nav user={user()} path={path()} />
             <BaseDialog>
                 {children()}
             </BaseDialog>
-        </BaseDrawer>
+        </SideDrawer>
     );
 };
 

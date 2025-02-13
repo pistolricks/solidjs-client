@@ -24,6 +24,7 @@ const Nav: Component<PROPS> = props => {
     createEffect(() => console.log('user', props.user))
     return (
         <>
+
             <header class={"w-full bg-gray-ui sticky top-0"}>
                 <nav class="container items-center" aria-label="Global">
                     <div class="flex justify-between items-center w-full py-3 text-gray-normal">
@@ -51,7 +52,6 @@ const Nav: Component<PROPS> = props => {
                             </Show>
                         </ul>
                     </div>
-
                 </nav>
                 <div class={'bg-gray-app border-b border-gray-normal'}>
                     <div class="container w-full">

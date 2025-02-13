@@ -3,7 +3,7 @@ import {useSubmission} from "@solidjs/router";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
 import {showToast} from "~/components/ui/toast";
-import {ChevronLeft} from "~/components/svg";
+import {ChevronLeft, MagnifyingGlass, XMark} from "~/components/svg";
 import {addAddress, addressFieldNames} from "~/lib/addresses";
 import {AreaSelect, CountryData} from "~/lib/store";
 import {
@@ -16,6 +16,7 @@ import {
     ComboboxItemLabel,
     ComboboxTrigger
 } from "~/components/ui/combobox"
+import {DrawerClose} from "~/components/ui/drawer";
 
 type PROPS = CountryData;
 
@@ -52,8 +53,8 @@ const CreateAddressForm: Component<PROPS> = props => {
     })
 
     const [getItem, setItem] = createSignal<AreaSelect>({
-        ID: "CA",
-        Name: "California"
+        ID: "",
+        Name: ""
     })
 
     const postalSubRegex = createMemo(() => {
@@ -67,7 +68,6 @@ const CreateAddressForm: Component<PROPS> = props => {
         console.log("getItem", getItem())
         console.log(postCodeRegex())
         console.log("countryData", props)
-
 
 
         if (results()?.error) {
@@ -85,7 +85,7 @@ const CreateAddressForm: Component<PROPS> = props => {
 
             <form class={'space-y-4'} action={addAddress} method="post">
                 <TextField>
-                    <TextFieldInput type="text" autocomplete="none" name="street_address" placeholder="Address"/>
+                    <TextFieldInput type="text" autocomplete="none" name="street_address" placeholder="Search"/>
                     <Show when={results()?.error?.street_address}>
                         <TextFieldErrorMessage>
                             {results()?.error?.street_address}
@@ -100,32 +100,36 @@ const CreateAddressForm: Component<PROPS> = props => {
                         </TextFieldErrorMessage>
                     </Show>
                 </TextField>
-                <div class={'grid grid-cols-1 sm:grid-cols-2 gap-3'}>
-                    <input class={'hidden'} name="administrative_area" id="administrative_area" value={getItem().ID} />
+                <div class={'grid grid-cols-5 gap-3'}>
 
-                    <Combobox
-                        class={"text-gray-11"}
-                        options={adminAreas()}
-                        optionValue="ID"
-                        optionTextValue="Name"
-                        optionLabel="Name"
-                        optionDisabled="disabled"
-                        onChange={(a: any) => setItem(a)}
-                        placeholder={fields().administrative_area}
-                        itemComponent={(props: any) => (
-                            <ComboboxItem item={props.item}>
-                                <ComboboxItemLabel>{props.item.rawValue?.Name}</ComboboxItemLabel>
-                                <ComboboxItemIndicator/>
-                            </ComboboxItem>
-                        )}
-                    >
-                        <ComboboxControl aria-labe={fields().administrative_area}>
-                            <ComboboxInput/>
-                            <ComboboxTrigger/>
-                        </ComboboxControl>
-                        <ComboboxContent/>
-                    </Combobox>
-                    <TextField>
+                    <div class="col-span-3">
+                        <input class={'hidden'} name="administrative_area" id="administrative_area"
+                               value={getItem().ID}/>
+
+                        <Combobox
+                            class={"text-gray-11"}
+                            options={adminAreas()}
+                            optionValue="ID"
+                            optionTextValue="Name"
+                            optionLabel="Name"
+                            optionDisabled="disabled"
+                            onChange={(a: any) => setItem(a)}
+                            placeholder={fields().administrative_area}
+                            itemComponent={(props: any) => (
+                                <ComboboxItem item={props.item}>
+                                    <ComboboxItemLabel>{props.item.rawValue?.Name}</ComboboxItemLabel>
+                                    <ComboboxItemIndicator/>
+                                </ComboboxItem>
+                            )}
+                        >
+                            <ComboboxControl aria-labe={fields().administrative_area}>
+                                <ComboboxInput/>
+                                <ComboboxTrigger/>
+                            </ComboboxControl>
+                            <ComboboxContent/>
+                        </Combobox>
+                    </div>
+                    <TextField class="col-span-2">
                         <TextFieldInput type="text" autocomplete="none" name="post_code" pattern={postalRegex()}
                                         placeholder={fields().post_code}/>
                         <Show when={results()?.error?.post_code}>
@@ -136,16 +140,10 @@ const CreateAddressForm: Component<PROPS> = props => {
                     </TextField>
                 </div>
                 <div class={'items-center flex flex-row-reverse space-x-2 space-x-reverse'}>
-                    <Button as={"button"} variant={'default'} type={"submit"}>Add Address</Button>
-                    <Button
-                        as={"A"}
-                        href={'/addresses'}
-                        variant={'secondary'}
-                        size={"icon"}
-                        type={"button"}
-                    >
-                        <ChevronLeft/>
-                    </Button>
+                    <Button as={"button"} variant={'default'} type={"submit"} size="icon"><MagnifyingGlass/></Button>
+                    <DrawerClose as={Button<"button">} variant="outline" size="icon">
+                        <XMark/>
+                    </DrawerClose>
                 </div>
             </form>
         </>

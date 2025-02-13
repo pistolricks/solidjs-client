@@ -7,11 +7,11 @@ type PROPS = {
     children?: JSXElement
 }
 
-function BaseDrawer(props: PROPS) {
+function SideDrawer(props: PROPS) {
     const children = () => props.children;
 
     return (
-        <Drawer dialogId="base-drawer-1" breakPoints={[0.75]} side={"right"}>
+        <Drawer dialogId="side-drawer-1" breakPoints={[0.75]} side={"right"}>
             {(props) => (
                 <>
 
@@ -33,4 +33,4 @@ function BaseDrawer(props: PROPS) {
     )
 }
 
-export default BaseDrawer
+export default SideDrawer
