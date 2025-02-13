@@ -1,8 +1,7 @@
-import {Component, createEffect, createSignal, Show} from "solid-js";
+import {Component, createEffect, createSignal, JSX, Show} from "solid-js";
 import {getContents, uploadFileHandler} from "~/lib/contents";
 import {Button} from "~/components/ui/button";
 import {UploadCloud, XMark} from "~/components/svg";
-import {useObjectUrl} from 'solidjs-use'
 import {showToast} from "~/components/ui/toast";
 import Dialog from "@corvu/dialog";
 import {revalidate} from "@solidjs/router";
@@ -14,8 +13,14 @@ const FileUploader: Component<PROPS> = props => {
 
     const [getRef, setRef] = createSignal<HTMLFormElement | undefined>()
 
-    const [getFile, setFile] = createSignal<File | MediaSource | undefined>()
-    const objectUrl = useObjectUrl(getFile)
+    const [getImageUrl, setImageUrl] = createSignal<string | undefined>()
+
+
+    const handleInput: JSX.EventHandler<HTMLInputElement, InputEvent> = (event) => {
+        console.log("ImageInput Input changed to", event.currentTarget.value)
+        const imageUrl = URL.createObjectURL(event.currentTarget.files?.item(0) as File)
+        setImageUrl(imageUrl)
+    }
 
     const onSubmit = async (e: SubmitEvent) => {
         e.preventDefault();
@@ -27,7 +32,7 @@ const FileUploader: Component<PROPS> = props => {
 
 
         getRef()?.reset()
-        setFile(undefined)
+        setImageUrl(undefined)
 
         if (res?.error) {
             showToast({
@@ -42,7 +47,7 @@ const FileUploader: Component<PROPS> = props => {
     };
 
     createEffect(() => {
-        console.log(getFile())
+        console.log(getImageUrl())
 
     })
 
@@ -63,17 +68,15 @@ const FileUploader: Component<PROPS> = props => {
                                               clip-rule="evenodd"/>
                                     </svg>
                                 }
-                                when={objectUrl()}>
-                                <img src={objectUrl()} class={'h-72 w-full object-contain'} alt={""}/>
+                                when={getImageUrl()}>
+                                <img src={getImageUrl()} class={'h-72 w-full object-contain'} alt={""}/>
                             </Show>
                             <div class="mt-4 flex text-sm/6 text-gray-11/80">
                                 <label for="src"
                                        class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-11/80 focus-within:outline-hidden  hover:text-indigo-6">
                                     <span>Upload a file</span>
                                     <input id="src" name="src" type="file"
-                                           onChange={event => {
-                                               setFile(event.currentTarget.files?.[0])
-                                           }}
+                                           onInput={handleInput}
                                            class="sr-only"/>
                                 </label>
                                 <p class="pl-1">or drag and drop</p>

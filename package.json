@@ -23,7 +23,6 @@
     "solid-js": "^1.9.2",
     "solid-list": "^0.3.0",
     "solid-transition-size": "^0.1.4",
-    "solidjs-use": "^2.3.0",
     "tailwind-merge": "^2.6.0",
     "tailwind-scrollbar-hide": "^2.0.0",
     "tailwindcss": "^4.0.0",
