@@ -1,6 +1,6 @@
 import {AccessorWithLatest, createAsync, redirect, useSubmission} from "@solidjs/router";
 import {createEffect, createMemo, createSignal, For, lazy, Show} from "solid-js";
-import {addressDetailsHandler, addressSearchHandler, getAddresses} from "~/lib/addresses";
+import {addressDetailsHandler, addressPositionHandler, addressSearchHandler, getAddresses} from "~/lib/addresses";
 import AddressesList from "~/components/addresses/list";
 import FooterMenu from "~/components/layouts/partials/footer-menu";
 import {MagnifyingGlass, MapPin} from "~/components/svg";
@@ -46,7 +46,8 @@ export default function Addresses() {
 
     const handleGetDetails = async(data: OsmOutput, event: Event) => {
         if (!data) return;
-        let res = await addressDetailsHandler(data.place_id)
+        // let res = await addressDetailsHandler(data.place_id)
+        let res = await addressPositionHandler(data.lat, data.lon)
         console.log('status', res.status)
         setDetails(res)
         return res;

@@ -113,6 +113,35 @@ export const addressDetailsHandler = async (place_id: number) => {
     return res;
 }
 
+export const addressPositionHandler = async (lat: string, lon: string) => {
+    "use server";
+    let token = await getUserToken();
+    if (!token) throw redirect("/")
+
+    console.log("Bearer:", token.token)
+
+    const inputItems = {
+        lat: lat,
+        lon: lon,
+    }
+
+
+    const response = await fetch(`${baseApi}/addresses/position`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token.token}`
+        },
+        body: JSON.stringify(inputItems)
+    })
+
+    const res: any = await response.json();
+    const status: number = response.status;
+    console.log("status", status)
+    console.log("res", res.address)
+
+    return res;
+}
+
 
 export const getAddressFormFormats = query(async () => {
     "use server";
