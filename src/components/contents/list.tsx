@@ -1,6 +1,7 @@
 import {Component, createEffect, createSignal, For} from "solid-js";
 import {ContentsData} from "~/lib/store";
 import {ByteWithLocale} from "~/components/ui/format-byte";
+import {ResponsiveDialog} from "~/components/ui/dialogs/responsive-dialog";
 
 type PROPS = {
     contents: ContentsData | undefined;
@@ -40,6 +41,8 @@ const ContentsList: Component<PROPS> = props => {
                     </li>
                 )}
             </For>
+
+            <ResponsiveDialog/>
         </ul>
     );
 };

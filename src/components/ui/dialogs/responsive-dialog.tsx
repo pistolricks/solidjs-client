@@ -32,7 +32,7 @@ export function ResponsiveDialog() {
     })
 
     const MobileDialog = () => (
-        <Drawer dialogId="responsive-drawer-1" open={open()} onOpenChange={setOpen}>
+        <Drawer contextId={'md1'} dialogId="responsive-drawer-1" open={open()} onOpenChange={setOpen}>
             <DrawerTrigger as={Button<"button">} variant="outline">
                 Edit Profile
             </DrawerTrigger>

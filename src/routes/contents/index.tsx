@@ -7,6 +7,7 @@ import {Button} from "~/components/ui/button";
 import Dialog from "@corvu/dialog";
 import FileUploader from "~/components/ui/file-uploader";
 import {getUser} from "~/lib/users";
+import {DrawerContent} from "~/components/ui/drawer";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 const ContentsList = lazy(() => import( "~/components/contents/list"));
@@ -32,6 +33,7 @@ export default function Contents() {
             <Dialog.Content>
                 <FileUploader/>
             </Dialog.Content>
+
 
 
             <ContentsList contents={getAllContents()}/>
