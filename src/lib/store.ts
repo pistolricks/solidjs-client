@@ -206,3 +206,39 @@ export type LookupResult = {
         year_of_construction?: string
     }
 }
+
+export type DetailResults = {
+    place_id: number,
+    licence: string,
+    osm_type: string,
+    osm_id: number,
+    lat: string
+    lon: string
+    class: string
+    type: string
+    place_rank: number
+    importance: number
+    addresstype: string,
+    name: string,
+    display_name: string;
+    address?: {
+        amenity?: string;
+        house_number?: string;
+        road?: string;
+        quarter?: string;
+        neighbourhood?: string;
+        suburb?: string;
+        county?: string;
+        city?: string;
+        state?: string;
+        'ISO3166-2-lvl4'?: string;
+        postcode?: string;
+        country?: string;
+        country_code?: string;
+        town?: string;
+        province?: string;
+        region?: string;
+    },
+    boundingbox: string[]
+
+}

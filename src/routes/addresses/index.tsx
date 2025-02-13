@@ -1,6 +1,6 @@
 import {AccessorWithLatest, createAsync, useSubmission} from "@solidjs/router";
 import {createEffect, createMemo, createSignal, For, lazy} from "solid-js";
-import {addressPositionHandler, addressSearchHandler, getAddresses} from "~/lib/addresses";
+import {actionPositionHandler, addressPositionHandler, addressSearchHandler, getAddresses} from "~/lib/addresses";
 import AddressesList from "~/components/addresses/list";
 import FooterMenu from "~/components/layouts/partials/footer-menu";
 import {MapPin} from "~/components/svg";
@@ -23,6 +23,8 @@ export default function Addresses() {
     const addressData: AccessorWithLatest<any | undefined> = createAsync(async () => getAddresses());
     const submission = useSubmission(addressSearchHandler);
 
+    const currentLocation = useSubmission(actionPositionHandler);
+
     const [getPlace, setPlace] = createSignal<OsmOutput | undefined>()
     const [getDetails, setDetails] = createSignal<LookupResult | undefined>()
 
@@ -37,6 +39,8 @@ export default function Addresses() {
         console.log("getPlace", getPlace())
         console.log("results_index", results()?.results)
         console.log("addresses", addressData())
+
+        console.log("currentLocation", currentLocation.result)
     })
 
     const selectPlace = (data: OsmOutput, event: Event) => {
@@ -83,11 +87,11 @@ export default function Addresses() {
 
                 <AddressesList addresses={addressData()}/>
 
-                <Geolocation/>
+
 
                 <FooterMenu sectionClass={'flex justify-center items-center md:justify-between'}
                             childClass={'w-full md:w-1/2 pl-2'} size="icon" titleClass={"bg-sky-4"}
-                            title={<MapPin class={'stroke-green-11'}/>}>
+                            title={<Geolocation/>}>
 
 
                     <AddressSearchForm/>

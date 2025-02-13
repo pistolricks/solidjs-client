@@ -150,9 +150,11 @@ export const actionPositionHandler = action(async (data: FormData) => {
     console.log("Bearer:", token.token)
 
     const inputItems = {
-        lat: String(data.get("lat")),
-        lon: String(data.get("lon")),
+        lat: data.get("lat"),
+        lon: data.get("lon"),
     }
+
+    console.log("inputItems", inputItems)
 
     const response = await fetch(`${baseApi}/addresses/position`, {
         method: "POST",
@@ -165,7 +167,7 @@ export const actionPositionHandler = action(async (data: FormData) => {
     const res: any = await response.json();
     const status: number = response.status;
     console.log("status", status)
-    console.log("res", res.address)
+    console.log("res", res)
 
     return res;
 })

@@ -1,25 +1,35 @@
-import {Component, createEffect, createSignal, Show} from "solid-js";
-import {OsmOutput} from "~/lib/store";
+import {Component, createEffect, createMemo, createSignal, Match, onMount, Show, Switch} from "solid-js";
+import {DetailResults, OsmOutput} from "~/lib/store";
 import {actionPositionHandler, addressPositionHandler} from "~/lib/addresses";
-import {useSubmission} from "@solidjs/router";
+import {useAction, useSubmission} from "@solidjs/router";
 import {Button} from "~/components/ui/button";
-import {MapPin} from "~/components/svg";
+import {MapPin, Power} from "~/components/svg";
+import {showToast} from "~/components/ui/toast";
 
 type PROPS = {}
-
+let map;
+let marker;
+let watchID: number;
 const Geolocation: Component<PROPS> = props => {
-    const submission = useSubmission(actionPositionHandler);
-
-    let map;
-    let marker;
-    let watchID;
+    const [getRef, setRef] = createSignal<HTMLFormElement | undefined>()
+    const submit = useAction(actionPositionHandler);
     const locationStatus = document.getElementById("locationStatus");
-
+    const [getLocationAccess, setLocationAccess] = createSignal<"denied" | "granted" | "prompt">();
     const [getPosition, setPosition] = createSignal<[number, number]>()
 
 
-    createEffect(() => {
+    createEffect(async() => {
         console.log('getPosition', getPosition())
+
+        await navigator.permissions.query({ name: 'geolocation' }).then((permissionStatus) => {
+            permissionStatus.onchange = () => {
+                setLocationAccess(permissionStatus.state)
+                if (permissionStatus.state) {
+
+                }
+            };
+        });
+        console.log(getLocationAccess())
     })
 
     function trackLocation() {
@@ -30,77 +40,114 @@ const Geolocation: Component<PROPS> = props => {
                 maximumAge: 0
             });
         } else {
-
             if (locationStatus) {
-                locationStatus.innerHTML = "Geolocation is not supported by your browser.";
+                showToast({
+                    variant: "error",
+                    title: "Error",
+                    description: "Geolocation is not supported by your browser."
+                })
             }
         }
     }
-
-    function updatePosition(position: { coords: { latitude: number, longitude: number } }) {
-        const {latitude, longitude} = position.coords;
-        const locationStatus = document.getElementById("locationStatus");
-        setPosition([latitude, longitude])
-        if (locationStatus) {
-            locationStatus.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
-        }
-    }
-
     function showPosition(position: { coords: { latitude: number; longitude: number; }; }) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
         setPosition([latitude, longitude])
+        const formData = new FormData(getRef());
+        submit(formData).then((r) => console.log("action", r))
 
         const locationStatus = document.getElementById("locationStatus");
         if (locationStatus) {
             locationStatus.innerHTML = `${mapPin}`
-
-
         }
-        // Additional code to integrate with mapping APIs can be added here.
     }
+
+    function clearPosition() {
+        if (getPosition()) {
+            navigator.geolocation.clearWatch(watchID);
+        }
+        setPosition(undefined)
+
+        showToast({
+            variant: "error",
+            title: "Location Services",
+            description: "Services have been turned off"
+        })
+    }
+
 
     function showError(error: any) {
         const locationStatus = document.getElementById("locationStatus");
         if (locationStatus) {
             switch (error.code) {
                 case error.PERMISSION_DENIED:
-                    locationStatus.innerHTML = "Access to location was denied.";
+                    showToast({
+                        variant: "error",
+                        title: "Error",
+                        description: "Access to location was denied."
+                    })
                     break;
                 case error.POSITION_UNAVAILABLE:
-                    locationStatus.innerHTML = "Location information is currently unavailable.";
+                    showToast({
+                        variant: "error",
+                        title: "Error",
+                        description: "Location information is currently unavailable."
+                    })
                     break;
                 case error.TIMEOUT:
-                    locationStatus.innerHTML = "The request to get location timed out.";
+                    showToast({
+                        variant: "error",
+                        title: "Error",
+                        description: "The request to get location timed out. You may need to refresh the page"
+                    })
                     break;
                 default:
-                    locationStatus.innerHTML = "An unknown error occurred.";
+                    showToast({
+                        variant: "error",
+                        title: "Error",
+                        description: "An unknown error occurred."
+                    })
                     break;
             }
         }
     }
 
+onMount(async() => {
+   await navigator.permissions.query({ name: 'geolocation' }).then((permissionStatus) => {
+        setLocationAccess(permissionStatus.state)
+
+        permissionStatus.onchange = () => {
+            setLocationAccess(permissionStatus.state)
+        };
+    });
+})
+
 
     return (
-        <form action={actionPositionHandler} method="post">
-            <input class={'sr-only'} id={'lat'} name={'lat'} value={getPosition()?.[0]}/>
-            <input class={'sr-only'} id={'lon'} name={'lon'} value={getPosition()?.[1]}/>
-            <Show
-                fallback={<Button<"button"> size={"icon"} variant={'outline'} onClick={trackLocation}><p id="locationStatus"/></Button>}
-                when={!getPosition()}>
-                <Button<"button"> size={"icon"} variant={'outline'} onClick={trackLocation}><p id="locationStatus"><MapPin class={"stroke-red-4 size-6"}/></p></Button>
-            </Show>
+        <form ref={setRef} id={"geo-form"} action={actionPositionHandler} method="post">
+            <input class={'sr-only'} id={'lat'} name={'lat'} type={'string'} value={getPosition()?.[0]}/>
+            <input class={'sr-only'} id={'lon'} name={'lon'} type={'string'} value={getPosition()?.[1]}/>
+                <Show
+                    fallback={
+                        <Button<"button"> size={"icon"} variant={'destructive'} onClick={trackLocation}>
+                            <MapPin class={"stroke-red-11"}/>
+                        </Button>
+                    }
+                    when={getPosition()}>
+                    <Button<"button"> size={"icon"} variant={'success'} onClick={clearPosition}>
+                        <MapPin class={" stroke-green-11"}/>
+                    </Button>
 
+                </Show>
             <div id="map"></div>
-
         </form>
     );
 };
 
 export default Geolocation;
 
-export const mapPin = (`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+export const mapPin = (`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="stroke-green-11">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                         </svg>`)
