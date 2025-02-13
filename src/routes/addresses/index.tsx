@@ -61,7 +61,7 @@ export default function Addresses() {
 
     return (
         <div>
-            <DrawerContent class={"relative h-full"}>
+            <DrawerContent class={"relative h-full overflow-y-auto"}>
                 <pre>{JSON.stringify(details(), null, 2)}</pre>
             </DrawerContent>
         <CategoryLayout {...addressData()}>
