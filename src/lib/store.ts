@@ -1,4 +1,5 @@
 import {GeoJSON, GeoJsonObject, Geometry, GeometryCollection} from "geojson";
+import {createStore} from "solid-js/store";
 
 export type USER = {
     id: number;
@@ -94,7 +95,7 @@ export type AreaSelect = {
     Name: string;
 }
 export type postCodeRegex = {
-    Regex:           string
+    Regex: string
     SubdivisionRegex: any
 }
 
@@ -112,6 +113,38 @@ export type CountryData = {
     AdministrativeAreas?: any
 }
 
+export type OsmOutput = {
+    place_id: number,
+    licence?: string,
+    osm_type: string,
+    osm_id: number,
+    boundingbox?: string[],
+    lat?: string,
+    lon?: string,
+    display_name?: string,
+    class?: string,
+    type?: string,
+    importance?: number,
+    icon?: string,
+    address?: {
+        city?: string,
+        state_district?: string,
+        state?: string,
+        "ISO3166-2-lvl4"?: string,
+        postcode?: string,
+        country?: string,
+        country_code?: string,
+    },
+    extratags?: {
+        capital?: string,
+        website?: string,
+        wikidata?: string,
+        wikipedia?: string,
+        population?: string,
+    }
+}
+
+
 export interface FeatureCollection<G = Geometry | GeometryCollection, P = Properties> extends GeoJsonObject {
     type: "FeatureCollection";
     features: Array<Feature<G, P>>;
@@ -121,9 +154,55 @@ export declare type Properties = {
     [name: string]: any;
 } | null;
 
-export interface Feature<G = Geometry | GeometryCollection, T = string|number, P = Properties> extends GeoJsonObject {
+export interface Feature<G = Geometry | GeometryCollection, T = string | number, P = Properties> extends GeoJsonObject {
     type: "Feature";
     geometry: G;
     properties: P;
     id?: T;
+}
+
+
+export const [getOsmResults, setOsmResults] = createStore<{
+    count: number,
+    results: OsmOutput[]
+}>({
+    count: 0,
+    results: [],
+})
+
+export type LookupResult = {
+    place_id: number;
+    licence?: string;
+    osm_type: string;
+    osm_id: number;
+    boundingbox?: string[];
+    lat?: string;
+    lon?: string;
+    display_name?: string;
+    class?: string;
+    type?: string;
+    importance?: number;
+    address?: {
+        tourism?: string
+        road?: string
+        suburb?: string
+        city?: string
+        state?: string
+        postcode?: string
+        country?: string
+        country_code?: string
+    },
+    extratags?: {
+        image?: string
+        heritage?: string
+        wikidata?: string
+        architect?: string
+        wikipedia?: string
+        wheelchair?: string
+        description?: string
+        "heritage:website"?: string
+        "heritage:operator"?: string
+        "architect:wikidata"?: string
+        year_of_construction?: string
+    }
 }

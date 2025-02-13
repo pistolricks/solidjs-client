@@ -13,6 +13,7 @@ const CreateAddressForm: Component<PROPS> = props => {
     const submission = useSubmission(addressSearchHandler);
 
     const results = createMemo(() => {
+        console.log("result", submission.result)
         return submission.result
     })
 
