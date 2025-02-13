@@ -11,7 +11,7 @@ function BaseDrawer(props: PROPS) {
     const children = () => props.children;
 
     return (
-        <Drawer breakPoints={[0.75]} side={"right"}>
+        <Drawer dialogId="base-drawer-1" breakPoints={[0.75]} side={"right"}>
             {(props) => (
                 <>
 

@@ -1,3 +1,5 @@
+import {GeoJSON, GeoJsonObject, Geometry, GeometryCollection} from "geojson";
+
 export type USER = {
     id: number;
     name: string;
@@ -108,4 +110,20 @@ export type CountryData = {
     PostCodeNameType?: number
     PostCodeRegex?: postCodeRegex
     AdministrativeAreas?: any
+}
+
+export interface FeatureCollection<G = Geometry | GeometryCollection, P = Properties> extends GeoJsonObject {
+    type: "FeatureCollection";
+    features: Array<Feature<G, P>>;
+}
+
+export declare type Properties = {
+    [name: string]: any;
+} | null;
+
+export interface Feature<G = Geometry | GeometryCollection, T = string|number, P = Properties> extends GeoJsonObject {
+    type: "Feature";
+    geometry: G;
+    properties: P;
+    id?: T;
 }

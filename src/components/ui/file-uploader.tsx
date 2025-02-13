@@ -1,7 +1,7 @@
 import {Component, createEffect, createSignal, Show} from "solid-js";
 import {getContents, uploadFileHandler} from "~/lib/contents";
 import {Button} from "~/components/ui/button";
-import {ChevronLeft, UploadCloud, XMark} from "~/components/svg";
+import {UploadCloud, XMark} from "~/components/svg";
 import {useObjectUrl} from 'solidjs-use'
 import {showToast} from "~/components/ui/toast";
 import Dialog from "@corvu/dialog";
@@ -85,7 +85,8 @@ const FileUploader: Component<PROPS> = props => {
             </div>
             <div class={'items-center flex flex-row-reverse space-x-4 space-x-reverse py-3'}>
                 <Dialog.Close class={''}>
-                    <Button as={"button"} variant={'default'} class={'bg-white'} size={"icon"} type={"submit"}><UploadCloud/></Button>
+                    <Button as={"button"} variant={'default'} class={'bg-white'} size={"icon"}
+                            type={"submit"}><UploadCloud/></Button>
                 </Dialog.Close>
                 <Dialog.Close class={''}>
                     <Button as={"button"} variant={'default'} class={'bg-white'} size={"icon"} type={"button"}><XMark/></Button>
