@@ -1,7 +1,5 @@
 import {Component, For} from "solid-js";
-import {AddressData, VendorsData} from "~/lib/store";
-import {A} from "@solidjs/router";
-import {Button} from "~/components/ui/button";
+import {AddressData} from "~/lib/store";
 
 type PROPS = {
     addresses: AddressData | undefined;
@@ -15,7 +13,7 @@ const AddressesList: Component<PROPS> = props => {
                 {(address, i) => (
                     <li class={''}>
 
-                            <span class={'text-tomato-normal'}>{address.administrative_area}</span>
+                        <span class={'text-tomato-normal'}>{address.administrative_area}</span>
 
                         <div class={'space-x-1'}>
                             <For each={address?.street_address}>

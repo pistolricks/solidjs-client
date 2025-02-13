@@ -8,8 +8,9 @@ import {Button} from "~/components/ui/button";
 import {DrawerContent, DrawerTrigger} from "~/components/ui/drawer";
 import CreateAddressForm from "~/components/addresses/forms/create-address-form";
 import FormLayout from "~/components/layouts/form-layout";
-import {MagnifyingGlass} from "~/components/svg";
+import {MagnifyingGlass, MapPin} from "~/components/svg";
 import MiniFormLayout from "~/components/layouts/mini-form-layout";
+import AddressSearchForm from "~/components/addresses/forms/address-search-form";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 
@@ -22,7 +23,6 @@ export const route = {
 }
 
 export default function Vendors() {
-    const formFormats: AccessorWithLatest<CountryData | undefined> = createAsync(async () => getAddressFormFormats());
     const addressData: AccessorWithLatest<any | undefined> = createAsync(async () => getAddresses());
 
     createEffect(() => {
@@ -33,19 +33,8 @@ export default function Vendors() {
 
             <AddressesList addresses={addressData()}/>
 
-
-            <DrawerContent class={"relative h-full"}>
-                <MiniFormLayout title="Address Search">
-                    <Show when={formFormats()}>
-                        <CreateAddressForm {...formFormats()}/>
-                    </Show>
-                </MiniFormLayout>
-            </DrawerContent>
-
-            <FooterMenu title={"Addresses"}>
-                <DrawerTrigger as={Button<"button">} class={'uppercase bg-white'} size={"icon"} variant={"outline"}>
-                    <MagnifyingGlass/>
-                </DrawerTrigger>
+            <FooterMenu size="icon" class={"bg-sky-4"} title={<MapPin class={'stroke-green-11'}/>}>
+                <AddressSearchForm/>
             </FooterMenu>
         </CategoryLayout>
     );

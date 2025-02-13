@@ -56,6 +56,34 @@ export const addAddress = action(async (data: FormData) => {
     return res;
 })
 
+export const addressSearchHandler = action(async (data: FormData) => {
+    "use server";
+    let token = await getUserToken();
+    if (!token) throw redirect("/")
+
+    console.log("Bearer:", token.token)
+
+
+    const addressInput = {
+        search: String(data.get("search")),
+    }
+
+    const response = await fetch(`${baseApi}/addresses/search`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token.token}`
+        },
+        body: JSON.stringify(addressInput)
+    })
+
+    const res: any = await response.json();
+    const status: number = response.status;
+    console.log("status", status)
+    console.log("res", res)
+
+    return res;
+})
+
 
 export const getAddressFormFormats = query(async () => {
     "use server";
