@@ -1,15 +1,27 @@
-import {Component, lazy, VoidComponent} from "solid-js";
-import {createAsync, RouteSectionProps} from "@solidjs/router";
-import {showLoginHandler} from "~/lib/users";
+import {Component, createEffect, lazy, VoidComponent} from "solid-js";
+import {AccessorWithLatest, createAsync, RouteSectionProps, useNavigate} from "@solidjs/router";
+import {AUTHENTICATION_TOKEN, getUserToken} from "~/lib";
+
 const LoginUserForm = lazy(() => import('~/components/users/forms/login-user-form'));
 const FormLayout = lazy(() => import("~/components/layouts/form-layout"));
 
 const Login: Component<RouteSectionProps> = props => {
-    const message = createAsync(async () => showLoginHandler());
+    const navigate = useNavigate();
+    const token: AccessorWithLatest<AUTHENTICATION_TOKEN | undefined> = createAsync(async () => getUserToken());
+
+
+
+    createEffect(() => {
+        if (token()) {
+            navigate('/', {replace: true});
+        }
+    })
+
     return (
-            <FormLayout>
-                <LoginUserForm/>
-            </FormLayout>
+
+        <FormLayout>
+            <LoginUserForm/>
+        </FormLayout>
     );
 };
 

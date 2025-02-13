@@ -1,5 +1,5 @@
 import {Component, createEffect, lazy, Show, VoidComponent} from "solid-js";
-import {AccessorWithLatest, createAsync, RouteSectionProps} from "@solidjs/router";
+import {AccessorWithLatest, createAsync, RouteSectionProps, useNavigate} from "@solidjs/router";
 import {USER} from "~/lib/store";
 import {getUser} from "~/lib/users";
 import {redirectTo} from "~/lib";
@@ -10,14 +10,13 @@ const FormLayout = lazy(() => import("~/components/layouts/form-layout"));
 
 
 const Resend: Component<RouteSectionProps> = props => {
+    const navigate = useNavigate();
+    const user: AccessorWithLatest<USER | undefined> = createAsync(async () => getUser());
 
-    const userData: AccessorWithLatest<USER | undefined> = createAsync(async () => getUser());
-
-    const user = () => userData() ?? undefined;
 
     createEffect(() => {
         if (user()?.activated) {
-            redirectTo("/")
+            navigate('/', {replace: true});
         }
     })
 
@@ -29,7 +28,7 @@ const Resend: Component<RouteSectionProps> = props => {
                 {(user: USER) => (
                     <Show
                         fallback={<ResendActivateEmailForm/>}
-                        when={user.activated}>
+                        when={user?.activated}>
                         <>TEST</>
                     </Show>
                 )}

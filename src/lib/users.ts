@@ -52,8 +52,3 @@ export const logoutUserHandler = action(async () => {
     return await logout()
 })
 
-export const showLoginHandler = query(async () => {
-    let token = await getUserToken();
-    if (token) throw redirect("/")
-    else return "PLease Login"
-}, "login")
