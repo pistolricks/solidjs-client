@@ -22,6 +22,7 @@ import {
     DrawerTrigger
 } from "~/components/ui/drawer"
 import { TextField, TextFieldInput, TextFieldLabel } from "~/components/ui/text-field"
+import DrawerPrimitive from "@corvu/drawer";
 
 export function ResponsiveDialog() {
     const [open, setOpen] = createSignal(false)
@@ -32,25 +33,25 @@ export function ResponsiveDialog() {
     })
 
     const MobileDialog = () => (
-        <Drawer contextId={'md1'} dialogId="responsive-drawer-1" open={open()} onOpenChange={setOpen}>
-            <DrawerTrigger as={Button<"button">} variant="outline">
+        <DrawerPrimitive contextId={'md1'} dialogId="responsive-drawer-1" open={open()} onOpenChange={setOpen}>
+            <DrawerPrimitive.Trigger contextId={'md1'} as={Button<"button">} variant="outline">
                 Edit Profile
-            </DrawerTrigger>
-            <DrawerContent>
+            </DrawerPrimitive.Trigger>
+            <DrawerPrimitive.Content contextId={'md1'}>
                 <DrawerHeader class="text-left">
-                    <DrawerTitle>Edit profile</DrawerTitle>
-                    <DrawerDescription>
+                    <DrawerTitle contextId={'md1'} >Edit profile</DrawerTitle>
+                    <DrawerPrimitive.Description contextId={'md1'}>
                         Make changes to your profile here. Click save when you're done.
-                    </DrawerDescription>
+                    </DrawerPrimitive.Description>
                 </DrawerHeader>
                 <ProfileForm class="px-4" />
                 <DrawerFooter class="pt-2">
-                    <DrawerClose as={Button<"button">} variant="outline">
+                    <DrawerClose contextId={'md1'}  as={Button<"button">} variant="outline">
                         Cancel
                     </DrawerClose>
                 </DrawerFooter>
-            </DrawerContent>
-        </Drawer>
+            </DrawerPrimitive.Content>
+        </DrawerPrimitive>
     )
 
     return (

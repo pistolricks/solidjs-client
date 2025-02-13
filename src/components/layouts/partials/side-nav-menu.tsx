@@ -122,7 +122,7 @@ const MenuItem: Component<MenuItem> = props => {
     const title = () => props.title;
     const href = () => props.href;
     return (
-        <Drawer.Trigger as={A} href={href()}
+        <Drawer.Trigger contextId={'sd1'} as={A} href={href()}
            class="flex items-center gap-3 p-3 transition-colors rounded text-slate-700 hover:text-emerald-500 hover:bg-emerald-50 focus:bg-emerald-50 aria-[current=page]:text-emerald-500 aria-[current=page]:bg-emerald-50 ">
             <div class="flex items-center self-center w-6">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

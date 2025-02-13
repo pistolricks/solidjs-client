@@ -12,7 +12,7 @@ const LogoutUserForm: Component<PROPS> = props => {
     return (
         <>
             <form class={''} action={logoutUserHandler} method="post">
-                    <Drawer.Trigger as={"div"}>
+                    <Drawer.Trigger contextId={'sd1'} as={"div"}>
                         <Button as={"button"} variant={"ghost"}  size={"wd"} type={"submit"}>LOGOUT</Button>
                     </Drawer.Trigger>
             </form>

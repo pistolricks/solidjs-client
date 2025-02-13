@@ -2,6 +2,7 @@ import Drawer from '@corvu/drawer'
 
 import SideNavMenu from "~/components/layouts/partials/side-nav-menu";
 import {createEffect, JSXElement} from "solid-js";
+import DrawerPrimitive from "@corvu/drawer";
 
 type PROPS = {
     children?: JSXElement
@@ -11,14 +12,15 @@ function SideDrawer(props: PROPS) {
     const children = () => props.children;
 
     return (
-        <Drawer dialogId="side-drawer-1" breakPoints={[0.75]} side={"right"}>
+        <DrawerPrimitive contextId={'sd1'}  breakPoints={[0.75]} side={"right"}>
             {(props) => (
                 <>
 
                     {children()}
 
-                    <Drawer.Portal>
+                    <Drawer.Portal contextId={'sd1'}>
                         <Drawer.Overlay
+                            contextId={'sd1'}
                             style={{
                                 'background-color': `rgb(0 0 0 / ${
                                     0.5 * props.openPercentage
@@ -29,7 +31,7 @@ function SideDrawer(props: PROPS) {
                     </Drawer.Portal>
                 </>
             )}
-        </Drawer>
+        </DrawerPrimitive>
     )
 }
 

@@ -1,6 +1,7 @@
 import type {ParentProps} from "solid-js"
 import {createSignal, onMount, Show} from "solid-js"
 import {Drawer} from "~/components/ui/drawer"
+import DrawerPrimitive from "@corvu/drawer";
 
 export function ResponsiveDrawer(props: ParentProps) {
     const [open, setOpen] = createSignal(false)
@@ -13,17 +14,17 @@ export function ResponsiveDrawer(props: ParentProps) {
     })
 
     const MobileDrawer = () => (
-        <Drawer breakPoints={[0.75]} dialogId="responsive-drawer-mobile" open={open()} onOpenChange={setOpen}>
+        <DrawerPrimitive contextId={'rmd1'} breakPoints={[0.75]} dialogId="responsive-drawer-mobile" open={open()} onOpenChange={setOpen}>
             {children()}
-        </Drawer>
+        </DrawerPrimitive>
     )
 
     return (
         <Show when={isDesktop()} fallback={<MobileDrawer/>}>
-            <Drawer breakPoints={[0.75]} side={"right"} dialogId="responsive-drawer-desktop" open={open()}
+            <DrawerPrimitive contextId={'rdd1'} breakPoints={[0.75]} side={"right"} dialogId="responsive-drawer-desktop" open={open()}
                     onOpenChange={setOpen}>
                 {children()}
-            </Drawer>
+            </DrawerPrimitive>
         </Show>
     )
 }

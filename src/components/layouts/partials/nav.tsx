@@ -46,7 +46,7 @@ const Nav: Component<PROPS> = props => {
                                     </>
                                 }
                                 when={user()?.email} >
-                                <Drawer.Trigger as={"button"}>
+                                <Drawer.Trigger contextId={'sd1'} as={"button"}>
                                     <UserCircle/>
                                 </Drawer.Trigger>
                             </Show>
@@ -59,7 +59,7 @@ const Nav: Component<PROPS> = props => {
                     </div>
                 </div>
             </header>
-            <Drawer.Content class={"w-screen sm:max-w-lg"}>
+            <Drawer.Content contextId={'sd1'} class={"w-screen sm:max-w-lg"}>
                 <SideNavMenu user={user()}/>
                 {/*
                             <p class="hidden_frog">🐸 You found froggy!</p>

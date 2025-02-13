@@ -11,6 +11,7 @@ import {
     DrawerTitle,
     DrawerTrigger
 } from "~/components/ui/drawer"
+import DrawerPrimitive from "@corvu/drawer";
 
 export function BaseDrawer() {
     const [goal, setGoal] = createSignal(250)
@@ -20,15 +21,15 @@ export function BaseDrawer() {
     }
 
     return (
-        <Drawer dialogId="base-drawer-1" breakPoints={[0.75]} side={"right"}>
-            <DrawerTrigger as={Button<"button">} variant="outline">
+        <DrawerPrimitive contextId={'bd1'} dialogId="base-drawer-1" breakPoints={[0.75]} side={"right"}>
+            <DrawerPrimitive.Trigger contextId={'bd1'} as={Button<"button">} variant="outline">
                 Open Drawer
-            </DrawerTrigger>
-            <DrawerContent>
+            </DrawerPrimitive.Trigger>
+            <DrawerPrimitive.Content contextId={'bd1'}>
                 <div class="mx-auto w-full max-w-sm">
                     <DrawerHeader>
-                        <DrawerTitle>Move Goal</DrawerTitle>
-                        <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+                        <DrawerTitle contextId={'bd1'}>Move Goal</DrawerTitle>
+                        <DrawerDescription contextId={'bd1'}>Set your daily activity goal.</DrawerDescription>
                     </DrawerHeader>
                     <div class="p-4 pb-0">
                         <div class="flex items-center justify-center space-x-2">
@@ -57,14 +58,14 @@ export function BaseDrawer() {
                             </Button>
                         </div>
                     </div>
-                    <DrawerFooter>
+                    <DrawerFooter >
                         <Button>Submit</Button>
-                        <DrawerClose as={Button<"button">} variant="outline">
+                        <DrawerClose contextId={'bd1'} as={Button<"button">} variant="outline">
                             Cancel
                         </DrawerClose>
                     </DrawerFooter>
                 </div>
-            </DrawerContent>
-        </Drawer>
+            </DrawerPrimitive.Content>
+        </DrawerPrimitive>
     )
 }
