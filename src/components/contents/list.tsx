@@ -47,14 +47,17 @@ const ContentsList: Component<PROPS> = props => {
                 <img
                     src={`http://localhost:4000/${getSelected()?.src}`}
                     alt=""
-                    class="pointer-events-none h-full w-full object-contain group-hover:opacity-75"/>
-                <DrawerPrimitive.Description contextId={'dd1'}>
-                    Make changes to your profile here. Click save when you're done.
+                    class="pointer-events-none h-full max-h-[90dvh] w-full object-contain group-hover:opacity-75"/>
+                <DrawerPrimitive.Description class={'p-4 text-pretty'} contextId={'dd1'}>
+                    {getSelected()?.original}
                 </DrawerPrimitive.Description>
 
-                <DrawerPrimitive.Close contextId={'dd1'} as={Button<"button">} variant="outline">
-                    Cancel
-                </DrawerPrimitive.Close>
+                <div class={'flex justify-end items-center p-1'}>
+                    <DrawerPrimitive.Close class={''} contextId={'dd1'} as={Button<"button">} size={'icon'}
+                                           variant="outline">
+                        <XMark/>
+                    </DrawerPrimitive.Close>
+                </div>
             </DrawerPrimitive.Content>
         )
     }
@@ -104,8 +107,9 @@ const ContentsList: Component<PROPS> = props => {
                 <For each={getContents()}>
                     {(content, i) => (
                         <Show when={isDesktop()} fallback={
-                            <DrawerPrimitive.Trigger as={'li'} class={'relative'} contextId={'dd1'} onClick={[handler, content]}
-                                            classList={{active: isSelected(content.id)}}>
+                            <DrawerPrimitive.Trigger as={'li'} class={'relative'} contextId={'dd1'}
+                                                     onClick={[handler, content]}
+                                                     classList={{active: isSelected(content.id)}}>
                                 <GridImage content={content}/>
                             </DrawerPrimitive.Trigger>
                         }>
