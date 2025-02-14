@@ -21,7 +21,7 @@ export function ResponsiveDrawer(props: ParentProps) {
 
     return (
         <Show when={isDesktop()} fallback={<MobileDrawer/>}>
-            <DrawerPrimitive contextId={'rdd1'} breakPoints={[0.75]} side={"right"} dialogId="responsive-drawer-desktop" open={open()}
+            <DrawerPrimitive contextId={'rmd1'} breakPoints={[0.75]} side={"right"} dialogId="responsive-drawer-desktop" open={open()}
                     onOpenChange={setOpen}>
                 {children()}
             </DrawerPrimitive>

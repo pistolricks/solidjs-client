@@ -8,6 +8,7 @@ import Dialog from "@corvu/dialog";
 import FileUploader from "~/components/ui/file-uploader";
 import {getUser} from "~/lib/users";
 import {DrawerContent} from "~/components/ui/drawer";
+import BaseDialog from "~/components/ui/dialogs/base-dialog";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 const ContentsList = lazy(() => import( "~/components/contents/list"));
@@ -30,18 +31,21 @@ export default function Contents() {
     })
     return (
         <CategoryLayout {...getAllContents()}>
-            <Dialog.Content>
-                <FileUploader/>
-            </Dialog.Content>
-
-
 
             <ContentsList contents={getAllContents()}/>
 
+            <BaseDialog contextId={'albd1'}>
+            <Dialog.Content contextId={'albd1'} >
+                <FileUploader/>
+            </Dialog.Content>
+
             <FooterMenu title={"Contents"}>
-                <Dialog.Trigger as={Button<"button">} class={'uppercase bg-white'} variant={"outline"}
-                                size={'sm'}>Upload</Dialog.Trigger>
+                <Dialog.Trigger contextId={'albd1'} as={Button<"button">} class={'uppercase bg-white'} variant={"outline"}
+                                size={'sm'}>
+                    Upload
+                </Dialog.Trigger>
             </FooterMenu>
+            </BaseDialog>
         </CategoryLayout>
     );
 }

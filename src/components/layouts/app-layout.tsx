@@ -24,9 +24,9 @@ const AppLayout: Component<PROPS> = props => {
     return (
         <SideDrawer>
             <Nav user={user()} path={path()} />
-            <BaseDialog>
+
                 {children()}
-            </BaseDialog>
+
         </SideDrawer>
     );
 };

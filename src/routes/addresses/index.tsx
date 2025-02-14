@@ -9,6 +9,7 @@ import {DrawerContent, DrawerTrigger} from "~/components/ui/drawer";
 import {Button} from "~/components/ui/button";
 import {LookupResult, OsmOutput} from "~/lib/store";
 import Geolocation from "~/components/ui/geolocation";
+import DrawerPrimitive from "@corvu/drawer";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 
@@ -70,19 +71,19 @@ export default function Addresses() {
     return (
         <div>
             <CategoryLayout {...addressData()}>
-                <DrawerContent class={"relative h-full overflow-y-auto"}>
+                <DrawerPrimitive.Content contextId={'rmd1'} class={"relative h-full overflow-y-auto"}>
                     <pre>{JSON.stringify(details(), null, 2)}</pre>
-                </DrawerContent>
+                </DrawerPrimitive.Content>
 
 
                 <For each={results()?.results}>
                     {(place) => (
 
-                        <DrawerTrigger as={Button<"button">} onClick={[handleGetDetails, place]} class={'bg-gray-1'}>
+                        <DrawerPrimitive.Trigger contextId={'rmd1'} as={Button<"button">} onClick={[handleGetDetails, place]} class={'bg-gray-1'}>
                             <p>{place.osm_id}</p>
                             <p>{place.osm_type}</p>
                             <p>{place.display_name}</p>
-                        </DrawerTrigger>
+                        </DrawerPrimitive.Trigger>
                     )}
                 </For>
 

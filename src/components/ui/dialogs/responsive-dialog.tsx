@@ -1,22 +1,19 @@
-import {createSignal, JSXElement, onMount, Show} from "solid-js"
-import {Button} from "~/components/ui/button"
+import {createSignal, JSXElement, Show} from "solid-js"
 
 import DrawerPrimitive from "@corvu/drawer";
 import Dialog from "@corvu/dialog";
 
 type PROPS = {
+    isDesktop: boolean;
     children?: JSXElement
 }
 
 export function ResponsiveDialog(props: PROPS) {
     const [open, setOpen] = createSignal(false)
-    const [isDesktop, setIsDesktop] = createSignal(false)
+    const isDesktop = () => props.isDesktop;
 
     const children = () => props.children;
 
-    onMount(() => {
-        setIsDesktop(window.innerWidth >= 768)
-    })
 
     const MobileDialog = () => (
         <DrawerPrimitive contextId={'dd1'} open={open()} onOpenChange={setOpen}>
