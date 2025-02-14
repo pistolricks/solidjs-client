@@ -1,13 +1,13 @@
 import {AccessorWithLatest, createAsync, useSubmission} from "@solidjs/router";
 import {createEffect, createMemo, createSignal, For, lazy} from "solid-js";
-import {actionPositionHandler, addressPositionHandler, addressSearchHandler, getAddresses} from "~/lib/addresses";
+import {actionPositionHandler, addressSearchHandler, getAddresses} from "~/lib/addresses";
 import AddressesList from "~/components/addresses/list";
 import FooterMenu from "~/components/layouts/partials/footer-menu";
 
 import AddressSearchForm from "~/components/addresses/forms/address-search-form";
 import {Button} from "~/components/ui/button";
 import {LookupResult, OsmOutput} from "~/lib/store";
-import Geolocation from "~/components/ui/geolocation";
+import Geolocation from "~/components/addresses/partials/geolocation";
 import DrawerPrimitive from "@corvu/drawer";
 import {MapIcon} from "~/components/svg";
 
@@ -46,19 +46,9 @@ export default function Addresses() {
 
     })
 
-    const selectPlace = (data: OsmOutput, event: Event) => {
-        console.log("Data:", data, "Event:", event);
-        setPlace(data)
-    };
-
-
     const handleGetDetails = async (data: OsmOutput, event: Event) => {
         if (!data) return;
-        // let res = await addressDetailsHandler(data.place_id)
-        let res = await addressPositionHandler(data.lat, data.lon)
-        console.log('status', res.status)
-        setDetails(res)
-        return res;
+        setDetails(data)
     }
 
 
@@ -71,12 +61,11 @@ export default function Addresses() {
     return (
         <div>
             <CategoryLayout {...addressData()}>
-
-
                 <DrawerPrimitive.Content contextId={'rmd1'} class={"relative h-full overflow-y-auto"}>
                     <pre>{JSON.stringify(details(), null, 2)}</pre>
                 </DrawerPrimitive.Content>
 
+                <AddressSearchForm/>
 
                 <For each={results()?.results}>
                     {(place) => (
@@ -93,8 +82,6 @@ export default function Addresses() {
 
                 <AddressesList addresses={addressData()}/>
 
-
-                <AddressSearchForm/>
                 <FooterMenu title={<MapIcon class={'size-full stroke-mint-11 p-0.5 fill-green-2'}/>}
                             variant={'ghost'} size={'icon'}>
                     <Geolocation/>

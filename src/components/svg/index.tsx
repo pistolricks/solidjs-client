@@ -9,6 +9,23 @@ export const ChevronLeft: Component<{
     </svg>
 )
 
+export const PositionIcon: Component<{
+    class?: string;
+}> = props => (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={1} stroke="currentColor"
+             class={props.class ?? 'size-6'}>
+            <circle cx="12" cy="12" r="4"></circle><path d="M13 4.069V2h-2v2.069A8.01 8.01 0 0 0 4.069 11H2v2h2.069A8.008 8.008 0 0 0 11 19.931V22h2v-2.069A8.007 8.007 0 0 0 19.931 13H22v-2h-2.069A8.008 8.008 0 0 0 13 4.069zM12 18c-3.309 0-6-2.691-6-6s2.691-6 6-6 6 2.691 6 6-2.691 6-6 6z"></path>
+        </svg>
+    )
+export const CompassIcon: Component<{
+    class?: string;
+}> = props => (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={1.5} stroke="currentColor"
+             class={props.class ?? 'size-6'}>
+            <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm3 13-8 2 2-8 8-2-2 8z"></path><circle cx="12" cy="12" r="2"></circle>
+        </svg>
+    )
+
 export const UploadCloud: Component<{
     class?: string;
 }> = props => (

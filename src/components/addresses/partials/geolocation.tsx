@@ -1,9 +1,8 @@
-import {Component, createEffect, createMemo, createSignal, Match, onMount, Show, Switch} from "solid-js";
-import {DetailResults, OsmOutput} from "~/lib/store";
-import {actionPositionHandler, addressPositionHandler} from "~/lib/addresses";
-import {useAction, useSubmission} from "@solidjs/router";
+import {Component, createEffect, createSignal, onMount, Show} from "solid-js";
+import {actionPositionHandler} from "~/lib/addresses";
+import {useAction} from "@solidjs/router";
 import {Button} from "~/components/ui/button";
-import {MapPin, Power} from "~/components/svg";
+import {MapPin, PositionIcon} from "~/components/svg";
 import {showToast} from "~/components/ui/toast";
 
 type PROPS = {}
@@ -11,10 +10,10 @@ let map;
 let marker;
 let watchID: number;
 const Geolocation: Component<PROPS> = props => {
-    const [getRef, setRef] = createSignal<HTMLFormElement | undefined>()
     const submit = useAction(actionPositionHandler);
     const locationStatus = document.getElementById("locationStatus");
     const [getLocationAccess, setLocationAccess] = createSignal<"denied" | "granted" | "prompt">();
+    const [getRef, setRef] = createSignal<HTMLFormElement | undefined>()
     const [getPosition, setPosition] = createSignal<[number, number]>()
 
 
@@ -131,12 +130,12 @@ onMount(async() => {
                 <Show
                     fallback={
                         <Button<"button"> size={"icon"} variant={'destructive'} onClick={trackLocation}>
-                            <MapPin class={"p-1 stroke-red-11"}/>
+                            <PositionIcon class={"p-1 fill-amber-1 stroke-red-11"}/>
                         </Button>
                     }
                     when={getPosition()}>
                     <Button<"button"> size={"icon"} variant={'success'} onClick={clearPosition}>
-                        <MapPin class={"p-1 stroke-green-11"}/>
+                        <MapPin class={"p-1 animate-pulse stroke-green-11"}/>
                     </Button>
 
                 </Show>

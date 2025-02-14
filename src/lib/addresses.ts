@@ -1,7 +1,5 @@
 import {action, query, redirect} from "@solidjs/router";
 import {baseApi, getUserToken} from "~/lib/server";
-import {redirectTo} from "~/lib/index";
-import {OsmOutput, setOsmResults} from "~/lib/store";
 import {createPositionMapHandler} from "~/lib/maps";
 
 
@@ -87,62 +85,6 @@ export const addressSearchHandler = action(async (data: FormData) => {
     return res;
 })
 
-export const addressDetailsHandler = async (place_id: number) => {
-    "use server";
-    let token = await getUserToken();
-    if (!token) throw redirect("/")
-
-    console.log("Bearer:", token.token)
-
-    const inputItems = {
-        place_id: place_id,
-    }
-
-
-    const response = await fetch(`${baseApi}/addresses/details`, {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${token.token}`
-        },
-        body: JSON.stringify(inputItems)
-    })
-
-    const res: any = await response.json();
-    const status: number = response.status;
-    console.log("status", status)
-    console.log("res", res.address)
-
-    return res;
-}
-
-export const addressPositionHandler = async (lat: string, lon: string) => {
-    "use server";
-    let token = await getUserToken();
-    if (!token) throw redirect("/")
-
-    console.log("Bearer:", token.token)
-
-    const inputItems = {
-        lat: lat,
-        lon: lon,
-    }
-
-
-    const response = await fetch(`${baseApi}/addresses/position`, {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${token.token}`
-        },
-        body: JSON.stringify(inputItems)
-    })
-
-    const res: any = await response.json();
-    const status: number = response.status;
-    console.log("status", status)
-    console.log("res", res.address)
-
-    return res;
-}
 
 export const actionPositionHandler = action(async (data: FormData) => {
     "use server";
@@ -173,7 +115,7 @@ export const actionPositionHandler = action(async (data: FormData) => {
 
     let mapInput = {
         title: res.results.display_name,
-        filename:   `${res.results.osm_type}-${res.results.osm_id}`,
+        filename: `${res.results.osm_type}-${res.results.osm_id}`,
         lat: res.results.lat,
         lng: res.results.lon,
     }

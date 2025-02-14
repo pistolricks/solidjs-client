@@ -11,7 +11,7 @@ import {useLayoutContext} from "~/context/layout-provider";
 type PROPS = {
     contents: ContentsData | undefined;
 }
-/* TODO: NEED TO SETUP STATIC FILE SERVER ON GO PROJECT */
+
 const ContentsList: Component<PROPS> = props => {
     const {getIsDesktop} = useLayoutContext()
     const contents = () => props.contents;

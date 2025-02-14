@@ -18,7 +18,7 @@ import {
 } from "~/components/ui/combobox"
 import {DrawerClose} from "~/components/ui/drawer";
 
-type PROPS = CountryData;
+type PROPS = CountryData & { contextId?: string };
 
 const CreateAddressForm: Component<PROPS> = props => {
     const submission = useSubmission(addAddress);
@@ -27,6 +27,7 @@ const CreateAddressForm: Component<PROPS> = props => {
         return submission.result
     })
 
+    const contextId = () => props.contextId ?? 'rmd1'
     const localityNameType = () => props.LocalityNameType ?? 2;
     const administrativeAreaNameType = () => props.AdministrativeAreaNameType ?? 18;
     const dependentLocalityNameType = () => props.DependentLocalityNameType ?? 19;
@@ -109,7 +110,7 @@ const CreateAddressForm: Component<PROPS> = props => {
                         <Combobox
                             class={"text-gray-11"}
                             options={adminAreas()}
-                            optionValue="ID"
+                            optionValue="Name"
                             optionTextValue="Name"
                             optionLabel="Name"
                             optionDisabled="disabled"
@@ -141,7 +142,7 @@ const CreateAddressForm: Component<PROPS> = props => {
                 </div>
                 <div class={'items-center flex flex-row-reverse space-x-2 space-x-reverse'}>
                     <Button as={"button"} variant={'default'} type={"submit"} size="icon"><MagnifyingGlass/></Button>
-                    <DrawerClose as={Button<"button">} variant="outline" size="icon">
+                    <DrawerClose contextId={contextId()} as={Button<"button">} variant="outline" size="icon">
                         <XMark/>
                     </DrawerClose>
                 </div>

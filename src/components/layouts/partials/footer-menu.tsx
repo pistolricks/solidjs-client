@@ -44,7 +44,7 @@ const FooterMenu: Component<PROPS> = props => {
 
     return (
         <footer
-            class={'bg-slate-ui fixed inset-x-0 bottom-0 w-full px-4 rounded-none border-gray-normal h-16 flex items-center'}>
+            class={'bg-slate-ui fixed  left-1/2 -translate-x-1/2 bottom-0 w-screen mx-auto px-4 rounded-none border-gray-normal h-16 flex items-center'}>
             <div class={sectionClass()}>
                 <ResponsiveNav title={splitPath()?.[1]}>
                     <Button class={titleClass()} variant={variant()} base={base()} size={size()}>{title()}</Button>
