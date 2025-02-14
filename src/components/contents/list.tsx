@@ -49,7 +49,7 @@ const ContentsList: Component<PROPS> = props => {
                 </DrawerPrimitive.Description>
 
                 <div class={'flex justify-end items-center p-1'}>
-                    <DrawerPrimitive.Close class={''} contextId={'dd1'} as={Button<"button">} size={'icon'}
+                    <DrawerPrimitive.Close  contextId={'dd1'} as={Button<"button">} size={'icon'}
                                            variant="outline">
                         <XMark/>
                     </DrawerPrimitive.Close>
@@ -71,7 +71,7 @@ const ContentsList: Component<PROPS> = props => {
                     <img
                         src={`http://localhost:4000/${content().src}`}
                         alt=""
-                        class="pointer-events-none aspect-[1/1] w-full object-cover group-hover:opacity-75"/>
+                        class="pointer-events-none aspect-[1/1] w-full object-cover group-hover:opacity-75 rounded-sm"/>
                     <button type="button" class="absolute inset-0 focus:outline-none">
                         <span class="sr-only">{content().original}</span>
                     </button>
@@ -91,10 +91,10 @@ const ContentsList: Component<PROPS> = props => {
                 <Dialog.Content contextId={'dd1'} class="sm:max-w-[425px]">
 
                     <img src={`http://localhost:4000/${getSelected()?.src}`} alt=""
-                         class="pointer-events-none h-full max-h-[78dvh] w-full object-contain group-hover:opacity-75"/>
+                         class="pointer-events-none h-full max-h-[78dvh] w-full object-contain group-hover:opacity-75 rounded-sm"/>
 
                     <Dialog.Description contextId={'dd1'}>
-                        <Dialog.Close contextId={'dd1'} as={Button<"button">}><XMark/></Dialog.Close>
+                        <Dialog.Close contextId={'dd1'} as={Button<"button">} size={'icon'}><XMark class={'stroke-sky-8 fill-sky-4'}/></Dialog.Close>
                     </Dialog.Description>
                 </Dialog.Content>
             </Show>

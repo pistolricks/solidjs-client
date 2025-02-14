@@ -41,7 +41,7 @@ export default function Contents() {
                 <FileUploader/>
             </Dialog.Content>
 
-                <FooterMenu title={<BuildingOffice2 class={'size-full stroke-blue-11 p-0.5 fill-green-2'}/>} variant={'ghost'} size={'icon'}>
+                <FooterMenu title={<Photo class={'size-full stroke-sky-11 p-0.5 fill-green-2'}/>} variant={'ghost'} size={'icon'}>
                     <Button  as={Drawer.Trigger} contextId={"albd1"} variant={"ghost"} size={'icon'}>
                         <Plus class={'size-full p-0.5 stroke-slate-11'}/>
                     </Button>

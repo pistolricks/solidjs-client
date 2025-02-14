@@ -3,17 +3,13 @@ import {createEffect, createMemo, createSignal, For, lazy} from "solid-js";
 import {actionPositionHandler, addressPositionHandler, addressSearchHandler, getAddresses} from "~/lib/addresses";
 import AddressesList from "~/components/addresses/list";
 import FooterMenu from "~/components/layouts/partials/footer-menu";
-import {BuildingOffice2, MapPin, Plus} from "~/components/svg";
+
 import AddressSearchForm from "~/components/addresses/forms/address-search-form";
-import {DrawerContent, DrawerTrigger} from "~/components/ui/drawer";
 import {Button} from "~/components/ui/button";
 import {LookupResult, OsmOutput} from "~/lib/store";
 import Geolocation from "~/components/ui/geolocation";
 import DrawerPrimitive from "@corvu/drawer";
-import Drawer from "@corvu/drawer";
-import Dialog from "@corvu/dialog";
-import FileUploader from "~/components/ui/file-uploader";
-import BaseDialog from "~/components/ui/dialogs/base-dialog";
+import {MapIcon} from "~/components/svg";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 
@@ -99,9 +95,9 @@ export default function Addresses() {
 
 
                 <AddressSearchForm/>
-                <FooterMenu title={<BuildingOffice2 class={'size-full stroke-blue-11 p-0.5 fill-green-2'}/>}
+                <FooterMenu title={<MapIcon class={'size-full stroke-mint-11 p-0.5 fill-green-2'}/>}
                             variant={'ghost'} size={'icon'}>
-                        <Geolocation/>
+                    <Geolocation/>
                 </FooterMenu>
 
             </CategoryLayout>

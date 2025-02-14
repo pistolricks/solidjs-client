@@ -4,7 +4,8 @@ import {addVendor} from "~/lib/vendors";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
 import {showToast} from "~/components/ui/toast";
-import {ChevronLeft} from "~/components/svg";
+import {ChevronLeft, UploadCloud, XMark} from "~/components/svg";
+import Dialog from "@corvu/dialog";
 
 type PROPS = {}
 
@@ -62,16 +63,12 @@ const CreateVendorForm: Component<PROPS> = props => {
                     </Show>
                 </TextField>
                 <div class={'items-center flex flex-row-reverse space-x-2 space-x-reverse'}>
-                    <Button as={"button"} variant={'default'} type={"submit"}>Add Vendor</Button>
-                    <Button
-                        as={"A"}
-                        href={'/vendors'}
-                        variant={'secondary'}
-                        size={"icon"}
-                        type={"button"}
-                    >
-                        <ChevronLeft/>
-                    </Button>
+                    <Dialog.Close contextId={'albd1'} class={''}>
+                        <Button as={"button"} variant={'default'} type={"submit"}>Add Vendor</Button>
+                    </Dialog.Close>
+                    <Dialog.Close contextId={'albd1'} class={''}>
+                        <Button as={"button"} variant={'default'} size={"icon"} type={"button"}><XMark class={'p-1.5 stroke-gray-11'}/></Button>
+                    </Dialog.Close>
                 </div>
             </form>
         </>

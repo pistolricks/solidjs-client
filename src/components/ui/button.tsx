@@ -25,14 +25,14 @@ const Button = <T extends ValidComponent = "button">(
     }[base()]
 
     let variants = {
-        default: "bg-gray-action text-gray-normal",
+        default: "bg-gray-action text-gray-dim",
         secondary: "bg-slate-action text-slate-dim",
-        outline: "bg-gray-ui text-gray-dim border border-gray-normal",
+        outline: "bg-gray-ui text-gray-dim border border-gray-dim",
         ghost: "bg-gray-ui text-gray-dim",
-        information: "bg-sky-action text-sky-normal",
-        success: "bg-mint-action text-mint-normal border border-mint-normal",
-        destructive: "bg-red-action text-red-12 border border-red-normal",
-        warning: "bg-amber-action text-amber-normal",
+        information: "bg-sky-action text-sky-dim",
+        success: "bg-mint-action text-mint-normal border border-mint-dim",
+        destructive: "bg-red-subtle text-red-12 border border-red-dim",
+        warning: "bg-amber-action text-amber-dim",
         link: "text-blue-action hover:underline"
     }[variant()];
 
