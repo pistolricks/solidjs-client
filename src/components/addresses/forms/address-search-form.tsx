@@ -3,7 +3,7 @@ import {useSubmission} from "@solidjs/router";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
 import {Button} from "../../ui/button";
 import {showToast} from "~/components/ui/toast";
-import {MagnifyingGlass} from "~/components/svg";
+import {MagnifyingGlass, MagnifyingGlassCircle} from "~/components/svg";
 import {addAddress, addressFieldNames, addressSearchHandler} from "~/lib/addresses";
 import {AreaSelect, CountryData} from "~/lib/store";
 
@@ -39,19 +39,18 @@ const CreateAddressForm: Component<PROPS> = props => {
     return (
         <>
 
-            <form class={'flex justify-center items-center space-x-2 md:space-x-2.5'} action={addressSearchHandler} method="post">
-                <TextField class={'w-full'}>
+            <form class={'flex justify-center items-center'} action={addressSearchHandler} method="post">
+                <TextField class={'w-full relative'}>
                     <TextFieldInput onInput={handleSearch} class={"w-full"} type="text" autocomplete="none" id="search" name="search" placeholder="Search"/>
                     <Show when={results()?.error?.search}>
                         <TextFieldErrorMessage>
                             {results()?.error?.search}
                         </TextFieldErrorMessage>
                     </Show>
+                        <Button disabled={getSearch()?.length < 1} as={"button"} class={'absolute right-0 inset-y-0 z-40 w-12 h-full flex items-center bg-blue-3 hover:bg-blue-4 border border-gray-10 rounded-l-none rounded-r-md'} variant={'link'} type={"submit"} size="icon"><MagnifyingGlassCircle class={"p-0.5 stroke-red-8 hover:stroke-red-7 "}/></Button>
                 </TextField>
 
-                <div class={''}>
-                    <Button disabled={getSearch()?.length < 1} as={"button"} variant={'default'} type={"submit"} size="icon"><MagnifyingGlass/></Button>
-                </div>
+
             </form>
         </>
     );

@@ -3,13 +3,17 @@ import {createEffect, createMemo, createSignal, For, lazy} from "solid-js";
 import {actionPositionHandler, addressPositionHandler, addressSearchHandler, getAddresses} from "~/lib/addresses";
 import AddressesList from "~/components/addresses/list";
 import FooterMenu from "~/components/layouts/partials/footer-menu";
-import {MapPin} from "~/components/svg";
+import {BuildingOffice2, MapPin, Plus} from "~/components/svg";
 import AddressSearchForm from "~/components/addresses/forms/address-search-form";
 import {DrawerContent, DrawerTrigger} from "~/components/ui/drawer";
 import {Button} from "~/components/ui/button";
 import {LookupResult, OsmOutput} from "~/lib/store";
 import Geolocation from "~/components/ui/geolocation";
 import DrawerPrimitive from "@corvu/drawer";
+import Drawer from "@corvu/drawer";
+import Dialog from "@corvu/dialog";
+import FileUploader from "~/components/ui/file-uploader";
+import BaseDialog from "~/components/ui/dialogs/base-dialog";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 
@@ -71,6 +75,8 @@ export default function Addresses() {
     return (
         <div>
             <CategoryLayout {...addressData()}>
+
+
                 <DrawerPrimitive.Content contextId={'rmd1'} class={"relative h-full overflow-y-auto"}>
                     <pre>{JSON.stringify(details(), null, 2)}</pre>
                 </DrawerPrimitive.Content>
@@ -79,7 +85,8 @@ export default function Addresses() {
                 <For each={results()?.results}>
                     {(place) => (
 
-                        <DrawerPrimitive.Trigger contextId={'rmd1'} as={Button<"button">} onClick={[handleGetDetails, place]} class={'bg-gray-1'}>
+                        <DrawerPrimitive.Trigger contextId={'rmd1'} as={Button<"button">}
+                                                 onClick={[handleGetDetails, place]} class={'bg-gray-1'}>
                             <p>{place.osm_id}</p>
                             <p>{place.osm_type}</p>
                             <p>{place.display_name}</p>
@@ -91,14 +98,12 @@ export default function Addresses() {
                 <AddressesList addresses={addressData()}/>
 
 
-
-                <FooterMenu sectionClass={'flex justify-center items-center md:justify-between'}
-                            childClass={'w-full md:w-1/2 pl-2'} size="icon" titleClass={"bg-sky-4"}
-                            title={<Geolocation/>}>
-
-
-                    <AddressSearchForm/>
+                <AddressSearchForm/>
+                <FooterMenu title={<BuildingOffice2 class={'size-full stroke-blue-11 p-0.5 fill-green-2'}/>}
+                            variant={'ghost'} size={'icon'}>
+                        <Geolocation/>
                 </FooterMenu>
+
             </CategoryLayout>
         </div>
     );

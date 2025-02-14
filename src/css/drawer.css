@@ -1,5 +1,5 @@
 [data-corvu-drawer-trigger] {
-    color: var(--color-muted-foreground)
+/*    color: var(--color-muted-foreground) */
 }
 
 [data-corvu-drawer-trigger]:hover {

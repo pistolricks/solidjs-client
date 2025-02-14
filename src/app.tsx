@@ -5,15 +5,18 @@ import "./css/app.css";
 import "@fontsource/inter";
 import {Toaster} from "~/components/ui/toast";
 import AppLayout from "~/components/layouts/app-layout";
+import {LayoutProvider} from "~/context/layout-provider";
 
 export default function App() {
 
     return (
         <Router
             root={props => (
-                <AppLayout>
-                    <Suspense>{props.children}</Suspense>
-                </AppLayout>
+                <LayoutProvider>
+                    <AppLayout>
+                        <Suspense>{props.children}</Suspense>
+                    </AppLayout>
+                </LayoutProvider>
             )}
         >
             <FileRoutes/>

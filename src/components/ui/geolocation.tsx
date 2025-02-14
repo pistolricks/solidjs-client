@@ -131,12 +131,12 @@ onMount(async() => {
                 <Show
                     fallback={
                         <Button<"button"> size={"icon"} variant={'destructive'} onClick={trackLocation}>
-                            <MapPin class={"stroke-red-11"}/>
+                            <MapPin class={"p-1 stroke-red-11"}/>
                         </Button>
                     }
                     when={getPosition()}>
                     <Button<"button"> size={"icon"} variant={'success'} onClick={clearPosition}>
-                        <MapPin class={" stroke-green-11"}/>
+                        <MapPin class={"p-1 stroke-green-11"}/>
                     </Button>
 
                 </Show>

@@ -20,7 +20,7 @@ const Button = <T extends ValidComponent = "button">(
     const className = () => local.class ?? ""
 
     let bases = {
-        default: "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium outline-offset-background transition-colors focus-visible:outline-hidden focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+        default: "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium outline-offset-background transition-colors focus-visible:outline-hidden focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-8 [&_svg]:shrink-0",
         custom: className()
     }[base()]
 

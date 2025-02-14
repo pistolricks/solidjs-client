@@ -1,16 +1,14 @@
-import {A, AccessorWithLatest, createAsync, RouteSectionProps, useLocation} from "@solidjs/router";
-import {Component, createEffect, lazy, ParentProps, Show} from "solid-js";
+import {A} from "@solidjs/router";
+import {Component, createEffect, Show} from "solid-js";
 import {USER} from "~/lib/store";
 import Drawer from "@corvu/drawer";
 import {UserCircle} from "~/components/svg";
-import {getUser} from "~/lib/users";
 import Breadcrumbs from "~/components/layouts/partials/breadcrumbs";
 import SideNavMenu from "~/components/layouts/partials/side-nav-menu";
-import {getVendors} from "~/lib/vendors";
 
 
 type PROPS = {
-    user: USER|undefined;
+    user: USER | undefined;
     path?: string;
 }
 const Nav: Component<PROPS> = props => {
@@ -45,7 +43,7 @@ const Nav: Component<PROPS> = props => {
                                         </li>
                                     </>
                                 }
-                                when={user()?.email} >
+                                when={user()?.email}>
                                 <Drawer.Trigger contextId={'sd1'} as={"button"}>
                                     <UserCircle/>
                                 </Drawer.Trigger>

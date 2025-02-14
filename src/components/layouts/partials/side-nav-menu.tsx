@@ -2,6 +2,7 @@ import {Component, For, lazy, ParentProps} from "solid-js";
 import {A} from "@solidjs/router";
 import Drawer from "@corvu/drawer";
 import {USER} from "~/lib/store";
+import {useLayoutContext} from "~/context/layout-provider";
 
 const LogoutUserForm = lazy(() => import("~/components/users/forms/logout-user-form"));
 type PROPS = {
@@ -10,21 +11,13 @@ type PROPS = {
 
 const SideNavMenu: Component<PROPS> = props => {
 
+    const {menu, apps} = useLayoutContext();
     const user = () => props.user;
     const title = () => user()?.name ?? "Login"
 
-    const menus: MenuItem[] = [
-        {title: "Vendors", href: "/vendors"},
-        {title: "Addresses", href: "/addresses"},
-        {title: "Contents", href: "/contents"}
-    ]
 
-    const apps: MenuItem[] = [
-        {title: "Messages", href: "/messages"},
-        {title: "Friends", href: "/friends"},
-        {title: "Tasks", href: "/task"},
-        {title: "Notifications", href: "/notification"}
-    ]
+
+
 
     const active = (routePath: string) =>
         routePath == path() ? "border-gray-normal" : "border-transparent hover:border-gray-dim";
@@ -58,10 +51,10 @@ const SideNavMenu: Component<PROPS> = props => {
             <nav aria-label="side navigation" class="flex-1 overflow-auto divide-y divide-slate-100">
                 <div>
                     <ul class="flex flex-col flex-1 gap-1 py-3">
-                        <For each={menus}>
+                        <For each={menu}>
                             {(item) => (
                                 <li class="px-3">
-                                    <MenuItem {...item}/>
+                                    <MenuItem contextId={'sd1'} {...item}/>
                                 </li>
                             )}
                         </For>
@@ -72,7 +65,7 @@ const SideNavMenu: Component<PROPS> = props => {
                         <For each={apps}>
                             {(item) => (
                                 <li class="px-3">
-                                    <MenuItem {...item}/>
+                                    <MenuItem contextId={'sd1'}{...item}/>
                                 </li>
                             )}
                         </For>
@@ -115,15 +108,17 @@ export default SideNavMenu;
 type MenuItem = {
     title: string;
     href: string;
+    description?: string;
+    icon?: string;
 }
 
-const MenuItem: Component<MenuItem> = props => {
+export const MenuItem: Component<MenuItem & { contextId: string }> = props => {
 
     const title = () => props.title;
     const href = () => props.href;
+    const contextId = () => props.contextId;
     return (
-        <Drawer.Trigger contextId={'sd1'} as={A} href={href()}
-           class="flex items-center gap-3 p-3 transition-colors rounded text-slate-700 hover:text-emerald-500 hover:bg-emerald-50 focus:bg-emerald-50 aria-[current=page]:text-emerald-500 aria-[current=page]:bg-emerald-50 ">
+        <Drawer.Trigger contextId={contextId()} as={A} href={href()} class="flex items-center gap-3 p-3 transition-colors rounded text-slate-700 hover:text-emerald-500 hover:bg-emerald-50 focus:bg-emerald-50 aria-[current=page]:text-emerald-500 aria-[current=page]:bg-emerald-50 ">
             <div class="flex items-center self-center w-6">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                      stroke-width="1.5" stroke="currentColor" class="w-6 h-6"

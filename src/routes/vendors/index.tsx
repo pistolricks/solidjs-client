@@ -5,6 +5,9 @@ import {getVendors} from "~/lib/vendors";
 import FooterMenu from "~/components/layouts/partials/footer-menu";
 import Dialog from "@corvu/dialog";
 import {Button} from "~/components/ui/button";
+import BaseDialog from "~/components/ui/dialogs/base-dialog";
+import {BuildingOffice2, Plus} from "~/components/svg";
+import Drawer from "@corvu/drawer";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 const VendorsList = lazy(() => import( "~/components/vendors/list"));
@@ -29,10 +32,17 @@ export default function Vendors() {
             <VendorsList vendors={vendorsData()}/>
 
 
-            <FooterMenu title={"Vendors"}>
-                <Button as={A} href={'/vendors/create'} class={'uppercase bg-white'} variant={"outline"}
-                        size={'sm'}>Create</Button>
-            </FooterMenu>
+            <BaseDialog contextId={'albd1'}>
+                <Dialog.Content contextId={'albd1'} >
+
+                </Dialog.Content>
+
+                <FooterMenu title={<BuildingOffice2 class={'size-full stroke-blue-11 p-0.5 fill-green-2'}/>} variant={'ghost'} size={'icon'}>
+                    <Button  as={Drawer.Trigger} contextId={"albd1"} variant={"ghost"} size={'icon'}>
+                        <Plus class={'size-full p-0.5 stroke-slate-11'}/>
+                    </Button>
+                </FooterMenu>
+            </BaseDialog>
         </CategoryLayout>
     );
 }

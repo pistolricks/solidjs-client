@@ -6,15 +6,15 @@ import DrawerPrimitive from "@corvu/drawer";
 import Dialog from "@corvu/dialog";
 import {Button} from "~/components/ui/button";
 import {XMark} from "~/components/svg";
+import {useLayoutContext} from "~/context/layout-provider";
 
 type PROPS = {
     contents: ContentsData | undefined;
 }
 /* TODO: NEED TO SETUP STATIC FILE SERVER ON GO PROJECT */
 const ContentsList: Component<PROPS> = props => {
+    const {getIsDesktop} = useLayoutContext()
     const contents = () => props.contents;
-
-    const [isDesktop, setIsDesktop] = createSignal(false)
     const [getContents, setContents] = createSignal(contents()?.contents)
 
     createEffect(() => {
@@ -36,10 +36,6 @@ const ContentsList: Component<PROPS> = props => {
 
     };
 
-
-    onMount(() => {
-        setIsDesktop(window.innerWidth >= 768)
-    })
 
     const MobileDialogContent = () => {
         return (
@@ -90,8 +86,8 @@ const ContentsList: Component<PROPS> = props => {
     }
 
     return (
-        <ResponsiveDialog isDesktop={isDesktop()}>
-            <Show when={isDesktop()} fallback={<MobileDialogContent/>}>
+        <ResponsiveDialog isDesktop={getIsDesktop()}>
+            <Show when={getIsDesktop()} fallback={<MobileDialogContent/>}>
                 <Dialog.Content contextId={'dd1'} class="sm:max-w-[425px]">
 
                     <img src={`http://localhost:4000/${getSelected()?.src}`} alt=""
@@ -106,7 +102,7 @@ const ContentsList: Component<PROPS> = props => {
                 class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8 container">
                 <For each={getContents()}>
                     {(content, i) => (
-                        <Show when={isDesktop()} fallback={
+                        <Show when={getIsDesktop()} fallback={
                             <DrawerPrimitive.Trigger as={'li'} class={'relative'} contextId={'dd1'}
                                                      onClick={[handler, content]}
                                                      classList={{active: isSelected(content.id)}}>

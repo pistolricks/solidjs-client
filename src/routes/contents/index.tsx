@@ -9,6 +9,8 @@ import FileUploader from "~/components/ui/file-uploader";
 import {getUser} from "~/lib/users";
 import {DrawerContent} from "~/components/ui/drawer";
 import BaseDialog from "~/components/ui/dialogs/base-dialog";
+import {BuildingOffice2, Photo, Plus, UploadCloud} from "~/components/svg";
+import Drawer from "@corvu/drawer";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 const ContentsList = lazy(() => import( "~/components/contents/list"));
@@ -39,12 +41,11 @@ export default function Contents() {
                 <FileUploader/>
             </Dialog.Content>
 
-            <FooterMenu title={"Contents"}>
-                <Dialog.Trigger contextId={'albd1'} as={Button<"button">} class={'uppercase bg-white'} variant={"outline"}
-                                size={'sm'}>
-                    Upload
-                </Dialog.Trigger>
-            </FooterMenu>
+                <FooterMenu title={<BuildingOffice2 class={'size-full stroke-blue-11 p-0.5 fill-green-2'}/>} variant={'ghost'} size={'icon'}>
+                    <Button  as={Drawer.Trigger} contextId={"albd1"} variant={"ghost"} size={'icon'}>
+                        <Plus class={'size-full p-0.5 stroke-slate-11'}/>
+                    </Button>
+                </FooterMenu>
             </BaseDialog>
         </CategoryLayout>
     );
