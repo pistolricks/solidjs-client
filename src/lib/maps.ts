@@ -10,7 +10,7 @@ export const  createPositionMapHandler= async (mapInput: { title: string, filena
     console.log("Bearer:", token.token)
 
     const mapInputs = {
-        title: mapInput.title,
+        title: `${mapInput.lat}-${mapInput.lng}-${Date.now()}`, // mapInput.title,
         filename: mapInput.filename,
         lat: mapInput.lat,
         lng: mapInput.lng,
