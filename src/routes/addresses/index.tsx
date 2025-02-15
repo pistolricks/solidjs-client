@@ -10,6 +10,7 @@ import {LookupResult, OsmOutput} from "~/lib/store";
 import Geolocation from "~/components/addresses/partials/geolocation";
 import DrawerPrimitive from "@corvu/drawer";
 import {MapIcon} from "~/components/svg";
+import GeoMap from "~/components/addresses/partials/geo-map";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 
@@ -65,7 +66,8 @@ export default function Addresses() {
                     <pre>{JSON.stringify(details(), null, 2)}</pre>
                 </DrawerPrimitive.Content>
 
-                <AddressSearchForm/>
+
+                <GeoMap/>
 
                 <For each={results()?.results}>
                     {(place) => (
@@ -79,15 +81,22 @@ export default function Addresses() {
                     )}
                 </For>
 
-
                 <AddressesList addresses={addressData()}/>
 
-                <FooterMenu title={<MapIcon class={'size-full stroke-mint-11 p-0.5 fill-green-2'}/>}
-                            variant={'ghost'} size={'icon'}>
-                    <Geolocation/>
-                </FooterMenu>
+                <div class={"absolute right-0 bottom-0 z-20 w-full p-1"}>
+                    <AddressSearchForm/>
+                </div>
 
             </CategoryLayout>
+
+
+
+            <FooterMenu title={<MapIcon class={'size-full stroke-mint-11 p-0.5 fill-green-2'}/>}
+                        variant={'ghost'} size={'icon'}>
+                <Geolocation/>
+            </FooterMenu>
+
+
         </div>
     );
 }

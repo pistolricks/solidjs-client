@@ -5,9 +5,8 @@ import {Button} from "~/components/ui/button";
 import {MapPin, PositionIcon} from "~/components/svg";
 import {showToast} from "~/components/ui/toast";
 
+
 type PROPS = {}
-let map;
-let marker;
 let watchID: number;
 const Geolocation: Component<PROPS> = props => {
     const submit = useAction(actionPositionHandler);
@@ -19,6 +18,7 @@ const Geolocation: Component<PROPS> = props => {
 
     createEffect(async() => {
         console.log('getPosition', getPosition())
+
 
         await navigator.permissions.query({ name: 'geolocation' }).then((permissionStatus) => {
             permissionStatus.onchange = () => {
@@ -139,7 +139,6 @@ onMount(async() => {
                     </Button>
 
                 </Show>
-            <div id="map"></div>
         </form>
     );
 };

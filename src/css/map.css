@@ -1,0 +1,24 @@
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.ol-attribution {
+    display: none;
+}
+
+.ol-zoom-in {
+    display: none;
+}
+
+.ol-zoom-out {
+    display: none;
+}
+
+.ol-rotate-reset {
+    display: none;
+}
+

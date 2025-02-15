@@ -20,6 +20,7 @@
     "@types/geojson": "^7946.0.16",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "ol": "^10.4.0",
     "postcss": "^8.4.38",
     "solid-js": "^1.9.2",
     "solid-list": "^0.3.0",
