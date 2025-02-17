@@ -10,7 +10,7 @@ type PROPS = {
 const VendorsList: Component<PROPS> = props => {
     const vendors = () => props.vendors?.vendors;
     return (
-        <ul class={'text-gray-11 space-y-8 text-center'}>
+        <ul class={'text-gray-11 space-y-8 text-center p-4'}>
             <For each={vendors()}>
                 {(vendor, i) => (
                     <li class={''}>
