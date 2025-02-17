@@ -5,7 +5,7 @@ import {ResponsiveDialog} from "~/components/ui/dialogs/responsive-dialog";
 import DrawerPrimitive from "@corvu/drawer";
 import Dialog from "@corvu/dialog";
 import {Button} from "~/components/ui/button";
-import {XMark} from "~/components/svg";
+import {ChevronDown, XMark} from "~/components/svg";
 import {useLayoutContext} from "~/context/layout-provider";
 import GridWrapper from "~/components/layouts/partials/grid-wrapper";
 
@@ -44,7 +44,7 @@ const ContentsList: Component<PROPS> = props => {
                 <img
                     src={`http://localhost:4000/${getSelected()?.src}`}
                     alt=""
-                    class="pointer-events-none h-full max-h-[90dvh] w-full object-contain group-hover:opacity-75"/>
+                    class="pointer-events-none h-full max-h-[80.5dvh] w-full object-contain group-hover:opacity-75 rounded-sm"/>
                 <DrawerPrimitive.Description class={'p-4 text-pretty'} contextId={'dd1'}>
                     {getSelected()?.original}
                 </DrawerPrimitive.Description>
@@ -52,7 +52,7 @@ const ContentsList: Component<PROPS> = props => {
                 <div class={'flex justify-end items-center p-1'}>
                     <DrawerPrimitive.Close contextId={'dd1'} as={Button<"button">} size={'icon'}
                                            variant="outline">
-                        <XMark/>
+                        <ChevronDown/>
                     </DrawerPrimitive.Close>
                 </div>
             </DrawerPrimitive.Content>
@@ -94,9 +94,9 @@ const ContentsList: Component<PROPS> = props => {
                     <img src={`http://localhost:4000/${getSelected()?.src}`} alt=""
                          class="pointer-events-none h-full max-h-[78dvh] w-full object-contain group-hover:opacity-75 rounded-sm"/>
 
-                    <Dialog.Description contextId={'dd1'}>
-                        <Dialog.Close contextId={'dd1'} as={Button<"button">} size={'icon'}><XMark
-                            class={'stroke-sky-8 fill-sky-4'}/></Dialog.Close>
+                    <Dialog.Description class={'flex justify-end items-center'} contextId={'dd1'}>
+                        <Dialog.Close contextId={'dd1'} as={Button<"button">} size={'icon'}>
+                            <XMark class={'stroke-sky-8 fill-sky-4'}/></Dialog.Close>
                     </Dialog.Description>
                 </Dialog.Content>
             </Show>
