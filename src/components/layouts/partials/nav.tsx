@@ -23,9 +23,9 @@ const Nav: Component<PROPS> = props => {
     return (
         <>
 
-            <header class={"w-full bg-gray-ui sticky top-0"}>
-                <nav class="container items-center" aria-label="Global">
-                    <div class="flex justify-between items-center w-full py-3 text-gray-normal">
+            <header class={"w-full bg-gray-ui sticky top-0 z-50"}>
+                <nav class="container items-center flex justify-between  h-16" aria-label="Global">
+                    <div class="flex justify-between items-center w-full text-gray-normal">
                         <ul class="flex justify-start items-center">
                             <li class={`${active("/")}`}>
                                 <A href="/">{import.meta.env.VITE_APP_NAME}</A>
@@ -59,9 +59,6 @@ const Nav: Component<PROPS> = props => {
             </header>
             <Drawer.Content contextId={'sd1'} class={"w-screen sm:max-w-lg"}>
                 <SideNavMenu user={user()}/>
-                {/*
-                            <p class="hidden_frog">🐸 You found froggy!</p>
-                           */}
             </Drawer.Content>
         </>
     );

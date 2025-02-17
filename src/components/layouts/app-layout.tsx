@@ -9,6 +9,7 @@ import {Photo, Plus} from "~/components/svg";
 import {Button} from "~/components/ui/button";
 import Drawer from "@corvu/drawer";
 import FooterMenu from "~/components/layouts/partials/footer-menu";
+import {useLayoutContext} from "~/context/layout-provider";
 
 type PROPS = ParentProps
 export const route = {
@@ -17,6 +18,8 @@ export const route = {
     }
 }
 const AppLayout: Component<PROPS> = props => {
+
+    const {getHeight} = useLayoutContext();
     const children = () => props.children;
 
     const user: AccessorWithLatest<USER | undefined> = createAsync(async () => getUser());
@@ -28,9 +31,12 @@ const AppLayout: Component<PROPS> = props => {
     return (
         <SideDrawer>
             <Nav user={user()} path={path()}/>
-
-            {children()}
-
+            <main
+                style={{
+                height: getHeight() + 'px'
+            }}>
+                {children()}
+            </main>
         </SideDrawer>
     );
 };

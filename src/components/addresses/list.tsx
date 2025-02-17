@@ -12,9 +12,7 @@ const AddressesList: Component<PROPS> = props => {
             <For each={addresses()}>
                 {(address, i) => (
                     <li class={''}>
-
                         <span class={'text-tomato-normal'}>{address.administrative_area}</span>
-
                         <div class={'space-x-1'}>
                             <For each={address?.street_address}>
                                 {(line) => (

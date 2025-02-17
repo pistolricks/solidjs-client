@@ -48,7 +48,7 @@ const SideNavMenu: Component<PROPS> = props => {
                 <div></div>
                 <LogoutUserForm/>
             </div>
-            <nav aria-label="side navigation" class="flex-1 overflow-auto divide-y divide-slate-100">
+            <div aria-label="side navigation" class="flex-1 overflow-auto divide-y divide-slate-100">
                 <div>
                     <ul class="flex flex-col flex-1 gap-1 py-3">
                         <For each={menu}>
@@ -95,7 +95,7 @@ const SideNavMenu: Component<PROPS> = props => {
                         </li>
                     </ul>
                 </div>
-            </nav>
+            </div>
 
 
         </aside>

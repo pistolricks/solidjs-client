@@ -6,7 +6,7 @@ export default function Home(props: RouteSectionProps) {
 
     return (
         <>
-            <main class="text-center mx-auto p-4">
+            <div class="text-center mx-auto p-4">
                 <h1 class="max-6-xs text-6xl text-red-7 font-thin uppercase my-16">
                     SS FE
                 </h1>
@@ -14,7 +14,7 @@ export default function Home(props: RouteSectionProps) {
                 <Button variant={'outline'} size={'lg'}>
                     Test
                 </Button>
-            </main>
+            </div>
         </>
     );
 }

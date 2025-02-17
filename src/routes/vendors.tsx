@@ -8,9 +8,9 @@ type PROPS = {
 const VendorsLayout: Component<PROPS> = props => {
 
     return (
-        <main>
+        <div>
             {props.children}
-        </main>
+        </div>
     );
 };
 

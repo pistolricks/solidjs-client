@@ -7,13 +7,14 @@ import Dialog from "@corvu/dialog";
 import {Button} from "~/components/ui/button";
 import {XMark} from "~/components/svg";
 import {useLayoutContext} from "~/context/layout-provider";
+import GridWrapper from "~/components/layouts/partials/grid-wrapper";
 
 type PROPS = {
     contents: ContentsData | undefined;
 }
 
 const ContentsList: Component<PROPS> = props => {
-    const {getIsDesktop} = useLayoutContext()
+    const {getIsDesktop, getHeight} = useLayoutContext()
     const contents = () => props.contents;
     const [getContents, setContents] = createSignal(contents()?.contents)
 
@@ -49,7 +50,7 @@ const ContentsList: Component<PROPS> = props => {
                 </DrawerPrimitive.Description>
 
                 <div class={'flex justify-end items-center p-1'}>
-                    <DrawerPrimitive.Close  contextId={'dd1'} as={Button<"button">} size={'icon'}
+                    <DrawerPrimitive.Close contextId={'dd1'} as={Button<"button">} size={'icon'}
                                            variant="outline">
                         <XMark/>
                     </DrawerPrimitive.Close>
@@ -94,12 +95,13 @@ const ContentsList: Component<PROPS> = props => {
                          class="pointer-events-none h-full max-h-[78dvh] w-full object-contain group-hover:opacity-75 rounded-sm"/>
 
                     <Dialog.Description contextId={'dd1'}>
-                        <Dialog.Close contextId={'dd1'} as={Button<"button">} size={'icon'}><XMark class={'stroke-sky-8 fill-sky-4'}/></Dialog.Close>
+                        <Dialog.Close contextId={'dd1'} as={Button<"button">} size={'icon'}><XMark
+                            class={'stroke-sky-8 fill-sky-4'}/></Dialog.Close>
                     </Dialog.Description>
                 </Dialog.Content>
             </Show>
-            <ul role="list"
-                class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8 container">
+
+            <GridWrapper>
                 <For each={getContents()}>
                     {(content, i) => (
                         <Show when={getIsDesktop()} fallback={
@@ -116,7 +118,7 @@ const ContentsList: Component<PROPS> = props => {
                         </Show>
                     )}
                 </For>
-            </ul>
+            </GridWrapper>
         </ResponsiveDialog>
     );
 };

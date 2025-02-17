@@ -8,13 +8,22 @@ export type MenuItem = {
 }
 
 type LayoutType = {
+    getHeight: Accessor<number>
     getIsDesktop: Accessor<boolean>
     menu: MenuItem[]
     apps: MenuItem[]
 }
 
+let headerHeight = import.meta.env.VITE_HEADER_HEIGHT
+let footerHeight = import.meta.env.VITE_FOOTER_HEIGHT
+
+
 export const LayoutContext = createContext<LayoutType>();
 export function LayoutProvider(props: { children: JSX.Element }) {
+
+
+    const [getHeight, setHeight] = createSignal(window.innerHeight)
+
     const [getIsDesktop, setIsDesktop] = createSignal(false)
 
     const menu: MenuItem[] = [
@@ -32,11 +41,13 @@ export function LayoutProvider(props: { children: JSX.Element }) {
 
 
     onMount(() => {
+        setHeight(() => window.innerHeight - (headerHeight) - (footerHeight))
         setIsDesktop(window.innerWidth >= 768)
     })
 
     return (
         <LayoutContext.Provider value={{
+            getHeight,
             getIsDesktop,
             menu,
             apps,

@@ -1,23 +1,17 @@
-import {Component, createSignal, onMount, ParentProps} from "solid-js";
+import {Component, ParentProps} from "solid-js";
+import {useLayoutContext} from "~/context/layout-provider";
 
 type PROPS = ParentProps
 
 const CategoryLayout: Component<PROPS> = props => {
 
-    let headerHeight = import.meta.env.VITE_HEADER_HEIGHT
-    let footerHeight = import.meta.env.VITE_FOOTER_HEIGHT
-
-    const [getHeight, setHeight] = createSignal(window.innerHeight)
-
-    onMount(() => {
-        setHeight(() => window.innerHeight - (headerHeight) - (footerHeight))
-    })
+    const {getHeight} = useLayoutContext();
 
     return (
 
         <div style={{
             height: getHeight() + 'px'
-        }} class="relative container mx-auto p-4 scrollbar-hide">
+        }} class="relative container mx-auto overflow-hide">
             {props.children}
         </div>
 
