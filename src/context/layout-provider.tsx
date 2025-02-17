@@ -1,4 +1,4 @@
-import {Accessor, createContext, createSignal, JSX, onMount, useContext} from "solid-js";
+import {Accessor, createContext, createSignal, JSX, onMount, Setter, useContext} from "solid-js";
 
 export type MenuItem = {
     title: string;
@@ -7,7 +7,11 @@ export type MenuItem = {
     icon?: string;
 }
 
+type POSITION = [number, number]|undefined
+
 type LayoutType = {
+    getPosition: Accessor<POSITION>
+    setPosition: Setter<POSITION>
     getHeight: Accessor<number>
     getIsDesktop: Accessor<boolean>
     menu: MenuItem[]
@@ -21,7 +25,7 @@ let footerHeight = import.meta.env.VITE_FOOTER_HEIGHT
 export const LayoutContext = createContext<LayoutType>();
 export function LayoutProvider(props: { children: JSX.Element }) {
 
-
+    const [getPosition, setPosition] = createSignal<POSITION>(undefined)
     const [getHeight, setHeight] = createSignal(window.innerHeight)
 
     const [getIsDesktop, setIsDesktop] = createSignal(false)
@@ -47,6 +51,8 @@ export function LayoutProvider(props: { children: JSX.Element }) {
 
     return (
         <LayoutContext.Provider value={{
+            getPosition,
+            setPosition,
             getHeight,
             getIsDesktop,
             menu,

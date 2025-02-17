@@ -4,16 +4,18 @@ import {useAction} from "@solidjs/router";
 import {Button} from "~/components/ui/button";
 import {MapPin, PositionIcon} from "~/components/svg";
 import {showToast} from "~/components/ui/toast";
+import {useLayoutContext} from "~/context/layout-provider";
 
 
 type PROPS = {}
 let watchID: number;
 const Geolocation: Component<PROPS> = props => {
+    const {getPosition, setPosition} = useLayoutContext();
     const submit = useAction(actionPositionHandler);
     const locationStatus = document.getElementById("locationStatus");
     const [getLocationAccess, setLocationAccess] = createSignal<"denied" | "granted" | "prompt">();
     const [getRef, setRef] = createSignal<HTMLFormElement | undefined>()
-    const [getPosition, setPosition] = createSignal<[number, number]>()
+
 
 
     createEffect(async() => {
@@ -31,7 +33,7 @@ const Geolocation: Component<PROPS> = props => {
         console.log(getLocationAccess())
     })
 
-    function trackLocation() {
+    async function trackLocation() {
         if (navigator.geolocation) {
             watchID = navigator.geolocation.watchPosition(showPosition, showError, {
                 enableHighAccuracy: true,
@@ -48,7 +50,7 @@ const Geolocation: Component<PROPS> = props => {
             }
         }
     }
-    function showPosition(position: { coords: { latitude: number; longitude: number; }; }) {
+    async function showPosition(position: { coords: { latitude: number; longitude: number; }; }) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
