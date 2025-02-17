@@ -2,6 +2,7 @@ import {Component, For} from "solid-js";
 import {VendorsData} from "~/lib/store";
 import {A} from "@solidjs/router";
 import {Button} from "~/components/ui/button";
+import ListWrapper from "~/components/layouts/partials/list-wrapper";
 
 type PROPS = {
     vendors: VendorsData | undefined;
@@ -10,7 +11,7 @@ type PROPS = {
 const VendorsList: Component<PROPS> = props => {
     const vendors = () => props.vendors?.vendors;
     return (
-        <ul class={'text-gray-11 space-y-8 text-center p-4'}>
+        <ListWrapper>
             <For each={vendors()}>
                 {(vendor, i) => (
                     <li class={''}>
@@ -29,7 +30,7 @@ const VendorsList: Component<PROPS> = props => {
                     </li>
                 )}
             </For>
-        </ul>
+        </ListWrapper>
     );
 };
 
