@@ -176,7 +176,7 @@ const GeoMap: Component<PROPS> = props => {
         positionFeature.setStyle(
             new Style({
                 image: new CircleStyle({
-                    radius: 6,
+                    radius: 10,
                     fill: new Fill({
                         color: '#3399CC',
                     }),
@@ -306,7 +306,7 @@ const GeoMap: Component<PROPS> = props => {
                 }
 
                 map.forEachFeatureAtPixel(e.pixel, function (f: any) {
-                    setSelected(() => f)
+                    setSelected(() => f?.values_)
                     f.setStyle(styleFunction);
                     console.log('f', f?.values_)
 
@@ -390,7 +390,22 @@ const GeoMap: Component<PROPS> = props => {
                 }}
                 id="map" class="map"/>
 
+            <Drawer.Content contextId={'map1'}
+                            style={{
+                                height: getHeight() + 'px',
+                                top: 110 + 'px',
+                                bottom: 64 + 'px'
+                            }}
+                            class={"w-screen sm:max-w-sm"}>
+
+                <div class={'text-sm text-gray-11'}>{selected()?.loc?.display}</div>
+
+
+            </Drawer.Content>
+
+
             <span id="status">&nbsp;</span>
+
 
 
 

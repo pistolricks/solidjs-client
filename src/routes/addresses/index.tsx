@@ -67,9 +67,6 @@ export default function Addresses() {
     return (
         <ResponsiveDrawer contentId={'map1'}>
 
-            <Drawer.Content contextId={'map1'} class={"w-screen sm:max-w-sm"}>
-
-            </Drawer.Content>
 
                     <CategoryLayout {...addressData()}>
                         <GeoMap results={results()}/>
