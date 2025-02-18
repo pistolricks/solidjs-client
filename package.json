@@ -21,6 +21,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "ol": "^10.4.0",
+    "ol-popup": "^5.1.1",
     "postcss": "^8.4.38",
     "solid-js": "^1.9.2",
     "solid-list": "^0.3.0",

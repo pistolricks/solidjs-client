@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './drawer.css' layer(utilities);
+@import './popup.css' layer(utilities);
 @import './dialog.css' layer(utilities);
 @import './map.css' layer(utilities);
 @import './colors.css';

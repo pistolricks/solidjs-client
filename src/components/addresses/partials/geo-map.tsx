@@ -1,5 +1,5 @@
 import {Component, createEffect, createMemo, createSignal, onCleanup, onMount, Show} from "solid-js";
-import {Map, View} from "ol";
+import {Map, Overlay, View} from "ol";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
 import Feature from 'ol/Feature.js';
@@ -12,7 +12,7 @@ import Fill from 'ol/style/Fill.js';
 import Stroke from 'ol/style/Stroke.js';
 import Style from 'ol/style/Style.js';
 import {Button} from "~/components/ui/button";
-import {PositionIcon} from "~/components/svg";
+import {mapPin, MapPin, PositionIcon} from "~/components/svg";
 import {useLayoutContext} from "~/context/layout-provider";
 import {toLonLat} from 'ol/proj';
 import {actionPositionHandler} from "~/lib/addresses";
@@ -20,7 +20,9 @@ import {useAction} from "@solidjs/router";
 import {GeoJSONFeatureCollection} from "ol/format/GeoJSON";
 import GeoJSON from 'ol/format/GeoJSON.js';
 import {Circle} from "ol/style";
-
+import Drawer from "@corvu/drawer";
+import Link from 'ol/interaction/Link';
+import ol from "ol/dist/ol";
 
 type PROPS = {
     results: GeoJSONFeatureCollection
@@ -28,6 +30,14 @@ type PROPS = {
 
 const GeoMap: Component<PROPS> = props => {
     const {getHeight, getPosition, setPosition, getViewbox, setViewbox} = useLayoutContext();
+    const {open, setOpen} = Drawer.useDialogContext('map1')
+
+    const [getSelected, setSelected] = createSignal()
+
+    const selected = createMemo<any>(() => {
+        console.log('s', getSelected())
+        return getSelected()
+    })
 
     const results = () => props.results;
 
@@ -36,7 +46,7 @@ const GeoMap: Component<PROPS> = props => {
 
 
     const image = new CircleStyle({
-        radius: 5,
+        radius: 7,
         fill: new Fill({
             color: 'rgba(255,0,0,0.2)',
         }),
@@ -126,6 +136,7 @@ const GeoMap: Component<PROPS> = props => {
         }
     })
 
+
     onMount(async () => {
 
         map = new Map({
@@ -151,10 +162,6 @@ const GeoMap: Component<PROPS> = props => {
         });
 
         setGeolocation(geolocation)
-
-        console.log(getGeolocation())
-
-        console.log(getShowPosition())
 
         getGeolocation()?.setTracking(getShowPosition());
 
@@ -195,7 +202,7 @@ const GeoMap: Component<PROPS> = props => {
 
                 console.log("coordinates", coordinates)
 
-               // let lonLat = toLonLat(coordinates)
+                // let lonLat = toLonLat(coordinates)
 
                 let position = {
                     coords: {
@@ -203,6 +210,7 @@ const GeoMap: Component<PROPS> = props => {
                         longitude: coordinates[0]
                     }
                 }
+
 
                 map.getView().animate({
                     duration: 1400,
@@ -245,9 +253,14 @@ const GeoMap: Component<PROPS> = props => {
 
     createEffect(() => {
 
+        console.log(selected())
+
+
         console.log('results-map', results())
         console.log('getShowPosition', getShowPosition())
         console.log(geolocation(), geolocation())
+
+        console.log('getItemRef', getSelected())
 
 
         const styleFunction = function (feature: any) {
@@ -259,21 +272,22 @@ const GeoMap: Component<PROPS> = props => {
 
 
             const vectorSource = new VectorSource({
-                features: features(),
+                features: features()
 
             });
 
 
             vectorSource.addFeature(new Feature(new Circle({
-                radius: 6,
-                fill: new Fill({
-                    color: '#3399CC',
+                    radius: 6,
+                    fill: new Fill({
+                        color: '#3399CC',
+                    }),
+                    stroke: new Stroke({
+                        color: '#fff',
+                        width: 2,
+                    }),
                 }),
-                stroke: new Stroke({
-                    color: '#fff',
-                    width: 2,
-                }),
-            })));
+            ));
 
 
             const vectorLayer = new VectorLayer({
@@ -283,7 +297,39 @@ const GeoMap: Component<PROPS> = props => {
             })
 
 
+            const status = document.getElementById('status') as HTMLElement | null;
+
+            map.on('singleclick', function (e: any) {
+                if (selected() !== null) {
+
+                }
+
+                map.forEachFeatureAtPixel(e.pixel, function (f: any) {
+                    setSelected(() => f)
+                    f.setStyle(styleFunction);
+                    console.log('f', f?.values_)
+
+                    map.getView().animate({
+                        duration: 1400,
+                        center: f?.values_?.geometry?.flatCoordinates,
+                        zoom: 12,
+                    })
+
+                    return true;
+                });
+
+                if (status) {
+                    if (selected()) {
+                        status.innerHTML = selected()?.values_?.loc
+                    } else {
+                        status.innerHTML = '&nbsp;';
+                    }
+                }
+            });
+
+
             map.addLayer(vectorLayer)
+          /*  map.addInteraction(new Link()) */
 
         }
     })
@@ -341,6 +387,11 @@ const GeoMap: Component<PROPS> = props => {
                 }}
                 id="map" class="map"/>
 
+            <span id="status">&nbsp;</span>
+
+            <Drawer.Content contextId={'map1'}>
+
+            </Drawer.Content>
 
             <form
                 ref={setRef}

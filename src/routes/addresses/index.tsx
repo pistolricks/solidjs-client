@@ -8,11 +8,13 @@ import AddressSearchForm from "~/components/addresses/forms/address-search-form"
 import {Button} from "~/components/ui/button";
 import {LookupResult, OsmOutput} from "~/lib/store";
 import Geolocation from "~/components/addresses/partials/geolocation";
-import DrawerPrimitive from "@corvu/drawer";
+import Drawer from "@corvu/drawer";
 import {MapIcon} from "~/components/svg";
 import GeoMap from "~/components/addresses/partials/geo-map";
 import ListWrapper from "~/components/layouts/partials/list-wrapper";
 import {useLayoutContext} from "~/context/layout-provider";
+import SideNavMenu from "~/components/layouts/partials/side-nav-menu";
+import {ResponsiveDrawer} from "~/components/ui/dialogs/responsive-drawer";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
 
@@ -42,14 +44,12 @@ export default function Addresses() {
     createEffect(() => {
         console.log("getDetails", getDetails())
         console.log("getPlace", getPlace())
-        console.log("results_index", results()?.results)
+        console.log("results_index", results())
         console.log("addresses", addressData())
 
         console.log("currentPosition", currentPosition.result?.results)
 
         setMyLocation(currentPosition.result?.results)
-
-
     })
 
     const handleGetDetails = async (data: OsmOutput, event: Event) => {
@@ -65,38 +65,34 @@ export default function Addresses() {
 
 
     return (
-        <div>
-            <CategoryLayout {...addressData()}>
-                <DrawerPrimitive.Content contextId={'rmd1'} class={"relative h-full overflow-y-auto"}>
-                    <pre>{JSON.stringify(details(), null, 2)}</pre>
-                </DrawerPrimitive.Content>
+        <ResponsiveDrawer contentId={'map1'}>
+                    <CategoryLayout {...addressData()}>
 
 
-                <GeoMap results={results()}/>
+                        <GeoMap results={results()}/>
 
-                <ListWrapper>
-                    <For each={results()?.results}>
-                        {(place) => (
+                        <ListWrapper>
+                            <For each={results()?.results}>
+                                {(place) => (
 
-                            <DrawerPrimitive.Trigger contextId={'rmd1'} as={Button<"button">}
-                                                     onClick={[handleGetDetails, place]} class={'bg-gray-1'}>
-                                <p>{place.osm_id}</p>
-                                <p>{place.osm_type}</p>
-                                <p>{place.display_name}</p>
-                            </DrawerPrimitive.Trigger>
-                        )}
-                    </For>
-                </ListWrapper>
-                <AddressesList addresses={addressData()}/>
-
-            </CategoryLayout>
+                                    <>
+                                        <p>{place.osm_id}</p>
+                                        <p>{place.osm_type}</p>
+                                        <p>{place.display_name}</p>
+                                    </>
+                                )}
+                            </For>
+                        </ListWrapper>
+                        <AddressesList addresses={addressData()}/>
+                    </CategoryLayout>
 
 
-            <FooterMenu childClass={'w-full'} sectionClass={'flex justify-between items-center w-full space-x-4'}
-                        title={<MapIcon class={'size-full stroke-mint-11 p-0.5 fill-green-2'}/>}
-                        variant={'ghost'} size={'icon'}>
-                <AddressSearchForm/>
-            </FooterMenu>
-        </div>
+                    <FooterMenu childClass={'w-full'}
+                                sectionClass={'flex justify-between items-center w-full space-x-4'}
+                                title={<MapIcon class={'size-full stroke-mint-11 p-0.5 fill-green-2'}/>}
+                                variant={'ghost'} size={'icon'}>
+                        <AddressSearchForm/>
+                    </FooterMenu>
+        </ResponsiveDrawer>
     );
 }

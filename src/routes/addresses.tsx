@@ -9,9 +9,9 @@ type PROPS = {
 const AddressesLayout: Component<PROPS> = props => {
 
     return (
-        <ResponsiveDrawer>
+        <div>
             {props.children}
-        </ResponsiveDrawer>
+        </div>
     );
 };
 
