@@ -37,7 +37,9 @@ const GeoMap: Component<PROPS> = props => {
 
     const image = new CircleStyle({
         radius: 5,
-        fill: undefined,
+        fill:  new Fill({
+            color: 'rgba(255,0,0,0.2)',
+        }),
         stroke: new Stroke({color: 'red', width: 1}),
     });
 
@@ -109,6 +111,7 @@ const GeoMap: Component<PROPS> = props => {
     const view = new View({
         center: [0, 0],
         zoom: 2,
+        projection: 'EPSG:4326',
     })
 
     const [getShowPosition, setShowPosition] = createSignal(false)
@@ -121,10 +124,8 @@ const GeoMap: Component<PROPS> = props => {
 
     const features = createMemo(() => {
         if(results()) {
-            setFeatures(new GeoJSON()?.readFeatures(results()))
+            return new GeoJSON()?.readFeatures(results())
         }
-
-        return getFeatures()
     })
 
     onMount(async () => {
