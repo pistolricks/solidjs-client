@@ -300,6 +300,7 @@ const GeoMap: Component<PROPS> = props => {
             const status = document.getElementById('status') as HTMLElement | null;
 
             map.on('singleclick', function (e: any) {
+                setOpen(true)
                 if (selected() !== null) {
 
                 }
@@ -308,6 +309,8 @@ const GeoMap: Component<PROPS> = props => {
                     setSelected(() => f)
                     f.setStyle(styleFunction);
                     console.log('f', f?.values_)
+
+
 
                     map.getView().animate({
                         duration: 1400,
@@ -389,9 +392,7 @@ const GeoMap: Component<PROPS> = props => {
 
             <span id="status">&nbsp;</span>
 
-            <Drawer.Content contextId={'map1'}>
 
-            </Drawer.Content>
 
             <form
                 ref={setRef}
