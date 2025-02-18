@@ -1,4 +1,6 @@
 import {Accessor, createContext, createSignal, JSX, onMount, Setter, useContext} from "solid-js";
+import {Coordinate} from "ol/coordinate";
+import {RevesrseLookupResults} from "~/lib/store";
 
 export type MenuItem = {
     title: string;
@@ -10,6 +12,8 @@ export type MenuItem = {
 type POSITION = [number, number]|undefined
 
 type LayoutType = {
+    getMyLocation: Accessor<RevesrseLookupResults|undefined>
+    setMyLocation: Setter<RevesrseLookupResults|undefined>
     getPosition: Accessor<POSITION>
     setPosition: Setter<POSITION>
     getHeight: Accessor<number>
@@ -26,9 +30,18 @@ export const LayoutContext = createContext<LayoutType>();
 export function LayoutProvider(props: { children: JSX.Element }) {
 
     const [getPosition, setPosition] = createSignal<POSITION>(undefined)
-    const [getHeight, setHeight] = createSignal(window.innerHeight)
+    const [getMyLocation, setMyLocation] = createSignal<RevesrseLookupResults|undefined>(undefined)
+    const [getHeight, setHeight] = createSignal(0)
+
+
+    const handleHeight = () => {
+        setHeight(() => window.innerHeight - (headerHeight) - (footerHeight))
+        setIsDesktop(window.innerWidth >= 768)
+    }
 
     const [getIsDesktop, setIsDesktop] = createSignal(false)
+
+
 
     const menu: MenuItem[] = [
         {title: "vendors", href: "/vendors"},
@@ -45,12 +58,16 @@ export function LayoutProvider(props: { children: JSX.Element }) {
 
 
     onMount(() => {
-        setHeight(() => window.innerHeight - (headerHeight) - (footerHeight))
-        setIsDesktop(window.innerWidth >= 768)
+
+        handleHeight();
+
+
     })
 
     return (
         <LayoutContext.Provider value={{
+            getMyLocation,
+            setMyLocation,
             getPosition,
             setPosition,
             getHeight,

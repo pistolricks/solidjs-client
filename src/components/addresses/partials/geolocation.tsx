@@ -68,7 +68,7 @@ const Geolocation: Component<PROPS> = props => {
         if (getPosition()) {
             navigator.geolocation.clearWatch(watchID);
         }
-        setPosition(undefined)
+        setPosition([0,0])
 
         showToast({
             variant: "error",

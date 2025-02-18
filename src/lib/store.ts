@@ -207,7 +207,7 @@ export type LookupResult = {
     }
 }
 
-export type DetailResults = {
+export type RevesrseLookupResults = {
     place_id: number,
     licence: string,
     osm_type: string,
@@ -239,6 +239,7 @@ export type DetailResults = {
         province?: string;
         region?: string;
     },
-    boundingbox: string[]
+    boundingbox: string[],
+    extratags?: any
 
 }
