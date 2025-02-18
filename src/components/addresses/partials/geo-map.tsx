@@ -215,8 +215,8 @@ const GeoMap: Component<PROPS> = props => {
                 ref={setRef}
                 class={'absolute bottom-0 right-0 z-50 p-2'} action={actionPositionHandler}
                 method="post">
-                <input class={'sr-only'} id={'lat'} name={'lat'} type={'string'} value={getPosition()?.[0]}/>
-                <input class={'sr-only'} id={'lon'} name={'lon'} type={'string'} value={getPosition()?.[1]}/>
+                <input class={'sr-only'} id={'lat'} name={'lat'} type={'text'} value={getPosition()?.[0]}/>
+                <input class={'sr-only'} id={'lon'} name={'lon'} type={'text'} value={getPosition()?.[1]}/>
 
                 <Show
                     fallback={

@@ -239,7 +239,7 @@ export type RevesrseLookupResults = {
         province?: string;
         region?: string;
     },
-    boundingbox: string[],
+    boundingbox: any[],
     extratags?: any
 
 }

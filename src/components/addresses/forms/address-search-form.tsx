@@ -6,11 +6,14 @@ import {showToast} from "~/components/ui/toast";
 import {MagnifyingGlassCircle} from "~/components/svg";
 import {addressSearchHandler} from "~/lib/addresses";
 import {CountryData} from "~/lib/store";
+import {useLayoutContext} from "~/context/layout-provider";
 
 type PROPS = CountryData;
 
 const AddressSearchForm: Component<PROPS> = props => {
+    const {getMyLocation} = useLayoutContext();
     const submission = useSubmission(addressSearchHandler);
+
 
     const results = createMemo(() => {
         console.log("result", submission.result)
@@ -33,6 +36,7 @@ const AddressSearchForm: Component<PROPS> = props => {
 
     const handleSearch: JSX.EventHandler<HTMLInputElement, InputEvent> = (event) => {
         console.log("Search Input changed to", event.currentTarget.value)
+
         setSearch(event.currentTarget.value)
     }
 
@@ -43,6 +47,9 @@ const AddressSearchForm: Component<PROPS> = props => {
                 <TextField class={'w-full relative'}>
                     <TextFieldInput onInput={handleSearch} class={"w-full"} type="text" autocomplete="none" id="search"
                                     name="search" placeholder="Search"/>
+                    <input class={'sr-only'} id={'postcode'} name={'postcode'} type={'text'} value={getMyLocation()?.address?.postcode}/>
+
+
                     <Show when={results()?.error?.search}>
                         <TextFieldErrorMessage>
                             {results()?.error?.search}

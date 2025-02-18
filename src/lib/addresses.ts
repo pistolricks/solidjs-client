@@ -64,9 +64,21 @@ export const addressSearchHandler = action(async (data: FormData) => {
 
     console.log("Bearer:", token.token)
 
-    const addressInput = {
-        search: String(data.get("search")),
+    let search = "";
+    let postcode = data.get("postcode")
+
+    if(!postcode) {
+        search = String(data.get("search"))
+    } else {
+        search = String(data.get("search")) + ', ' + String(data.get("postcode"))
     }
+
+
+    const addressInput = {
+        search:  search,
+    }
+
+    console.log("addressInput", addressInput)
 
     const response = await fetch(`${baseApi}/addresses/search`, {
         method: "POST",
