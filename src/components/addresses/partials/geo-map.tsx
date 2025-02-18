@@ -15,7 +15,6 @@ import {Button} from "~/components/ui/button";
 import {PositionIcon} from "~/components/svg";
 import {useLayoutContext} from "~/context/layout-provider";
 import {toLonLat} from 'ol/proj';
-import {mapPin} from "~/components/addresses/partials/geolocation";
 import {actionPositionHandler} from "~/lib/addresses";
 import {useAction} from "@solidjs/router";
 
@@ -26,9 +25,6 @@ const GeoMap: Component<PROPS> = props => {
 
     const submit = useAction(actionPositionHandler);
     const [getRef, setRef] = createSignal<HTMLFormElement | undefined>()
-
-    const locationStatus = document.getElementById("locationStatus");
-    const [getLocationAccess, setLocationAccess] = createSignal<"denied" | "granted" | "prompt">();
 
 
     const view = new View({
@@ -182,7 +178,7 @@ const GeoMap: Component<PROPS> = props => {
                 view.setZoom(zoom + 1);
         };
 
-    const showPosition = async(position: { coords: { latitude: number; longitude: number; }; }) => {
+    const showPosition = async (position: { coords: { latitude: number; longitude: number; }; }) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
