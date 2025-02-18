@@ -21,6 +21,7 @@ import {GeoJSONFeatureCollection} from "ol/format/GeoJSON";
 import GeoJSON from 'ol/format/GeoJSON.js';
 import {Circle} from "ol/style";
 import {Vector} from "ol/layer";
+import {coordinates} from "ol/geom/flat/reverse";
 
 
 type PROPS = {
@@ -120,8 +121,6 @@ const GeoMap: Component<PROPS> = props => {
     let map: Map;
 
 
-    const [getFeatures, setFeatures] = createSignal<any>()
-
     const features = createMemo(() => {
         if(results()) {
             return new GeoJSON()?.readFeatures(results())
@@ -193,7 +192,12 @@ const GeoMap: Component<PROPS> = props => {
             if (coordinates) {
                 console.log('coordinates', coordinates)
 
-                positionFeature.setGeometry(new Point(coordinates));
+              positionFeature.setGeometry(new Point(coordinates));
+
+
+
+
+
 
                 console.log("toLonLat",toLonLat(coordinates))
 
@@ -209,8 +213,10 @@ const GeoMap: Component<PROPS> = props => {
                 map.getView().animate({
                     duration: 1400,
                     center: coordinates,
-                    zoom: 12
+                    zoom: 12,
                 })
+
+
 
                 showPosition(position).then((r: any) => console.log(r?.results))
             }
@@ -222,7 +228,6 @@ const GeoMap: Component<PROPS> = props => {
             console.log(getGeolocation()?.getAltitudeAccuracy() + ' [m]');
             console.log(getGeolocation()?.getHeading() + ' [rad]');
         });
-
 
         new VectorLayer({
             map: map,
@@ -332,7 +337,8 @@ const GeoMap: Component<PROPS> = props => {
         <div
             style={{
                 height: getHeight() + 'px',
-                top: 110 + 'px'
+                top: 110 + 'px',
+                bottom: 64 + 'px'
             }}
             class={'fixed inset-0'}>
             <div
@@ -345,7 +351,7 @@ const GeoMap: Component<PROPS> = props => {
 
             <form
                 ref={setRef}
-                class={'absolute bottom-0 right-0 z-50 p-2'} action={actionPositionHandler}
+                class={'absolute bottom-0 right-0 z-50'} action={actionPositionHandler}
                 method="post">
                 <input class={'sr-only'} id={'lat'} name={'lat'} type={'text'} value={getPosition()?.[0]}/>
                 <input class={'sr-only'} id={'lon'} name={'lon'} type={'text'} value={getPosition()?.[1]}/>
