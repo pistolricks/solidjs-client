@@ -35,7 +35,7 @@ export default function Addresses() {
 
     const results = createMemo(() => {
         console.log("result2", submission.result)
-        return submission.result;
+        return submission.result?.results;
     })
 
 
@@ -72,7 +72,7 @@ export default function Addresses() {
                 </DrawerPrimitive.Content>
 
 
-                <GeoMap/>
+                <GeoMap results={results()}/>
 
                 <ListWrapper>
                     <For each={results()?.results}>

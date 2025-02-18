@@ -64,18 +64,8 @@ export const addressSearchHandler = action(async (data: FormData) => {
 
     console.log("Bearer:", token.token)
 
-    let search = "";
-    let postcode = data.get("postcode")
-
-    if(!postcode) {
-        search = String(data.get("search"))
-    } else {
-        search = String(data.get("search")) + ', ' + String(data.get("postcode"))
-    }
-
-
     const addressInput = {
-        search:  search,
+        search:  String(data.get("search"))
     }
 
     console.log("addressInput", addressInput)
