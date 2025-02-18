@@ -20,8 +20,6 @@ import {useAction} from "@solidjs/router";
 import {GeoJSONFeatureCollection} from "ol/format/GeoJSON";
 import GeoJSON from 'ol/format/GeoJSON.js';
 import {Circle} from "ol/style";
-import {Vector} from "ol/layer";
-import {coordinates} from "ol/geom/flat/reverse";
 
 
 type PROPS = {
@@ -29,16 +27,17 @@ type PROPS = {
 }
 
 const GeoMap: Component<PROPS> = props => {
-    const {getHeight, getPosition, setPosition, setMyLocation} = useLayoutContext();
+    const {getHeight, getPosition, setPosition, getViewbox, setViewbox} = useLayoutContext();
 
     const results = () => props.results;
 
     const submit = useAction(actionPositionHandler);
     const [getRef, setRef] = createSignal<HTMLFormElement | undefined>()
 
+
     const image = new CircleStyle({
         radius: 5,
-        fill:  new Fill({
+        fill: new Fill({
             color: 'rgba(255,0,0,0.2)',
         }),
         stroke: new Stroke({color: 'red', width: 1}),
@@ -122,7 +121,7 @@ const GeoMap: Component<PROPS> = props => {
 
 
     const features = createMemo(() => {
-        if(results()) {
+        if (results()) {
             return new GeoJSON()?.readFeatures(results())
         }
     })
@@ -138,7 +137,6 @@ const GeoMap: Component<PROPS> = props => {
             ],
             view: view,
         });
-
 
 
     });
@@ -192,21 +190,17 @@ const GeoMap: Component<PROPS> = props => {
             if (coordinates) {
                 console.log('coordinates', coordinates)
 
-              positionFeature.setGeometry(new Point(coordinates));
+                positionFeature.setGeometry(new Point(coordinates));
 
 
+                console.log("coordinates", coordinates)
 
-
-
-
-                console.log("toLonLat",toLonLat(coordinates))
-
-                let lonLat = toLonLat(coordinates)
+               // let lonLat = toLonLat(coordinates)
 
                 let position = {
                     coords: {
-                        latitude: lonLat[1],
-                        longitude: lonLat[0]
+                        latitude: coordinates[1],
+                        longitude: coordinates[0]
                     }
                 }
 
@@ -216,7 +210,9 @@ const GeoMap: Component<PROPS> = props => {
                     zoom: 12,
                 })
 
+                const extent = map.getView().calculateExtent();
 
+                setViewbox(extent)
 
                 showPosition(position).then((r: any) => console.log(r?.results))
             }
@@ -259,9 +255,7 @@ const GeoMap: Component<PROPS> = props => {
         };
 
 
-
-        if(results()) {
-
+        if (results()) {
 
 
             const vectorSource = new VectorSource({
@@ -280,7 +274,6 @@ const GeoMap: Component<PROPS> = props => {
                     width: 2,
                 }),
             })));
-
 
 
             const vectorLayer = new VectorLayer({

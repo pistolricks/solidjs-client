@@ -11,7 +11,7 @@ import {useLayoutContext} from "~/context/layout-provider";
 type PROPS = CountryData;
 
 const AddressSearchForm: Component<PROPS> = props => {
-    const {getMyLocation} = useLayoutContext();
+    const {getViewbox} = useLayoutContext();
     const submission = useSubmission(addressSearchHandler);
 
 
@@ -47,7 +47,7 @@ const AddressSearchForm: Component<PROPS> = props => {
                 <TextField class={'w-full relative'}>
                     <TextFieldInput onInput={handleSearch} class={"w-full"} type="text" autocomplete="none" id="search"
                                     name="search" placeholder="Search"/>
-                    <input class={'sr-only'} id={'postcode'} name={'postcode'} type={'text'} value={getMyLocation()?.address?.postcode}/>
+                    <input class={'sr-only'} id={'viewbox'} name={'viewbox'} type={'text'} value={String(getViewbox())}/>
 
 
                     <Show when={results()?.error?.search}>

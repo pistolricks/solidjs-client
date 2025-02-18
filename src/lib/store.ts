@@ -207,7 +207,7 @@ export type LookupResult = {
     }
 }
 
-export type RevesrseLookupResults = {
+export type ReverseLookupResults = {
     place_id: number,
     licence: string,
     osm_type: string,

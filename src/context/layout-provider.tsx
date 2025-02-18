@@ -1,6 +1,6 @@
 import {Accessor, createContext, createSignal, JSX, onMount, Setter, useContext} from "solid-js";
 import {Coordinate} from "ol/coordinate";
-import {RevesrseLookupResults} from "~/lib/store";
+import {Feature} from "~/lib/store";
 
 export type MenuItem = {
     title: string;
@@ -12,8 +12,10 @@ export type MenuItem = {
 type POSITION = [number, number]|undefined
 
 type LayoutType = {
-    getMyLocation: Accessor<RevesrseLookupResults|undefined>
-    setMyLocation: Setter<RevesrseLookupResults|undefined>
+    getViewbox: Accessor<number[]|undefined>
+    setViewbox: Setter<number[]|undefined>
+    getMyLocation: Accessor<Feature|undefined>
+    setMyLocation: Setter<Feature|undefined>
     getPosition: Accessor<POSITION>
     setPosition: Setter<POSITION>
     getHeight: Accessor<number>
@@ -30,7 +32,8 @@ export const LayoutContext = createContext<LayoutType>();
 export function LayoutProvider(props: { children: JSX.Element }) {
 
     const [getPosition, setPosition] = createSignal<POSITION>(undefined)
-    const [getMyLocation, setMyLocation] = createSignal<RevesrseLookupResults|undefined>(undefined)
+    const [getMyLocation, setMyLocation] = createSignal<Feature|undefined>(undefined)
+    const [getViewbox, setViewbox] = createSignal<number[]|undefined>(undefined)
     const [getHeight, setHeight] = createSignal(0)
 
 
@@ -66,6 +69,8 @@ export function LayoutProvider(props: { children: JSX.Element }) {
 
     return (
         <LayoutContext.Provider value={{
+            getViewbox,
+            setViewbox,
             getMyLocation,
             setMyLocation,
             getPosition,

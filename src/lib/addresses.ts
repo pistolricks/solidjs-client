@@ -1,5 +1,7 @@
 import {action, query, redirect} from "@solidjs/router";
 import {baseApi, getUserToken} from "~/lib/server";
+import {toLonLat} from "ol/proj";
+import {useLayoutContext} from "~/context/layout-provider";
 
 
 export const getAddresses = query(async () => {
@@ -59,13 +61,15 @@ export const addAddress = action(async (data: FormData) => {
 
 export const addressSearchHandler = action(async (data: FormData) => {
     "use server";
+
     let token = await getUserToken();
     if (!token) throw redirect("/")
 
     console.log("Bearer:", token.token)
 
     const addressInput = {
-        search:  String(data.get("search"))
+        search:  String(data.get("search")),
+        viewbox: data.get("viewbox"),
     }
 
     console.log("addressInput", addressInput)
