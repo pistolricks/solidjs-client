@@ -16,7 +16,7 @@ export function ResponsiveDrawer(props: ParentProps & { contextId?: string, side
 
 
     const MobileDrawer = () => (
-        <DrawerPrimitive contextId={contextId()} noOutsidePointerEvents={false} closeOnOutsidePointer={false} breakPoints={[0.75]} defaultSnapPoint={0.98} snapPoints={[0, 0.98]} dialogId="responsive-drawer-mobile" open={open()} onOpenChange={setOpen}>
+        <DrawerPrimitive contextId={contextId()} noOutsidePointerEvents={false} closeOnOutsidePointer={false} breakPoints={[0.20]} defaultSnapPoint={0.98} snapPoints={[0, 0.98]} dialogId="responsive-drawer-mobile" open={open()} onOpenChange={setOpen}>
             {children()}
         </DrawerPrimitive>
     )

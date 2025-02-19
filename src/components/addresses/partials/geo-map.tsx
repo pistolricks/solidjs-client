@@ -129,6 +129,7 @@ const GeoMap: Component<PROPS> = (props) => {
 
     // Memoized results for features
     const features = createMemo(() => {
+        console.log(featureCollection())
         if (featureCollection()) {
             return new GeoJSON().readFeatures(featureCollection());
         }
@@ -234,7 +235,7 @@ const GeoMap: Component<PROPS> = (props) => {
                 return styles[feature?.getGeometry()?.getType() as keyof typeof styles];
             };
             // Attach features to the map
-            if (features().length > 0) {
+            if (features()?.length > 0) {
                 const vectorSource = new VectorSource({
                     features: features(),
                 });
