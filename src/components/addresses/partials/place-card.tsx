@@ -1,4 +1,4 @@
-import {Component, createEffect} from "solid-js";
+import {Component, createEffect, createMemo, createSignal} from "solid-js";
 import {Properties} from "~/lib/store";
 import {CallIcon, EnvelopeIcon, GlobeIcon, MapPin, RatingIcon} from "~/components/svg";
 import {A} from "@solidjs/router";
@@ -25,10 +25,13 @@ const PlaceCard: Component<PLACE_PROPS> = props => {
 
     const displayName = () => properties()?.display?.split(',');
 
+
+
     createEffect(() => {
         console.log("geometry", geometry())
         console.log("displayName", displayName())
         console.log("properties", properties())
+
     })
     /*housenumber, street, locality, district, postcode, city, county, state, country*/
     return (
@@ -79,7 +82,9 @@ const PlaceCard: Component<PLACE_PROPS> = props => {
             <p class="text-xs py-2 w-full bg-gray-1 items-center text-center">{extraTags()?.opening_hours?.replaceAll(";", " |")}</p>
             <div class="flex justify-between items-center p-4 border-t border-gray-4 text-gray-600">
                 <div class="flex items-center text-left flex-col space-y-1">
-                    <p class="text-xs w-full"></p>
+                    <p class="text-xs w-full">
+
+                    </p>
                     <p class="text-xs w-full"></p>
                 </div>
 

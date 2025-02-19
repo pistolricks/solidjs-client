@@ -193,7 +193,7 @@ const GeoMap: Component<PROPS> = (props) => {
         positionFeature.setStyle(
             new Style({
                 image: new CircleStyle({
-                    radius: 10,
+                    radius: 14,
                     fill: new Fill({
                         color: "#3399CC",
                     }),
@@ -279,7 +279,7 @@ const GeoMap: Component<PROPS> = (props) => {
 
                             features().push(f);
                            // selected.push(f);
-                            f.setStyle(styles["Point"]);
+                           // f.setStyle(styles["Point"]);
                             throttle(handleDrawer(), 1000)
                             console.log(f)
                         } else {
@@ -289,7 +289,7 @@ const GeoMap: Component<PROPS> = (props) => {
                             console.log('ff', features())
                              features().splice(selIndex, 1);
                             // features().splice(selIndex, 1)
-                            f.setStyle(undefined);
+                           // f.setStyle(undefined);
                         }
                     }
                 });
