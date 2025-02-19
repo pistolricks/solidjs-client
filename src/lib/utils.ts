@@ -27,3 +27,10 @@ export function throttle(mainFunction:  any, delay: number | undefined) {
     }
   };
 }
+
+
+export function arrayDedupe<T>(array: T[], b: T, key: keyof T) {
+  let items: T[] = array.filter((c: T) => c[key] !== b[key]);
+   return [...items, b].reverse();
+
+}

@@ -1,4 +1,4 @@
-import {Component, createEffect, createMemo, createSignal, onCleanup, onMount, Show,} from "solid-js";
+import {Component, createEffect, createMemo, createSignal, For, onCleanup, onMount, Show,} from "solid-js";
 import {Map, View} from "ol";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
@@ -11,7 +11,7 @@ import CircleStyle from "ol/style/Circle.js";
 import Fill from "ol/style/Fill.js";
 import Stroke from "ol/style/Stroke.js";
 import Style from "ol/style/Style.js";
-import GeoJSON, {GeoJSONFeatureCollection} from "ol/format/GeoJSON.js";
+import GeoJSON from "ol/format/GeoJSON.js";
 import {useLayoutContext} from "~/context/layout-provider";
 import Drawer from "@corvu/drawer";
 import {useAction} from "@solidjs/router";
@@ -19,11 +19,15 @@ import {actionPositionHandler} from "~/lib/addresses";
 import {MapPin} from "~/components/svg";
 import List from "~/components/addresses/list";
 import SearchForm from "~/components/ui/search-form";
-import {cn, throttle} from "~/lib/utils";
-import { Geometry } from "ol/geom";
+import {arrayDedupe, cn, throttle} from "~/lib/utils";
+import {FeatureCollection} from "geojson";
+import {produce} from "solid-js/store";
+import PlaceCard from "~/components/addresses/partials/place-card";
+
+
 
 type PROPS = {
-    featureCollection: GeoJSONFeatureCollection;
+    featureCollection: FeatureCollection;
 };
 
 // Moved styles definition outside the component to avoid recreation on every render.
@@ -110,7 +114,7 @@ const styles = {
 };
 
 const GeoMap: Component<PROPS> = (props) => {
-    const {getHeight, setViewbox} = useLayoutContext();
+    const {getHeight, setViewbox, setStoreCollection} = useLayoutContext();
     const {open, setOpen} = Drawer.useDialogContext('map1')
     const [getSelected, setSelected] = createSignal()
     const [getShowPosition, setShowPosition] = createSignal(false);
@@ -132,7 +136,10 @@ const GeoMap: Component<PROPS> = (props) => {
         try {
             const collection = featureCollection();
             if (collection) {
-                return new GeoJSON().readFeatures(collection);
+                let ftr = new GeoJSON().readFeatures(collection);
+
+                return ftr;
+
             }
         } catch (error) {
             console.error("Invalid feature collection:", error);
@@ -145,13 +152,7 @@ const GeoMap: Component<PROPS> = (props) => {
         setOpen(true)
     }
 
-    function handleShowSelected(e: Feature<Geometry>) {
-        setSelected(e)
-        console.log('getSelected', getSelected())
 
-        handleDrawer()
-
-    }
 
     // Initialize and clean up the map
     onMount(() => {
@@ -242,6 +243,7 @@ const GeoMap: Component<PROPS> = (props) => {
 
 
         createEffect(() => {
+            console.log('features', features())
 
             setOpen(featureCollection()?.features?.length > 0)
 
@@ -263,7 +265,7 @@ const GeoMap: Component<PROPS> = (props) => {
                 getMap()?.addLayer(vectorLayer);
             }
 
-            const selected: Feature<import("ol/geom/Geometry").default>[] = [];
+            const selected: Feature<import("ol/geom/Geometry").default>[] = features();
 
             const status = document.getElementById('status') as HTMLDivElement | null;
 
@@ -273,10 +275,16 @@ const GeoMap: Component<PROPS> = (props) => {
                     if (f instanceof Feature) {
                         const selIndex = selected.indexOf(f);
                         if (selIndex < 0) {
+
+                            features().push(f)
+                            let ad = arrayDedupe<Feature>(selected, f, 'getId')
+                            console.log('ad',ad)
+                            console.log('ff', features())
+
                             selected.push(f);
                             f.setStyle(styles["Point"]);
-
-                           let vd = throttle(handleShowSelected(f), 300)
+                            throttle(handleDrawer(), 1000)
+                            console.log(f)
                         } else {
                             selected.splice(selIndex, 1);
                             f.setStyle(undefined);
@@ -284,6 +292,7 @@ const GeoMap: Component<PROPS> = (props) => {
                     }
                 });
                 if (status) {
+
                     status.innerHTML = '&nbsp;' + selected.length + ' selected features';
                 }
             })
@@ -307,6 +316,15 @@ const GeoMap: Component<PROPS> = (props) => {
     };
 
 
+    const featuresArray = createMemo(() => {
+        return features().map((feature) => ({
+            properties: feature.getProperties(),
+        }))
+    })
+
+
+    createEffect(() => console.log('fArr', featuresArray()))
+
     return (
         <div
             style={{
@@ -320,7 +338,6 @@ const GeoMap: Component<PROPS> = (props) => {
                 <Show when={getShowPosition()}>
                     <button onClick={() => toggleGeolocation(false)}>
                         <MapPin class={'stroke-green-11 size-10'}/>
-
                     </button>
                 </Show>
                 <Show when={!getShowPosition()}>
@@ -333,7 +350,7 @@ const GeoMap: Component<PROPS> = (props) => {
             <Drawer.Content
                 contextId={'map1'}
                 class={cn(
-                    "fixed inset-x-0 bottom-0 z-50 w-screen h-screen sm:max-w-md  mt-0 flex flex-col rounded-t-[10px] border bg-background after:absolute after:inset-x-0 after:top-full after:h-1/2 after:bg-inherit data-[transitioning]:transition-transform data-[transitioning]:duration-300 md:select-none",
+                    "fixed right-0 bottom-0 z-50 w-screen h-screen sm:max-w-md  mt-0 flex flex-col rounded-t-[10px] border bg-background after:absolute after:inset-x-0 after:top-full after:h-1/2 after:bg-inherit data-[transitioning]:transition-transform data-[transitioning]:duration-300 md:select-none",
                 )}>
                 <div class="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted"/>
                 <SearchForm contextId={'map1'} class={'absolute inset-x-0 top-0 py-3 px-2.5'}/>
@@ -343,7 +360,26 @@ const GeoMap: Component<PROPS> = (props) => {
                     }}
                     class={'relative mt-8'}
                 >
-                    <List places={featureCollection()}/>
+
+
+                    <ul
+                        class={'text-gray-11 space-y-2 text-center h-full overflow-y-auto px-2'}>
+                        <For each={features()?.map((feature) => feature.getProperties())?.reverse()}>
+                            {(properties, i) => (
+
+                                <PlaceCard
+                                    geometry={properties?.geometry}
+                                    properties={properties?.loc}
+                                    type={"Feature"}
+                                    id={properties.type}
+                                    bbox={properties.geometry}
+                                     />
+
+                            )}
+                        </For>
+                    </ul>
+
+
                 </div>
             </Drawer.Content>
 

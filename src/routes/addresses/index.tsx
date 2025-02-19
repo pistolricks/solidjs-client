@@ -1,19 +1,13 @@
 import {AccessorWithLatest, createAsync, useSubmission} from "@solidjs/router";
-import {createEffect, createMemo, createSignal, For, lazy} from "solid-js";
+import {createEffect, createMemo, createSignal, lazy} from "solid-js";
 import {actionPositionHandler, addressSearchHandler, getAddresses} from "~/lib/addresses";
-import AddressesList from "~/components/addresses/list";
 import FooterMenu from "~/components/layouts/partials/footer-menu";
 
 import SearchForm from "~/components/ui/search-form";
-import {Button} from "~/components/ui/button";
 import {LookupResult, OsmOutput} from "~/lib/store";
-import Geolocation from "~/components/addresses/partials/geolocation";
-import Drawer from "@corvu/drawer";
 import {MapIcon} from "~/components/svg";
 import GeoMap from "~/components/addresses/partials/geo-map";
-import ListWrapper from "~/components/layouts/partials/list-wrapper";
 import {useLayoutContext} from "~/context/layout-provider";
-import SideNavMenu from "~/components/layouts/partials/side-nav-menu";
 import {ResponsiveDrawer} from "~/components/ui/dialogs/responsive-drawer";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
@@ -54,11 +48,9 @@ export default function Addresses() {
     })
 
 
-
-
     return (
         <ResponsiveDrawer contextId={'map1'}>
-                <GeoMap featureCollection={getStoreCollection}/>
+            <GeoMap featureCollection={getStoreCollection}/>
             <FooterMenu childClass={'w-full sm:max-w-sm'}
                         sectionClass={'flex justify-between items-center w-full space-x-4'}
                         title={<MapIcon class={'size-full stroke-mint-11 p-0.5 fill-green-2'}/>}
