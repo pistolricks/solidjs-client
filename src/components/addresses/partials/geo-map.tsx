@@ -21,7 +21,7 @@ import List from "~/components/addresses/list";
 import SearchForm from "~/components/ui/search-form";
 
 type PROPS = {
-    results: GeoJSONFeatureCollection;
+    featureCollection: GeoJSONFeatureCollection;
 };
 
 // Moved styles definition outside the component to avoid recreation on every render.
@@ -117,6 +117,7 @@ const GeoMap: Component<PROPS> = (props) => {
 
     const [mapElement, setMapElement] = createSignal<HTMLDivElement | undefined>();
 
+    const featureCollection = () => props.featureCollection;
 
     let map: Map | undefined;
 
@@ -125,21 +126,10 @@ const GeoMap: Component<PROPS> = (props) => {
     const submit = useAction(actionPositionHandler);
 
 
-    const [getResults, setResults] = createSignal<GeoJSONFeatureCollection>(props.results)
-
-
-    const results = createMemo(() => {
-        setResults(props.results)
-        console.log(props.results)
-        setOpen(getResults()?.features?.length > 0)
-        return getResults()
-    })
-
-
     // Memoized results for features
     const features = createMemo(() => {
-        if (results()) {
-            return new GeoJSON().readFeatures(results());
+        if (featureCollection()) {
+            return new GeoJSON().readFeatures(featureCollection());
         }
         return [];
     });
@@ -235,6 +225,9 @@ const GeoMap: Component<PROPS> = (props) => {
 
 
         createEffect(() => {
+
+            setOpen(featureCollection()?.features?.length > 0)
+
             console.log(getMap(), getSelected())
             const styleFunction = function (feature: any) {
                 return styles[feature?.getGeometry()?.getType() as keyof typeof styles];
@@ -324,7 +317,7 @@ const GeoMap: Component<PROPS> = (props) => {
                 >
                     <div class={'h-16 p-2'}>TEXT</div>
 
-                    <List places={results()}/>
+                    <List places={featureCollection()}/>
 
 
                 </div>

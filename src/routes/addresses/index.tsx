@@ -26,7 +26,7 @@ export const route = {
 }
 
 export default function Addresses() {
-    const {setMyLocation, getMyLocation} = useLayoutContext();
+    const {setMyLocation, setStoreCollection, getStoreCollection} = useLayoutContext();
     const addressData: AccessorWithLatest<any | undefined> = createAsync(async () => getAddresses());
 
     const submission = useSubmission(addressSearchHandler);
@@ -37,6 +37,7 @@ export default function Addresses() {
 
     const results = createMemo(() => {
         console.log("result2", submission.result)
+        setStoreCollection(submission.result?.results)
         return submission.result?.results;
     })
 
@@ -52,21 +53,12 @@ export default function Addresses() {
         setMyLocation(currentPosition.result?.results)
     })
 
-    const handleGetDetails = async (data: OsmOutput, event: Event) => {
-        if (!data) return;
-        setDetails(data)
-    }
 
-
-    const details = createMemo(() => {
-        console.log("getDetails", getDetails())
-        return getDetails()
-    })
 
 
     return (
         <ResponsiveDrawer contextId={'map1'}>
-                <GeoMap results={results()}/>
+                <GeoMap featureCollection={getStoreCollection}/>
             <FooterMenu childClass={'w-full sm:max-w-sm'}
                         sectionClass={'flex justify-between items-center w-full space-x-4'}
                         title={<MapIcon class={'size-full stroke-mint-11 p-0.5 fill-green-2'}/>}
