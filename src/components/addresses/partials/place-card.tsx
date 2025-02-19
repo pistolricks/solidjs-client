@@ -35,10 +35,22 @@ const PlaceCard: Component<PROPS> = props => {
         <div class="bg-white shadow rounded overflow-hidden">
             <div class="bg-cover bg-center h-16 p-4 flex justify-end items-center"
                  style="background-image: url(https://content.api.news/v3/images/bin/11990db1d540d5c13ea8ca3e01f2083c)">
+
+                <div class="flex items-center justify-end space-x-2">
+                <a href={`tel:${extraTags()?.phone}`} target="_blank" class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
+                    <CallIcon class={'size-7 p-1'}/>
+                </a>
+                <a class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
+                    <EnvelopeIcon class={'size-7 p-1'}/>
+                </a>
+                <a href={`${extraTags()?.website}`} target="_blank" class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
+                    <GlobeIcon class={'size-7 p-1'}/>
+                </a>
                 <button
-                    class="uppercase tracking-widest text-sm text-gray-11 bg-gray-action py-1 px-1 rounded-full opacity-75 shadow-lg">
-                    <MapPin class={'size-6 p-1'}/>
+                    class="uppercase text-sm text-gray-11 bg-gray-action py-1 px-1 rounded-full shadow-lg">
+                    <MapPin class={'size-7 p-1'}/>
                 </button>
+                </div>
             </div>
             <div class="px-4 pb-3 pt-4 border-b border-gray-2 bg-gray-1 flex justify-between">
                 <div class={'flex justify-start items-center space-x-1'}>
@@ -52,7 +64,7 @@ const PlaceCard: Component<PROPS> = props => {
                     <p class="text-xl text-gray-900 leading-none">
                         {displayName()?.[0]}
                     </p>
-                    <p class="text-xs w-full mt-2">{properties()?.loc?.type} {" | "} {displayName()?.[1]} {displayName()?.[2]}</p>
+                    <p class="text-xs w-full mt-2"><span class={'font-semibold capitalize'}>{properties()?.loc?.type}</span> {" | "} {displayName()?.[1]} {displayName()?.[2]}</p>
                     <p class="text-xs w-full mt-2">{displayName()?.[2]}, {displayName()?.[3]}</p>
                 </div>
             </div>
@@ -64,15 +76,7 @@ const PlaceCard: Component<PROPS> = props => {
                 </div>
 
                 <div class="flex items-center justify-end space-x-4">
-                    <a href={`tel:${extraTags()?.phone}`} target="_blank" class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
-                        <CallIcon class={'size-6 p-1'}/>
-                    </a>
-                    <a class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
-                        <EnvelopeIcon class={'size-6 p-1'}/>
-                    </a>
-                    <a href={`${extraTags()?.website}`} target="_blank" class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
-                        <GlobeIcon class={'size-6 p-1'}/>
-                    </a>
+
                 </div>
             </div>
         </div>
