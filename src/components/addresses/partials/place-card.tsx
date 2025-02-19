@@ -1,6 +1,6 @@
 import {Component, createEffect} from "solid-js";
 import {Feature, Properties} from "~/lib/store";
-import {CallIcon, ChatIcon, GlobeIcon, MapPin, RatingIcon} from "~/components/svg";
+import {CallIcon, ChatIcon, EnvelopeIcon, GlobeIcon, MapPin, RatingIcon} from "~/components/svg";
 import {BBox, GeoJsonProperties, Geometry, Point} from "geojson";
 
 type PROPS = {
@@ -18,10 +18,15 @@ const PlaceCard: Component<PROPS> = props => {
     const geometry = () => props.geometry;
     const id = () => props.id;
     const properties = () => props.properties;
+    const extraTags = () => props.properties?.loc?.extratags;
+    const address = () => props.properties?.loc?.address;
     const bbox = () => props.bbox;
+
+    const displayName = () => props.properties?.loc?.display?.split(',');
 
     createEffect(() => {
         console.log(geometry())
+        console.log(displayName())
     })
 
     return (
@@ -42,31 +47,32 @@ const PlaceCard: Component<PROPS> = props => {
                 </div>
                 <div class="text-xs uppercase font-bold text-gray-600 tracking-wide">{properties()?.loc?.address?.name}</div>
             </div>
-            <div class="p-4 text-gray-700 flex justify-between items-start">
-                <div class={'flex flex-col'}>
-                    <p class="text-xl text-gray-900 leading-none my-1">
-
+            <div class="p-4 text-gray-700 flex justify-start items-center w-full">
+                <div class={'items-center text-left'}>
+                    <p class="text-xl text-gray-900 leading-none">
+                        {displayName()?.[0]}
                     </p>
-                    <p class="text-xs w-56 mt-2">Locally operated for 50 years</p>
-                    <p class="text-xs w-56 mt-2">123 La Jolla Ave., Los Angeles, CA</p>
+                    <p class="text-xs w-full mt-2">{properties()?.loc?.type} {" | "} {displayName()?.[1]} {displayName()?.[2]}</p>
+                    <p class="text-xs w-full mt-2">{displayName()?.[2]}, {displayName()?.[3]}</p>
                 </div>
             </div>
+            <p class="text-xs py-2 w-full bg-gray-1">{extraTags()?.opening_hours}</p>
             <div class="flex justify-between items-center p-4 border-t border-gray-4 text-gray-600">
-                <div class="flex items-center flex-col space-y-1">
-                    <p class="text-xs w-full">401-123-1234</p>
-                    <p class="text-xs w-full">Open - CLoses 11PM</p>
+                <div class="flex items-center text-left flex-col space-y-1">
+                    <p class="text-xs w-full"></p>
+                    <p class="text-xs w-full"></p>
                 </div>
 
                 <div class="flex items-center justify-end space-x-4">
-                    <div class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
+                    <a href={`tel:${extraTags()?.phone}`} target="_blank" class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
                         <CallIcon class={'size-6 p-1'}/>
-                    </div>
-                    <div class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
-                        <ChatIcon class={'size-6 p-1'}/>
-                    </div>
-                    <div class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
+                    </a>
+                    <a class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
+                        <EnvelopeIcon class={'size-6 p-1'}/>
+                    </a>
+                    <a href={`${extraTags()?.website}`} target="_blank" class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
                         <GlobeIcon class={'size-6 p-1'}/>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
