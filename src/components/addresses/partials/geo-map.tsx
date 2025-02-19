@@ -19,7 +19,8 @@ import {actionPositionHandler} from "~/lib/addresses";
 import {MapPin} from "~/components/svg";
 import List from "~/components/addresses/list";
 import SearchForm from "~/components/ui/search-form";
-import { cn } from "~/lib/utils";
+import {cn, throttle} from "~/lib/utils";
+import { Geometry } from "ol/geom";
 
 type PROPS = {
     featureCollection: GeoJSONFeatureCollection;
@@ -111,7 +112,6 @@ const styles = {
 const GeoMap: Component<PROPS> = (props) => {
     const {getHeight, setViewbox} = useLayoutContext();
     const {open, setOpen} = Drawer.useDialogContext('map1')
-
     const [getSelected, setSelected] = createSignal()
     const [getShowPosition, setShowPosition] = createSignal(false);
     const [getGeolocation, setGeolocation] = createSignal<Geolocation | undefined>();
@@ -129,12 +129,29 @@ const GeoMap: Component<PROPS> = (props) => {
 
     // Memoized results for features
     const features = createMemo(() => {
-        console.log(featureCollection())
-        if (featureCollection()) {
-            return new GeoJSON().readFeatures(featureCollection());
+        try {
+            const collection = featureCollection();
+            if (collection) {
+                return new GeoJSON().readFeatures(collection);
+            }
+        } catch (error) {
+            console.error("Invalid feature collection:", error);
+            return [];
         }
         return [];
     });
+
+    function handleDrawer() {
+        setOpen(true)
+    }
+
+    function handleShowSelected(e: Feature<Geometry>) {
+        setSelected(e)
+        console.log('getSelected', getSelected())
+
+        handleDrawer()
+
+    }
 
     // Initialize and clean up the map
     onMount(() => {
@@ -156,14 +173,14 @@ const GeoMap: Component<PROPS> = (props) => {
             view,
         });
 
-        setMap(() => map)
+        setMap(map)
 
 
         const geolocation = new Geolocation({
             trackingOptions: {
                 enableHighAccuracy: true,
             },
-            projection: view.getProjection(),
+            projection: getMap()?.getView().getProjection(),
         });
 
         setGeolocation(geolocation);
@@ -210,8 +227,6 @@ const GeoMap: Component<PROPS> = (props) => {
 
 
                 submit(formData).then(r => console.log(r))
-
-
             }
         });
 
@@ -223,14 +238,14 @@ const GeoMap: Component<PROPS> = (props) => {
         });
 
 
-        map.addLayer(vectorLayer);
+        getMap()?.addLayer(vectorLayer);
 
 
         createEffect(() => {
 
             setOpen(featureCollection()?.features?.length > 0)
 
-            console.log(getMap(), getSelected())
+            console.log(getMap())
             const styleFunction = function (feature: any) {
                 return styles[feature?.getGeometry()?.getType() as keyof typeof styles];
             };
@@ -248,33 +263,40 @@ const GeoMap: Component<PROPS> = (props) => {
                 getMap()?.addLayer(vectorLayer);
             }
 
-            getMap()?.on('singleclick', function (e: any) {
-                if (getSelected() !== null) {
+            const selected: Feature<import("ol/geom/Geometry").default>[] = [];
 
-                }
-
-                getMap()?.forEachFeatureAtPixel(e.pixel, function (f: any) {
-                    setSelected(() => f)
-                    console.log('f', f?.values_)
+            const status = document.getElementById('status') as HTMLDivElement | null;
 
 
-                    getMap()?.getView().animate({
-                        duration: 1400,
-                        center: f?.values_?.geometry?.flatCoordinates,
-                        zoom: 12,
-                    })
+            getMap()?.on('singleclick', function (e) {
+                getMap()?.forEachFeatureAtPixel(e.pixel, function (f) {
+                    if (f instanceof Feature) {
+                        const selIndex = selected.indexOf(f);
+                        if (selIndex < 0) {
+                            selected.push(f);
+                            f.setStyle(styles["Point"]);
+
+                           let vd = throttle(handleShowSelected(f), 300)
+                        } else {
+                            selected.splice(selIndex, 1);
+                            f.setStyle(undefined);
+                        }
+                    }
                 });
-
+                if (status) {
+                    status.innerHTML = '&nbsp;' + selected.length + ' selected features';
+                }
             })
-
         })
 
         // Cleanup on component unmount
         onCleanup(() => {
-            map?.dispose();
+            getMap()?.dispose();
             geolocation.setTracking(false);
+            setMap(undefined);
             map = undefined;
         });
+
     });
 
 
@@ -292,6 +314,7 @@ const GeoMap: Component<PROPS> = (props) => {
             }}
             class={'relative w-screen'}>
             <div ref={setMapElement} class={'absolute inset-0 w-full h-full'}/>
+            <span id="status">&nbsp;0 selected features</span>
 
             <div class={'absolute right-5 top-5 z-30'}>
                 <Show when={getShowPosition()}>
@@ -310,9 +333,9 @@ const GeoMap: Component<PROPS> = (props) => {
             <Drawer.Content
                 contextId={'map1'}
                 class={cn(
-                "fixed inset-x-0 bottom-0 z-50 w-screen h-screen sm:max-w-md  mt-0 flex flex-col rounded-t-[10px] border bg-background after:absolute after:inset-x-0 after:top-full after:h-1/2 after:bg-inherit data-[transitioning]:transition-transform data-[transitioning]:duration-300 md:select-none",
-            )}>
-                <div class="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+                    "fixed inset-x-0 bottom-0 z-50 w-screen h-screen sm:max-w-md  mt-0 flex flex-col rounded-t-[10px] border bg-background after:absolute after:inset-x-0 after:top-full after:h-1/2 after:bg-inherit data-[transitioning]:transition-transform data-[transitioning]:duration-300 md:select-none",
+                )}>
+                <div class="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted"/>
                 <SearchForm contextId={'map1'} class={'absolute inset-x-0 top-0 py-3 px-2.5'}/>
                 <div
                     style={{
@@ -320,11 +343,7 @@ const GeoMap: Component<PROPS> = (props) => {
                     }}
                     class={'relative mt-8'}
                 >
-
-
                     <List places={featureCollection()}/>
-
-
                 </div>
             </Drawer.Content>
 
