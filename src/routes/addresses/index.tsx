@@ -71,7 +71,7 @@ export default function Addresses() {
                         sectionClass={'flex justify-between items-center w-full space-x-4'}
                         title={<MapIcon class={'size-full stroke-mint-11 p-0.5 fill-green-2'}/>}
                         variant={'ghost'} size={'icon'}>
-                <SearchForm class={'w-full sm:max-w-sm'}/>
+                <SearchForm contextId={'map1'} class={'w-full sm:max-w-sm'}/>
             </FooterMenu>
         </ResponsiveDrawer>
     );

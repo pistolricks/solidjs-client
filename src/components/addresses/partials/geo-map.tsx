@@ -1,12 +1,4 @@
-import {
-    Component,
-    createEffect,
-    createMemo,
-    createSignal,
-    onCleanup,
-    onMount,
-    Show,
-} from "solid-js";
+import {Component, createEffect, createMemo, createSignal, onCleanup, onMount, Show,} from "solid-js";
 import {Map, View} from "ol";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
@@ -20,7 +12,6 @@ import Fill from "ol/style/Fill.js";
 import Stroke from "ol/style/Stroke.js";
 import Style from "ol/style/Style.js";
 import GeoJSON, {GeoJSONFeatureCollection} from "ol/format/GeoJSON.js";
-import {Circle} from "ol/style";
 import {useLayoutContext} from "~/context/layout-provider";
 import Drawer from "@corvu/drawer";
 import {useAction} from "@solidjs/router";
@@ -117,7 +108,7 @@ const styles = {
 };
 
 const GeoMap: Component<PROPS> = (props) => {
-    const {getHeight, getPosition, setPosition, getViewbox, setViewbox} = useLayoutContext();
+    const {getHeight, setViewbox} = useLayoutContext();
     const {open, setOpen} = Drawer.useDialogContext('map1')
 
     const [getSelected, setSelected] = createSignal()
@@ -337,7 +328,7 @@ const GeoMap: Component<PROPS> = (props) => {
 
 
                 </div>
-                <SearchForm class={'absolute inset-x-0 bottom-0 p-3'}/>
+                <SearchForm contextId={'map1'} class={'absolute inset-x-0 bottom-0 p-3'}/>
             </Drawer.Content>
 
 

@@ -2,6 +2,7 @@ import {Component, createEffect} from "solid-js";
 import {Feature, Properties} from "~/lib/store";
 import {CallIcon, ChatIcon, EnvelopeIcon, GlobeIcon, MapPin, RatingIcon} from "~/components/svg";
 import {BBox, GeoJsonProperties, Geometry, Point} from "geojson";
+import {A} from "@solidjs/router";
 
 type PROPS = {
     type: "Feature";
@@ -37,16 +38,17 @@ const PlaceCard: Component<PROPS> = props => {
                  style="background-image: url(https://content.api.news/v3/images/bin/11990db1d540d5c13ea8ca3e01f2083c)">
 
                 <div class="flex items-center justify-end space-x-2">
-                <a href={`tel:${extraTags()?.phone}`} target="_blank" class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
+                <A href={`tel:${extraTags()?.phone}`} target="_blank" class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
                     <CallIcon class={'size-7 p-1'}/>
-                </a>
-                <a class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
+                </A>
+                <A  href={""} class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
                     <EnvelopeIcon class={'size-7 p-1'}/>
-                </a>
-                <a href={`${extraTags()?.website}`} target="_blank" class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
+                </A>
+                <A href={`${extraTags()?.website}`} target="_blank" class={'flex items-center rounded-full bg-gray-action border border-gray-5 p-1'}>
                     <GlobeIcon class={'size-7 p-1'}/>
-                </a>
+                </A>
                 <button
+                    type={'button'}
                     class="uppercase text-sm text-gray-11 bg-gray-action py-1 px-1 rounded-full shadow-lg">
                     <MapPin class={'size-7 p-1'}/>
                 </button>

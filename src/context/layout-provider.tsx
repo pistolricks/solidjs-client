@@ -2,6 +2,12 @@ import {Accessor, createContext, createSignal, JSX, onMount, Setter, useContext}
 import {Coordinate} from "ol/coordinate";
 import {Feature} from "~/lib/store";
 
+import {createStore, SetStoreFunction, Store} from "solid-js/store";
+import {GeoJSONFeatureCollection} from "ol/format/GeoJSON";
+import {FeatureCollection} from "geojson";
+import Point from "ol/geom/Point.js";
+
+
 export type MenuItem = {
     title: string;
     href: string;
@@ -12,6 +18,8 @@ export type MenuItem = {
 type POSITION = [number, number]|undefined
 
 type LayoutType = {
+    getStoreCollection: Store<FeatureCollection>
+    setStoreCollection: SetStoreFunction<FeatureCollection>
     getViewbox: Accessor<number[]|undefined>
     setViewbox: Setter<number[]|undefined>
     getMyLocation: Accessor<Feature|undefined>
@@ -33,7 +41,15 @@ let footerHeight = import.meta.env.VITE_FOOTER_HEIGHT
 export const LayoutContext = createContext<LayoutType>();
 export function LayoutProvider(props: { children: JSX.Element }) {
 
-    const [getPosition, setPosition] = createSignal<POSITION>(undefined)
+
+
+    const [getStoreCollection, setStoreCollection] = createStore<FeatureCollection>({
+        type: "FeatureCollection",
+        features: []
+    })
+
+
+        const [getPosition, setPosition] = createSignal<POSITION>(undefined)
     const [getMyLocation, setMyLocation] = createSignal<Feature|undefined>(undefined)
     const [getViewbox, setViewbox] = createSignal<number[]|undefined>(undefined)
     const [getHeight, setHeight] = createSignal(0)
@@ -73,6 +89,8 @@ export function LayoutProvider(props: { children: JSX.Element }) {
 
     return (
         <LayoutContext.Provider value={{
+            getStoreCollection,
+            setStoreCollection,
             getQuery,
             setQuery,
             getViewbox,
