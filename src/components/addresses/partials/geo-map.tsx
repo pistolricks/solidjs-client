@@ -19,7 +19,7 @@ import {actionPositionHandler} from "~/lib/addresses";
 import {MapPin} from "~/components/svg";
 import List from "~/components/addresses/list";
 import SearchForm from "~/components/ui/search-form";
-import {arrayDedupe, cn, throttle} from "~/lib/utils";
+import {arrayDedupe, arrayRemove, cn, throttle} from "~/lib/utils";
 import {FeatureCollection} from "geojson";
 import {produce} from "solid-js/store";
 import PlaceCard from "~/components/addresses/partials/place-card";
@@ -273,20 +273,22 @@ const GeoMap: Component<PROPS> = (props) => {
             getMap()?.on('singleclick', function (e) {
                 getMap()?.forEachFeatureAtPixel(e.pixel, function (f) {
                     if (f instanceof Feature) {
-                        const selIndex = selected.indexOf(f);
+                        const selIndex = features().indexOf(f);
                         if (selIndex < 0) {
 
-                            features().push(f)
-                            let ad = arrayDedupe<Feature>(selected, f, 'getId')
-                            console.log('ad',ad)
-                            console.log('ff', features())
 
-                            selected.push(f);
+                            features().push(f);
+                           // selected.push(f);
                             f.setStyle(styles["Point"]);
                             throttle(handleDrawer(), 1000)
                             console.log(f)
                         } else {
-                            selected.splice(selIndex, 1);
+
+
+
+                            console.log('ff', features())
+                             features().splice(selIndex, 1);
+                            // features().splice(selIndex, 1)
                             f.setStyle(undefined);
                         }
                     }

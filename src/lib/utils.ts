@@ -34,3 +34,9 @@ export function arrayDedupe<T>(array: T[], b: T, key: keyof T) {
    return [...items, b].reverse();
 
 }
+
+export function arrayRemove<T>(array: T[], b: T, key: keyof T) {
+  let items: T[] = array.filter((c: T) => c[key] !== b[key]);
+  return items;
+
+}

@@ -30,7 +30,7 @@ const PlaceCard: Component<PLACE_PROPS> = props => {
         console.log("displayName", displayName())
         console.log("properties", properties())
     })
-
+    /*housenumber, street, locality, district, postcode, city, county, state, country*/
     return (
 
 
