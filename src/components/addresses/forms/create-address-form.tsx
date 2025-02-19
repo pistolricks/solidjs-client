@@ -142,9 +142,9 @@ const CreateAddressForm: Component<PROPS> = props => {
                 </div>
                 <div class={'items-center flex flex-row-reverse space-x-2 space-x-reverse'}>
                     <Button as={"button"} variant={'default'} type={"submit"} size="icon"><MagnifyingGlass/></Button>
-                    <DrawerClose contextId={contextId()} as={Button<"button">} variant="outline" size="icon">
+                    <Button<"button"> variant="outline" size="icon">
                         <XMark/>
-                    </DrawerClose>
+                    </Button>
                 </div>
             </form>
         </>

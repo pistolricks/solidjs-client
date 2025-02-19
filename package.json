@@ -8,29 +8,30 @@
   },
   "dependencies": {
     "@ark-ui/solid": "^4.10.1",
+    "@corvu/dialog": "^0.2.4",
     "@corvu/drawer": "^0.2.3",
     "@corvu/popover": "^0.2.0",
     "@fontsource/inter": "^5.1.1",
     "@kobalte/core": "^0.13.8",
     "@radix-ui/colors": "^3.0.0",
-    "@solidjs/router": "^0.15.0",
-    "@solidjs/start": "^1.0.10",
-    "@tailwindcss/postcss": "^4.0.0",
-    "@tailwindcss/vite": "^4.0.0",
+    "@solidjs/router": "^0.15.3",
+    "@solidjs/start": "^1.1.1",
+    "@tailwindcss/postcss": "^4.0.7",
+    "@tailwindcss/vite": "^4.0.7",
     "@types/geojson": "^7946.0.16",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "ol": "^10.4.0",
     "ol-popup": "^5.1.1",
-    "postcss": "^8.4.38",
-    "solid-js": "^1.9.2",
+    "postcss": "^8.5.2",
+    "solid-js": "^1.9.4",
     "solid-list": "^0.3.0",
     "solid-transition-size": "^0.1.4",
-    "tailwind-merge": "^2.6.0",
+    "tailwind-merge": "^3.0.1",
     "tailwind-scrollbar-hide": "^2.0.0",
-    "tailwindcss": "^4.0.0",
+    "tailwindcss": "^4.0.7",
     "tailwindcss-animate": "^1.0.7",
-    "vinxi": "^0.4.3"
+    "vinxi": "^0.5.3"
   },
   "overrides": {
     "vite": "5.4.10"
@@ -40,8 +41,8 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.10",
-    "@types/node": "^22.10.7",
-    "tailwindcss-radix-colors": "^1.4.1"
+    "@types/node": "^22.13.4",
+    "tailwindcss-radix-colors": "^2.0.0"
   },
-  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
+  "packageManager": "pnpm@10.4.1"
 }

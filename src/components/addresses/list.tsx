@@ -1,26 +1,25 @@
 import {Component, For} from "solid-js";
-import {AddressData} from "~/lib/store";
+import {Feature, Properties} from "~/lib/store";
+
+import {Point} from "geojson";
+import PlaceCard from "~/components/addresses/partials/place-card";
+import {GeoJSONFeatureCollection} from "ol/format/GeoJSON";
+import {useLayoutContext} from "~/context/layout-provider";
 
 type PROPS = {
-    addresses: AddressData | undefined;
+    places: GeoJSONFeatureCollection
 }
 
 const AddressesList: Component<PROPS> = props => {
-    const addresses = () => props.addresses?.addresses;
+    const places = () => props.places;
     return (
-        <ul class={'text-gray-11 space-y-8 text-center'}>
-            <For each={addresses()}>
-                {(address, i) => (
-                    <li class={''}>
-                        <span class={'text-tomato-normal'}>{address.administrative_area}</span>
-                        <div class={'space-x-1'}>
-                            <For each={address?.street_address}>
-                                {(line) => (
-                                    <span class={''}>{line}</span>
-                                )}
-                            </For>
-                        </div>
-                    </li>
+        <ul
+            class={'text-gray-11 space-y-2 text-center h-full overflow-y-auto px-2'}>
+            <For each={places()?.features}>
+                {(place, i) => (
+
+                        <PlaceCard {...place}/>
+
                 )}
             </For>
         </ul>

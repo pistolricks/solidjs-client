@@ -14,7 +14,7 @@ const ListWrapper: Component<PROPS> = props => {
                 height: getHeight() + 'px'
             }}
             role="list"
-            class="grid grid-cols-1 gap-x-4 gap-y-8 p-4 overflow-y-auto scrollbar-hide container"
+            class="overflow-y-auto scrollbar-hide container p-4"
         >
             {children()}
         </ul>

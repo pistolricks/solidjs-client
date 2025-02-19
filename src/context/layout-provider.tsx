@@ -20,6 +20,8 @@ type LayoutType = {
     setPosition: Setter<POSITION>
     getHeight: Accessor<number>
     getIsDesktop: Accessor<boolean>
+    getQuery: Accessor<string>
+    setQuery: Setter<string>
     menu: MenuItem[]
     apps: MenuItem[]
 }
@@ -35,11 +37,13 @@ export function LayoutProvider(props: { children: JSX.Element }) {
     const [getMyLocation, setMyLocation] = createSignal<Feature|undefined>(undefined)
     const [getViewbox, setViewbox] = createSignal<number[]|undefined>(undefined)
     const [getHeight, setHeight] = createSignal(0)
-
+    const [getQuery, setQuery] = createSignal("")
 
     const handleHeight = () => {
         setHeight(() => window.innerHeight - (headerHeight) - (footerHeight))
-        setIsDesktop(window.innerWidth >= 768)
+        setIsDesktop(window.innerWidth >= 726)
+
+        console.log('height', getHeight())
     }
 
     const [getIsDesktop, setIsDesktop] = createSignal(false)
@@ -69,6 +73,8 @@ export function LayoutProvider(props: { children: JSX.Element }) {
 
     return (
         <LayoutContext.Provider value={{
+            getQuery,
+            setQuery,
             getViewbox,
             setViewbox,
             getMyLocation,

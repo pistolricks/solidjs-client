@@ -4,9 +4,10 @@
 @import './dialog.css' layer(utilities);
 @import './map.css' layer(utilities);
 @import './colors.css';
-
+@import "tailwindcss-radix-colors/dist/all.css";
 @plugin "tailwindcss-animate";
-@plugin "tailwindcss-radix-colors";
+
+
 @plugin "tailwind-scrollbar-hide";
 
 /*

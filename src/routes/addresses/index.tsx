@@ -28,8 +28,8 @@ export const route = {
 export default function Addresses() {
     const {setMyLocation, getMyLocation} = useLayoutContext();
     const addressData: AccessorWithLatest<any | undefined> = createAsync(async () => getAddresses());
-    const submission = useSubmission(addressSearchHandler);
 
+    const submission = useSubmission(addressSearchHandler);
     const currentPosition = useSubmission(actionPositionHandler);
 
     const [getPlace, setPlace] = createSignal<OsmOutput | undefined>()
@@ -65,34 +65,14 @@ export default function Addresses() {
 
 
     return (
-        <ResponsiveDrawer contentId={'map1'}>
-
-
-                    <CategoryLayout {...addressData()}>
-                        <GeoMap results={results()}/>
-
-                        <ListWrapper>
-                            <For each={results()?.results}>
-                                {(place) => (
-
-                                    <>
-                                        <p>{place.osm_id}</p>
-                                        <p>{place.osm_type}</p>
-                                        <p>{place.display_name}</p>
-                                    </>
-                                )}
-                            </For>
-                        </ListWrapper>
-                        <AddressesList addresses={addressData()}/>
-                    </CategoryLayout>
-
-
-                    <FooterMenu childClass={'w-full'}
-                                sectionClass={'flex justify-between items-center w-full space-x-4'}
-                                title={<MapIcon class={'size-full stroke-mint-11 p-0.5 fill-green-2'}/>}
-                                variant={'ghost'} size={'icon'}>
-                        <AddressSearchForm/>
-                    </FooterMenu>
+        <ResponsiveDrawer contextId={'map1'}>
+                <GeoMap results={results()}/>
+            <FooterMenu childClass={'w-full sm:max-w-sm'}
+                        sectionClass={'flex justify-between items-center w-full space-x-4'}
+                        title={<MapIcon class={'size-full stroke-mint-11 p-0.5 fill-green-2'}/>}
+                        variant={'ghost'} size={'icon'}>
+                <AddressSearchForm class={'w-full sm:max-w-sm'}/>
+            </FooterMenu>
         </ResponsiveDrawer>
     );
 }
