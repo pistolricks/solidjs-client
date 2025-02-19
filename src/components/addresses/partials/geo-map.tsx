@@ -27,7 +27,7 @@ import {useAction} from "@solidjs/router";
 import {actionPositionHandler} from "~/lib/addresses";
 import {MapPin} from "~/components/svg";
 import List from "~/components/addresses/list";
-import AddressSearchForm from "~/components/addresses/forms/address-search-form";
+import SearchForm from "~/components/ui/search-form";
 
 type PROPS = {
     results: GeoJSONFeatureCollection;
@@ -337,7 +337,7 @@ const GeoMap: Component<PROPS> = (props) => {
 
 
                 </div>
-                <AddressSearchForm class={'absolute inset-x-0 bottom-0 p-3'}/>
+                <SearchForm class={'absolute inset-x-0 bottom-0 p-3'}/>
             </Drawer.Content>
 
 

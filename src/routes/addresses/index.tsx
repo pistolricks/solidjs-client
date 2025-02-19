@@ -4,7 +4,7 @@ import {actionPositionHandler, addressSearchHandler, getAddresses} from "~/lib/a
 import AddressesList from "~/components/addresses/list";
 import FooterMenu from "~/components/layouts/partials/footer-menu";
 
-import AddressSearchForm from "~/components/addresses/forms/address-search-form";
+import SearchForm from "~/components/ui/search-form";
 import {Button} from "~/components/ui/button";
 import {LookupResult, OsmOutput} from "~/lib/store";
 import Geolocation from "~/components/addresses/partials/geolocation";
@@ -71,7 +71,7 @@ export default function Addresses() {
                         sectionClass={'flex justify-between items-center w-full space-x-4'}
                         title={<MapIcon class={'size-full stroke-mint-11 p-0.5 fill-green-2'}/>}
                         variant={'ghost'} size={'icon'}>
-                <AddressSearchForm class={'w-full sm:max-w-sm'}/>
+                <SearchForm class={'w-full sm:max-w-sm'}/>
             </FooterMenu>
         </ResponsiveDrawer>
     );

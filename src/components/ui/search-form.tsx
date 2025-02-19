@@ -1,16 +1,16 @@
 import {Component, createEffect, createMemo, createSignal, JSX, Show} from "solid-js";
 import {useSubmission} from "@solidjs/router";
 import {TextField, TextFieldErrorMessage, TextFieldInput} from "~/components/ui/text-field";
-import {Button} from "../../ui/button";
+import {Button} from "./button";
 import {showToast} from "~/components/ui/toast";
-import {MagnifyingGlassCircle} from "~/components/svg";
+import {MagnifyingGlassCircle, XMark} from "~/components/svg";
 import {addressSearchHandler} from "~/lib/addresses";
 import {CountryData} from "~/lib/store";
 import {useLayoutContext} from "~/context/layout-provider";
 
 type PROPS = CountryData & {class?: string};
 
-const AddressSearchForm: Component<PROPS> = props => {
+const SearchForm: Component<PROPS> = props => {
     const {getViewbox, getQuery, setQuery} = useLayoutContext();
     const submission = useSubmission(addressSearchHandler);
 
@@ -55,6 +55,16 @@ const AddressSearchForm: Component<PROPS> = props => {
                             {results()?.error?.search}
                         </TextFieldErrorMessage>
                     </Show>
+                    <Button
+                        onClick={() => setQuery("")}
+                        as={"button"}
+                            disabled={getQuery()?.length < 1}
+                            class={'absolute right-12 inset-y-0 z-40 w-12 p-1 rounded-none h-full flex items-center'}
+                            variant={'link'}
+                            size="icon">
+                        <XMark class={"p-1.5 stroke-red-8 hover:stroke-red-12"}/>
+                    </Button>
+
                     <Button disabled={getQuery()?.length < 1} as={"button"}
                             class={'absolute right-0 inset-y-0 z-40 w-12 h-full flex items-center bg-mint-3 hover:bg-mint-4 border border-gray-10 rounded-l-none rounded-r-md'}
                             variant={'link'} type={"submit"}
@@ -69,4 +79,4 @@ const AddressSearchForm: Component<PROPS> = props => {
     );
 };
 
-export default AddressSearchForm;
+export default SearchForm;
