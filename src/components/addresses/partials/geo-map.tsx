@@ -17,13 +17,10 @@ import Drawer from "@corvu/drawer";
 import {useAction} from "@solidjs/router";
 import {actionPositionHandler} from "~/lib/addresses";
 import {MapPin} from "~/components/svg";
-import List from "~/components/addresses/list";
 import SearchForm from "~/components/ui/search-form";
-import {arrayDedupe, arrayRemove, cn, throttle} from "~/lib/utils";
+import {cn, throttle} from "~/lib/utils";
 import {FeatureCollection} from "geojson";
-import {produce} from "solid-js/store";
 import PlaceCard from "~/components/addresses/partials/place-card";
-
 
 
 type PROPS = {
@@ -153,7 +150,6 @@ const GeoMap: Component<PROPS> = (props) => {
     }
 
 
-
     // Initialize and clean up the map
     onMount(() => {
         if (!mapElement()) return;
@@ -278,18 +274,17 @@ const GeoMap: Component<PROPS> = (props) => {
 
 
                             features().push(f);
-                           // selected.push(f);
-                           // f.setStyle(styles["Point"]);
+                            // selected.push(f);
+                            // f.setStyle(styles["Point"]);
                             throttle(handleDrawer(), 1000)
                             console.log(f)
                         } else {
 
 
-
                             console.log('ff', features())
-                             features().splice(selIndex, 1);
+                            features().splice(selIndex, 1);
                             // features().splice(selIndex, 1)
-                           // f.setStyle(undefined);
+                            // f.setStyle(undefined);
                         }
                     }
                 });
@@ -375,7 +370,7 @@ const GeoMap: Component<PROPS> = (props) => {
                                     type={"Feature"}
                                     id={properties.type}
                                     bbox={properties.geometry}
-                                     />
+                                />
 
                             )}
                         </For>
