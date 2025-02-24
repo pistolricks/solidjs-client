@@ -32,6 +32,7 @@ export default function WSClient(props: Props) {
         }
     });
 
+
     return (
         <>
             <ul class="h-52 overflow-y-auto font-black">
