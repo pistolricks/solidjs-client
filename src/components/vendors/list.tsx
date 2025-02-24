@@ -1,7 +1,5 @@
 import {Component, For} from "solid-js";
 import {VendorsData} from "~/lib/store";
-import {A} from "@solidjs/router";
-import {Button} from "~/components/ui/button";
 import ListWrapper from "~/components/layouts/partials/list-wrapper";
 import VendorCard from "~/components/vendors/partials/vendor-card";
 
@@ -16,7 +14,6 @@ const VendorsList: Component<PROPS> = props => {
             <For each={vendors()}>
                 {(vendor, i) => (
                     <VendorCard {...vendor}/>
-
                 )}
             </For>
         </ListWrapper>

@@ -28,7 +28,7 @@ const Nav: Component<PROPS> = props => {
                     <div class="flex justify-between items-center w-full text-gray-normal">
                         <ul class="flex justify-start items-center">
                             <li class={`${active("/")}`}>
-                                <A href="/">{import.meta.env.VITE_APP_NAME}</A>
+                                <A href="/"><img class={'size-16'} src={'/logo.jpg'} /></A>
                             </li>
                         </ul>
                         <ul class="flex justify-end items-center">
