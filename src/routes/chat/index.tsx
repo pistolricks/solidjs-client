@@ -1,20 +1,23 @@
-import {Component, createEffect, createSignal, onMount, ParentProps} from "solid-js";
-import "./../../ws.ts"
-type PROPS = ParentProps
-
-export type Client = {
-    endpoint: string;
-    seq: number;
-    ready: boolean;
-    ws: Promise<WebSocket> | null;
-    pending: { [key: number]: { resolve: (value: any) => void; reject: (reason?: any) => void } };
-    handler: { [key: string]: Array<(params: any, self: Client) => void> };
-}
-
-const Chat: Component<PROPS> = props => {
+import {Component, ParentProps} from "solid-js";
+import {baseApi, getUserToken} from "~/lib";
+import {redirect} from "@solidjs/router";
 
 
-    let ws = new WebSocket(`ws://localhost:${import.meta.env.VITE_WS_PORT}/ws`);
+
+
+const Chat =  async() => {
+    let token = await getUserToken();
+    if (!token) throw redirect("/")
+
+    const response = await fetch(`${baseApi}/chat`, {
+        headers: {
+            Authorization: `Bearer ${token.token}`
+        },
+    })
+    const res: any = await response.json();
+    console.log(res);
+
+    // let ws = new WebSocket(`ws://localhost:${import.meta.env.VITE_WS_PORT}/ws`);
 
     return (
         <div>

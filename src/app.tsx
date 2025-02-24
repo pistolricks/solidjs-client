@@ -7,7 +7,9 @@ import {Toaster} from "~/components/ui/toast";
 import AppLayout from "~/components/layouts/app-layout";
 import {LayoutProvider} from "~/context/layout-provider";
 
+
 export default function App() {
+
 
     return (
         <Router
