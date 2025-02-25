@@ -1,10 +1,6 @@
-import {Component, JSXElement} from "solid-js";
-import {RouteSectionProps} from "@solidjs/router";
+import {Component, JSXElement, ParentProps} from "solid-js";
 
-type PROPS = {
-    children: JSXElement
-}
-const ContentsLayout: Component<PROPS> = props => {
+const ContentsLayout: Component<ParentProps> = props => {
 
     return (
         <div>

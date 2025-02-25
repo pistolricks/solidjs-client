@@ -6,6 +6,7 @@ import {createStore, SetStoreFunction, Store} from "solid-js/store";
 import {GeoJSONFeatureCollection} from "ol/format/GeoJSON";
 import {FeatureCollection} from "geojson";
 import Point from "ol/geom/Point.js";
+import {mapPin} from "~/components/svg";
 
 
 export type MenuItem = {
@@ -68,15 +69,19 @@ export function LayoutProvider(props: { children: JSX.Element }) {
 
     const menu: MenuItem[] = [
         {title: "vendors", href: "/vendors"},
-        {title: "addresses", href: "/addresses"},
-        {title: "contents", href: "/contents"}
+        {title: "places", href: "/places", icon: mapPin},
+        {title: "contents", href: "/contents"},
+        {title: "messages", href: "/messages"},
+        {title: "categories", href: "/categories"}
     ]
 
     const apps: MenuItem[] = [
-        {title: "messages", href: "/messages"},
-        {title: "friends", href: "/friends"},
-        {title: "tasks", href: "/task"},
-        {title: "notifications", href: "/notification"}
+        {title: "beauty", href: "categories/beauty"},
+        {title: "car wash", href: "categories/car-wash"},
+        {title: "cleaning", href: "categories/cleaning"},
+        {title: "entertainment", href: "categories/entertainment"},
+        {title: "handyman", href: "categories/handyman"},
+        {title: "homemade food", href: "categories/homemade-food"},
     ]
 
 

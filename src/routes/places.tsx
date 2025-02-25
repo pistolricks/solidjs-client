@@ -1,6 +1,7 @@
 import {Component, ParentProps} from "solid-js";
 
-const VendorsLayout: Component<ParentProps> = props => {
+
+const AddressesLayout: Component<ParentProps> = props => {
 
     return (
         <div>
@@ -9,4 +10,4 @@ const VendorsLayout: Component<ParentProps> = props => {
     );
 };
 
-export default VendorsLayout;
+export default AddressesLayout;

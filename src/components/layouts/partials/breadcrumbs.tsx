@@ -41,7 +41,7 @@ const Breadcrumbs: Component<PROPS> = props => {
                                     <BreadcrumbSeparator>
                                     </BreadcrumbSeparator>
                                     <BreadcrumbItem>
-                                        <BreadcrumbLink href={`/${path}`} class={"capitalize"}>{path}</BreadcrumbLink>
+                                        <BreadcrumbLink current={i() + 1 === splitPath()?.length} href={`/${path}`} class={"capitalize"}>{path}</BreadcrumbLink>
                                     </BreadcrumbItem>
                                 </Show>
                             )}

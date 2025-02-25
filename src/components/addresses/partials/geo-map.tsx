@@ -111,7 +111,7 @@ const styles = {
 };
 
 const GeoMap: Component<PROPS> = (props) => {
-    const {getHeight, setViewbox, setStoreCollection} = useLayoutContext();
+    const {getHeight, setViewbox} = useLayoutContext();
     const {open, setOpen} = Drawer.useDialogContext('map1')
     const [getSelected, setSelected] = createSignal()
     const [getShowPosition, setShowPosition] = createSignal(false);

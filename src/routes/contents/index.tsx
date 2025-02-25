@@ -7,7 +7,7 @@ import {Button} from "~/components/ui/button";
 import Dialog from "@corvu/dialog";
 import FileUploader from "~/components/ui/file-uploader";
 import BaseDialog from "~/components/ui/dialogs/base-dialog";
-import {Photo, Plus} from "~/components/svg";
+import {PhotoIcon, PlusIcon} from "~/components/svg";
 import Drawer from "@corvu/drawer";
 
 const CategoryLayout = lazy(() => import( "~/components/layouts/category-layout"));
@@ -38,10 +38,10 @@ export default function Contents() {
                 <Dialog.Content contextId={'albd1'}>
                     <FileUploader/>
                 </Dialog.Content>
-                <FooterMenu title={<Photo class={'size-full stroke-sky-11 p-0.5 fill-green-2'}/>} variant={'ghost'}
+                <FooterMenu title={<PhotoIcon class={'size-full stroke-sky-11 p-0.5 fill-green-2'}/>} variant={'ghost'}
                             size={'icon'}>
                     <Button as={Drawer.Trigger} contextId={"albd1"} variant={"ghost"} size={'icon'}>
-                        <Plus class={'size-full p-0.5 stroke-slate-11'}/>
+                        <PlusIcon class={'size-full p-0.5 stroke-slate-11'}/>
                     </Button>
                 </FooterMenu>
             </BaseDialog>

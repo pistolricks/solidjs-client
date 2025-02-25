@@ -1,5 +1,7 @@
 import {Component} from "solid-js";
 
+
+
 export const ChevronLeft: Component<{
     class?: string;
 }> = props => (
@@ -145,7 +147,7 @@ export const Power: Component<{
     </svg>
 )
 
-export const Photo: Component<{
+export const PhotoIcon: Component<{
     class?: string;
 }> = props => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={1.5} stroke="currentColor"
@@ -155,7 +157,7 @@ export const Photo: Component<{
     </svg>
 )
 
-export const Plus: Component<{
+export const PlusIcon: Component<{
     class?: string;
 }> = props => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={1.5} stroke="currentColor"
@@ -164,7 +166,7 @@ export const Plus: Component<{
     </svg>
 )
 
-export const BuildingOffice2: Component<{
+export const BuildingOffice2Icon: Component<{
     class?: string;
 }> = props => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={1.5} stroke="currentColor"

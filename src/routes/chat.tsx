@@ -1,10 +1,7 @@
-import {Component, JSXElement} from "solid-js";
-import {RouteSectionProps} from "@solidjs/router";
+import {Component, JSXElement, ParentProps} from "solid-js";
 
-type PROPS = {
-    children: JSXElement
-}
-const ChatLayout: Component<PROPS> = props => {
+
+const ChatLayout: Component<ParentProps> = props => {
 
     return (
         <div>
