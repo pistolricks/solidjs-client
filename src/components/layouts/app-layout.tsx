@@ -1,4 +1,4 @@
-import {Component, ParentProps} from "solid-js";
+import {Component, createEffect, createSignal, ParentProps, Show} from "solid-js";
 import SideDrawer from "~/components/ui/dialogs/side-drawer";
 import Nav from "~/components/layouts/partials/nav";
 import {AccessorWithLatest, createAsync, useLocation} from "@solidjs/router";
@@ -18,14 +18,23 @@ const AppLayout: Component<PROPS> = props => {
     const children = () => props.children;
 
     const user: AccessorWithLatest<USER | undefined> = createAsync(async () => getUser());
+
     const location = useLocation();
-    const path = () => location.pathname;
+    const [getPath, setPath] = createSignal<string | undefined>()
 
     console.log('name', user()?.name)
 
+
+    createEffect(() => {
+        setPath(() => location.pathname)
+
+    })
+
     return (
         <SideDrawer>
-            <Nav user={user()} path={path()}/>
+            <Show when={getPath()}>
+                <Nav user={user()} path={getPath()}/>
+            </Show>
             <main
                 style={{
                     height: getHeight() + 'px'

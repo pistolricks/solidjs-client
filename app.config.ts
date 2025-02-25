@@ -7,7 +7,7 @@ export default defineConfig({
          websocket: true,
       }
    },
-   ssr: false,
+   ssr: true,
 //   vite: {
 //
 //      // vite options
