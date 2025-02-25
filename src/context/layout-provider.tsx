@@ -71,7 +71,6 @@ export function LayoutProvider(props: { children: JSX.Element }) {
         {title: "vendors", href: "/vendors"},
         {title: "places", href: "/places", icon: mapPin},
         {title: "contents", href: "/contents"},
-        {title: "messages", href: "/messages"},
         {title: "categories", href: "/categories"}
     ]
 

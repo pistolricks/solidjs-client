@@ -30,11 +30,9 @@ const Breadcrumbs: Component<PROPS> = props => {
             <div class={'flex justify-between items-center w-full pt-3 mb-3 px-0.5 text-gray-normal'}>
                 <Breadcrumb class={''}>
                     <BreadcrumbList>
-
                         <BreadcrumbItem>
                             <BreadcrumbLink href="/">Home</BreadcrumbLink>
                         </BreadcrumbItem>
-
                         <For each={splitPath()}>
                             {(path, i) => (
                                 <Show when={i() > 0 && path?.length > 0}>
@@ -46,8 +44,6 @@ const Breadcrumbs: Component<PROPS> = props => {
                                 </Show>
                             )}
                         </For>
-
-
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
