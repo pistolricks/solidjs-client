@@ -28,7 +28,7 @@ const Nav: Component<PROPS> = props => {
                     <div class="flex justify-between items-center w-full text-gray-normal">
                         <ul class="flex justify-start items-center">
                             <li class={`${active("/")}`}>
-                                <A href="/"><img class={'size-16'} src={'/logo.jpg'}/></A>
+                                <A href="/"><img class={'size-12 rounded'} src={'/logo.jpg'} alt={'logo'}/></A>
                             </li>
                         </ul>
                         <ul class="flex justify-end items-center">
